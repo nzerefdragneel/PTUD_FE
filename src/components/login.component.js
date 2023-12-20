@@ -6,6 +6,7 @@ import CheckButton from "react-validation/build/button";
 import AuthService from "../services/auth.service";
 
 import { withRouter } from "../common/with-router";
+import { Navigate } from "react-router-dom";
 
 const required = (value) => {
   if (!value) {
@@ -65,8 +66,8 @@ class LoginForm extends Component {
         (response) => {
           if (response.data.id) {
             localStorage.setItem("user", JSON.stringify(response.data));
+            this.props.router.navigate("/home");
           }
-       
           window.location.reload();
         },
         (error) => {
@@ -129,8 +130,6 @@ class LoginForm extends Component {
                 validations={[required]}
               />
             </div>
-
-
          
 
             <div className="form-group">

@@ -105,19 +105,7 @@ function Signup() {
         <div className="col-md-12">
             <div className="">
                 <div className='grid grid-cols-1 md:grid-cols-2  justify-items-center content-around place-items-center px-4 -ml-4'>
-                    <div className='flex flex-col flex-wrap'>
-                        <div className='mr-4 ml-4'>
-                            <div className='text-4xl text-dark-green font-bold mt-3'>
-                                Classroom
-                            </div>
-                            <div className='text-xl mt-3'>
-                                Where teaching and learning come together
-                            </div>
-                            <div className='text-base mt-3 text-neutral-600'>
-                                Classroom helps educators create engaging learning experiences they can personalize, manage, and measure. Classroom is a Workspace for Education, which empowers your institution with simple, safer, collaborative tools.
-                            </div>
-                        </div>
-                    </div>
+             
                     <div className='bg-gray-50 m-3 p-5 shadow-lg'>
                         <div className='text-4xl font-bold text-center mb-3'>
                             Sign Up

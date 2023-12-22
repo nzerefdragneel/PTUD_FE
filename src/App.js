@@ -58,6 +58,7 @@ class App extends Component {
 
     return (
       <div className="">
+        {/* headers */}
         <div className="pt-3 pb-4 px-32 flex flex-row flex-wrap justify-between border-b mb-2">
           <div className="flex flex-row flex-wrap text-lg items-center">
             <img
@@ -99,7 +100,7 @@ class App extends Component {
             </div>
           )}
         </div>
-        {/* {!roles ? ( */}
+        {/* {role==""? ( */}
         <div className="min-h-screen flex">
           <div className="flex-none w-64 h-14">
             {currentUser && <SidesMenu />}
@@ -110,6 +111,7 @@ class App extends Component {
               <Routes>
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="/signup" element={<Signup />} />
+
                 <Route
                   exact
                   path="/"
@@ -124,7 +126,9 @@ class App extends Component {
                     currentUser ? <EditUser /> : <Navigate replace to="/" />
                   }
                 />
+
                 <Route path="/profile" element={<Profile />} />
+
               </Routes>
             </div>
           </div>

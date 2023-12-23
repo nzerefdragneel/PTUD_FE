@@ -62,13 +62,13 @@ class App extends Component {
         <div className="pt-3 pb-4 px-32 flex flex-row flex-wrap justify-between border-b mb-2">
           <div className="flex flex-row flex-wrap text-lg items-center">
             <img
-              src="./assets/logo.png"
-              className="w-10 h-10 mr-2"
+              src="./assets/logo_0.png"
+              className="h-16 w-auto mr-2"
               alt="logo"
             />
             <a href="/" className="nav-link">
               <div className="px-6 py-2.5 mr-2 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                Home
+                Trang chủ
               </div>
             </a>
           </div>
@@ -76,12 +76,12 @@ class App extends Component {
             <div className="flex flex-row gap-2 text-lg">
               <a href="/profile" className="nav-link">
                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  Profile
+                  Hồ sơ cá nhân
                 </div>
               </a>
               <a href="/login" className="nav-link" onClick={this.logOut}>
                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  LogOut
+                  Đăng xuất
                 </div>
               </a>
             </div>
@@ -89,12 +89,12 @@ class App extends Component {
             <div className="flex flex-row gap-2 text-lg">
               <Link to={"/signup"} className="nav-link">
                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  Sign up
+                  Đăng ký
                 </div>
               </Link>
               <Link to={"/login"} className="nav-link">
                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  Log in
+                  Đăng nhập
                 </div>
               </Link>
             </div>

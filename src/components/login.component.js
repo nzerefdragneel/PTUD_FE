@@ -12,7 +12,7 @@ const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        Vui lòng cung cấp không bỏ trống !
       </div>
     );
   }
@@ -103,13 +103,13 @@ class LoginForm extends Component {
           >
             <div className="form-group">
               <label htmlFor="username" className="font-semibold mb-2">
-                Username
+                Tên đăng nhập
               </label>
               <Input
                 type="text"
                 className="form-control"
                 name="username"
-                placeholder="Enter your Username"
+                placeholder="Tên đăng nhập"
                 value={this.state.username}
                 onChange={this.onChangeUsername}
                 validations={[required]}
@@ -118,13 +118,13 @@ class LoginForm extends Component {
 
             <div className="form-group">
               <label htmlFor="password" className="font-semibold mb-2">
-                Password
+                Mật khẩu
               </label>
               <Input
                 type={this.state.showPassword ? "text" : "password"}
                 className="form-control"
                 name="password"
-                placeholder="Enter your Password"
+                placeholder="Mật khẩu"
                 value={this.state.password}
                 onChange={this.onChangePassword}
                 validations={[required]}
@@ -141,7 +141,7 @@ class LoginForm extends Component {
                 {this.state.loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
-                <span>Login</span>
+                <span>Đăng nhập</span>
               </button>
             </div>
 

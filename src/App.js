@@ -14,6 +14,7 @@ import EditUser from "./components/edituser.component";
 import Profile from "./components/profile.component";
 import SimpleFooter from "./components/footer.component";
 import Bus from "./common/bus";
+import SignupScreen from "./screen/signupScreen";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -110,7 +111,7 @@ class App extends Component {
             <div className="flex-1 p-4">
               <Routes>
                 <Route path="/login" element={<LoginScreen />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/signup" element={<SignupScreen/>} />
 
                 <Route
                   exact

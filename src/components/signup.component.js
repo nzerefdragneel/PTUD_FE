@@ -47,6 +47,8 @@ const vpassword = (value) => {
   }
 };
 
+
+
 function parseJwt(token) {
   var base64Url = token.split(".")[1];
   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -65,6 +67,8 @@ function parseJwt(token) {
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+//   const [passwor setConfirmPassword] = useState("");
+
   const [email, setEmail] = useState("");
   const fref = useRef(null);
   const [message, setMessage] = useState("");
@@ -98,88 +102,99 @@ function Signup() {
       }
     );
   };
-
+  
   return (
     <div className="col-md-12">
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2  justify-items-center content-around place-items-center px-4 -ml-4">
-          <div className="bg-gray-50 m-3 p-5 shadow-lg">
-            <div className="text-4xl font-bold text-center mb-3">Đăng ký</div>
-            <div className="text-base text-neutral-600 mb-6">
-              Tạo tài khoản để sử dụng đầy đủ tính năng
+        <Form onSubmit={handleRegister} ref={fref}>
+          <div>
+            <div className="form-group">
+              <label htmlFor="username" className="font-semibold mb-2">
+                Tên đăng nhập
+              </label>
+              <Input
+                type="text"
+                className="form-control p-3 rounded required"
+                name="username"
+                placeholder="Nhập tên đăng nhập"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                validations={[required, vusername]}
+              />
             </div>
-            <Form onSubmit={handleRegister} ref={fref}>
-              <div>
-                <div className="form-group">
-                  <label htmlFor="username" className="font-semibold mb-2">
-                    Username
-                  </label>
-                  <Input
-                    type="text"
-                    className="form-control p-3 rounded required"
-                    name="username"
-                    placeholder="Enter your Username"
-                    onChange={(e) => {
-                      setUsername(e.target.value);
-                    }}
-                    validations={[required, vusername]}
-                  />
-                </div>
 
-                <div className="form-group">
-                  <label htmlFor="email" className="font-semibold mb-2 mt-2">
-                    Email
-                  </label>
-                  <Input
-                    type="text"
-                    className="form-control p-3 rounded"
-                    name="email"
-                    placeholder="Enter your Email"
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                    validations={[required, vemail]}
-                  />
-                </div>
+            <div className="form-group">
+              <label htmlFor="email" className="font-semibold mb-2 mt-2">
+                Email cá nhân
+              </label>
+              <Input
+                type="text"
+                className="form-control p-3 rounded"
+                name="email"
+                placeholder="Nhập email cá nhân"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                validations={[required, vemail]}
+              />
+            </div>
 
-                <div className="form-group">
-                  <label htmlFor="password" className="font-semibold mb-2 mt-2">
-                    Password
-                  </label>
-                  <Input
-                    type="password"
-                    className="form-control p-3 rounded"
-                    name="password"
-                    placeholder="Enter your Password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                    validations={[required, vpassword]}
-                  />
-                </div>
-                <div className="form-group">
-                  <button
-                    className="w-full py-2.5 text-white bg-dark-green rounded-lg text-sm mt-3"
-                    onClick={() => {
-                      setIsLoading(true);
-                    }}
-                  >
-                    {isLoading && (
-                      <span className="spinner-border spinner-border-sm mr-1"></span>
-                    )}
-                    Sign Up
-                  </button>
-                </div>
-              </div>
-            </Form>
-            {isSubmit && !isSuccess && (
-              <div className="text-error-color text-base">{message}</div>
-            )}
-            {isSubmit && isSuccess && (
-              <div className="alert alert-success text-base">{message}</div>
-            )}
+            <div className="form-group">
+              <label htmlFor="password" className="font-semibold mb-2 mt-2">
+                Mật khẩu
+              </label>
+              <Input
+                type="password"
+                className="form-control p-3 rounded"
+                name="password"
+                placeholder="Nhập mật khẩu"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                validations={[required, vpassword]}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="confirmPassword" className="font-semibold mb-2 mt-2">
+                Nhập lại mật khẩu Mật khẩu
+              </label>
+              <Input
+                type="password"
+                className="form-control p-3 rounded"
+                name="confirmPassword"
+                placeholder="Nhập mật khẩu"
+                onChange={(e) => {
+                //   setConfirmPassword(e.target.value);
+                
+                }}
+                validations={[required]}
+              />
+            </div>
+           
+            <div className="form-group">
+              <button
+                className="w-full py-2.5 text-white bg-dark-green rounded-lg text-sm mt-3"
+                onClick={() => {
+                  setIsLoading(true);
+                }}
+              >
+                {isLoading && (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                )}
+                Đăng ký
+              </button>
+            </div>
           </div>
-        </div>
+        </Form>
+  
+    
+        {isSubmit && !isSuccess && (
+          <div className="text-error-color text-base">{message}</div>
+        )}
+        {isSubmit && isSuccess && (
+          <div className="alert alert-success text-base">{message}</div>
+        )}
       </div>
     </div>
   );

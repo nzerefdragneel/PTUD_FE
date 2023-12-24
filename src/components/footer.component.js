@@ -7,10 +7,10 @@ export default class SimpleFooter extends Component {
 
         <div className='border-t mt-2 bottom-0 px-40 pb-8 pt-20 flex flex-row flex-wrap gap-2 justify-between'>
         <div className='flex flex-col mt-2 mr-5'>
-            <img src='./assets/logo.png' className='w-14 h-14 mb-4' alt='logo' />
+            <img src='./assets/logo_0.png' className='h-16 w-auto mr-2' alt='logo' />
             <div className='mt-2 flex flex-row items-center'>
                 <EnvelopeIcon className='h-6 w-6 mr-2' />
-                <div className='text-base'>admin@class.com</div>
+                <div className='text-base'>20120586@student.hcmus.edu.vn</div>
             </div>
             <div className='mt-2 flex flex-row items-center'>
                 <PhoneIcon className='h-6 w-6 mr-2' />

@@ -15,6 +15,8 @@ import Profile from "./components/profile.component";
 import SimpleFooter from "./components/footer.component";
 import Bus from "./common/bus";
 import SignupScreen from "./screen/signupScreen";
+import Register_Insurance from "./components/register.component";
+import Status_User from "./components/status_user.component";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -80,6 +82,16 @@ class App extends Component {
                   Hồ sơ cá nhân
                 </div>
               </a>
+              <a href="/register" className="nav-link">
+                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
+                  Đăng ký bảo hiểm 
+                </div>
+              </a>
+              <a href="/status_user" className="nav-link">
+                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
+                  Tình trạng đăng ký 
+                </div>
+              </a>
               <a href="/login" className="nav-link" onClick={this.logOut}>
                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
                   Đăng xuất
@@ -129,6 +141,11 @@ class App extends Component {
                 />
 
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/register" element={<Register_Insurance />} />
+                <Route path="/status_user" element={<Status_User/>} />
+
+
+                
 
               </Routes>
             </div>

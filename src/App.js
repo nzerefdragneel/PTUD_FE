@@ -6,7 +6,10 @@ import userService from "./services/user.service";
 import AuthVerify from "./common/authVerify";
 import { Routes, BrowserRouter, Navigate, Route, Link } from "react-router-dom";
 import { SidesMenu } from "./components/sidebar.component";
+
 import LoginScreen from "./screen/loginScreen";
+import xemGoiBaoHiem from "./screen/xemGoiBaoHiem";
+
 import Home from "./components/home.component";
 import Lading from "./components/lading.component";
 import Signup from "./components/signup.component";
@@ -111,7 +114,7 @@ class App extends Component {
               <Routes>
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="/signup" element={<Signup />} />
-
+                <Route path="/xemGoiBaoHiem" element={<xemGoiBaoHiem />} />
                 <Route
                   exact
                   path="/"

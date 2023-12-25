@@ -37,7 +37,7 @@ const Home = () => {
     return (
         <>
             <div className=" ">
-                    Home
+                    Trang chủ- lOGIN
             </div>
         </>
     );

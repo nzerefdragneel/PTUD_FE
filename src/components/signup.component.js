@@ -155,7 +155,7 @@ function Signup() {
                 validations={[required, vpassword]}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="confirmPassword" className="font-semibold mb-2 mt-2">
                 Nhập lại mật khẩu Mật khẩu
               </label>
@@ -171,7 +171,7 @@ function Signup() {
                 validations={[required]}
               />
             </div>
-           
+            */}
             <div className="form-group">
               <button
                 className="w-full py-2.5 text-white bg-dark-green rounded-lg text-sm mt-3"

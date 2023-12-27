@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import {
-    Card,
-    CardBody,
-    Typography,
-    List,
-    ListItem,
-    ListItemPrefix,
-} from "@material-tailwind/react";
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { Card, CardBody, Typography, List, ListItem, ListItemPrefix } from '@material-tailwind/react';
 
 export function SimpleCard() {
     return (
@@ -17,18 +10,16 @@ export function SimpleCard() {
                     UI/UX Review Check
                 </Typography>
                 <Typography>
-                    The place is close to Barceloneta Beach and bus stop just 2 min by
-                    walk and near to &quot;Naviglio&quot; where you can enjoy the main
-                    night life in Barcelona.
+                    The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to
+                    &quot;Naviglio&quot; where you can enjoy the main night life in Barcelona.
                 </Typography>
             </CardBody>
         </Card>
     );
 }
 
-
 const Home = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('user'));
 
     if (user == null) {
         return <Navigate replace to="/" />;
@@ -36,9 +27,7 @@ const Home = () => {
 
     return (
         <>
-            <div className=" ">
-                    Home
-            </div>
+            <div className=" ">Home</div>
         </>
     );
 };

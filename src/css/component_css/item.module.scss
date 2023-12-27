@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cac-goi-bao-hiem {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.goiBaoHiemItem {
+    width: calc(33.33% - 16px); /* 16px là margin giữa các gói */
+    margin: 8px; /* Margin để tạo khoảng cách giữa các gói */
+    box-sizing: border-box;
+}

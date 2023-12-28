@@ -1,7 +1,8 @@
+import EditUser from "../components/edituser.component"
 import Home from "../components/home.component"
-import Profile from "../components/profile.component"
 import Register_Insurance from "../components/register.component"
-import Status_User from "../components/status_user.component"
+import User_Profile from "../components/user_profile.component"
+import EditAccount from "../components/editAccount.component"
 import {
   BookmarkIcon,
   HomeIcon,
@@ -19,13 +20,22 @@ export const appRouters = [
     component: <Home/>
   },
   {
-    path: "/profile",
-    title: "profile",
-    name: "Hồ sơ cá nhân",
+    path: "/user_profile",
+    title: "user_profile",
+    name: "Profile",
     icon: BookmarkIcon,
     showInMenu: true,
-    component:<Profile/>
+    component: <User_Profile/>
   },
+  // {
+  //   path: "/profile",
+  //   title: "profile",
+  //   name: "Hồ sơ cá nhân",
+  //   icon: BookmarkIcon,
+  //   showInMenu: true,
+  //   component:<Profile/>
+  // },
+  
   {
     path: "/register",
     title: "register",
@@ -35,15 +45,24 @@ export const appRouters = [
     component:<Register_Insurance/>
   },
   {
-    path: "/status_user",
-    title: "status_user",
-    name: "Tình trạng đăng ký",
+    path: "/edituser",
+    title: "edituser",
+    name: "Cập nhật thông tin ",
     icon: BookmarkIcon,
     showInMenu: true,
-    component:<Status_User/>
+    component:<EditUser/>
   },
-  
+  {
+    path: "/editAccount",
+    title: "editAccount",
+    name: "Cài đặt tài khoản ",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component:<EditAccount/>
+  },
 
+ 
+  
 ]
 
 export const routers = [...appRouters]

@@ -23,8 +23,8 @@ export function SidesMenu(props) {
                   className={({ isActive }) =>
                     `flex items-center ${collapsed ? "pl-2" : "pl-8"} ${
                       isActive
-                        ? "text-sky-500 text-gray-900  rounded-2xl bg-slate-200 p-2"
-                        : "text-gray-400 hover:text-sky-500 p-2"
+                        ? " text-gray-100 font-bold  rounded-2xl bg-green-700 p-2"
+                        : "text-green-500 font-semi hover:text-green-900 p-2"
                     }`
                   }
                 >

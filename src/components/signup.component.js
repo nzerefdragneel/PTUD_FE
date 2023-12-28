@@ -17,15 +17,15 @@ const required = (value) => {
   }
 };
 
-const vemail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="text-error-color text-base" role="alert">
-        Địa chỉ Email không hợp lệ!
-      </div>
-    );
-  }
-};
+// const vemail = (value) => {
+//   if (!isEmail(value)) {
+//     return (
+//       <div className="text-error-color text-base" role="alert">
+//         Địa chỉ Email không hợp lệ!
+//       </div>
+//     );
+//   }
+// };
 
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
@@ -69,7 +69,7 @@ function Signup() {
   const [password, setPassword] = useState("");
 //   const [passwor setConfirmPassword] = useState("");
 
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const fref = useRef(null);
   const [message, setMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
@@ -81,7 +81,7 @@ function Signup() {
 
     fref.current.validateAll();
 
-    AuthService.register(username, email, password).then(
+    AuthService.register(username, password).then(
       (response) => {
         setSuccess(true);
         setMessage(response.data.message);
@@ -124,7 +124,7 @@ function Signup() {
               />
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="email" className="font-semibold mb-2 mt-2">
                 Email cá nhân
               </label>
@@ -138,7 +138,7 @@ function Signup() {
                 }}
                 validations={[required, vemail]}
               />
-            </div>
+            </div> */}
 
             <div className="form-group">
               <label htmlFor="password" className="font-semibold mb-2 mt-2">

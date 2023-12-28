@@ -24,6 +24,7 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import { SimpleNavbar } from "./simplenavbar.component";
+
 export function SimpleCard() {
   return (
     <Card className="mt-6 w-96 h-auto">

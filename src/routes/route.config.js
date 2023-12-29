@@ -3,6 +3,7 @@ import Home from "../components/home.component"
 import Register_Insurance from "../components/register.component"
 import User_Profile from "../components/user_profile.component"
 import EditAccount from "../components/editAccount.component"
+import Health_Declaration from "../components/health_declaration.component"
 import {
   BookmarkIcon,
   HomeIcon,
@@ -59,7 +60,18 @@ export const appRouters = [
     icon: BookmarkIcon,
     showInMenu: true,
     component:<EditAccount/>
+
   },
+  {
+    path: "/healthDeclaration",
+    title: "healthDeclacation",
+    name: "Khai báo sức khoẻ  ",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component:<Health_Declaration/>
+
+  },
+  
 
  
   

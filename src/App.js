@@ -16,6 +16,8 @@ import SignupScreen from "./screen/signupScreen";
 import Register_Insurance from "./components/register.component";
 import User_Profile from "./components/user_profile.component";
 import EditAccount from "./components/editAccount.component";
+import Health_Declaration from "./components/health_declaration.component";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -164,6 +166,8 @@ class App extends Component {
                 <Route path="/user_profile" element={<User_Profile />} />
                 <Route path="/edituser" element={<EditUser/>} />
                 <Route path="/editAccount" element={<EditAccount/>} />
+                <Route path="/healthDeclaration" element={<Health_Declaration/>} />
+
 
                 
 

@@ -9,11 +9,15 @@ import { SidesMenu } from "./components/sidebar.component";
 import LoginScreen from "./screen/loginScreen";
 import Home from "./components/home.component";
 import Lading from "./components/lading.component";
-import Signup from "./components/signup.component";
 import EditUser from "./components/edituser.component";
-import Profile from "./components/profile.component";
 import SimpleFooter from "./components/footer.component";
 import Bus from "./common/bus";
+import SignupScreen from "./screen/signupScreen";
+import Register_Insurance from "./components/register.component";
+import User_Profile from "./components/user_profile.component";
+import EditAccount from "./components/editAccount.component";
+import Health_Declaration from "./components/health_declaration.component";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -59,42 +63,71 @@ class App extends Component {
     return (
       <div className="">
         {/* headers */}
-        <div className="pt-3 pb-4 px-32 flex flex-row flex-wrap justify-between border-b mb-2">
-          <div className="flex flex-row flex-wrap text-lg items-center">
-            <img
-              src="./assets/logo.png"
-              className="w-10 h-10 mr-2"
-              alt="logo"
-            />
+        <div className="pt-3 pb-4 px-32 flex flex-row  justify-between border-b mb-2 bg-black">
+          <div className="flex flex-row flex-wrap text-lg  items-center">
             <a href="/" className="nav-link">
-              <div className="px-6 py-2.5 mr-2 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                Home
-              </div>
+              <img
+                src="./assets/logo_0.png"
+                className="h-16 w-auto mr-2"
+                alt="logo"
+              />
             </a>
           </div>
+
           {currentUser ? (
+            // Header sau khi đăng nhập
+
             <div className="flex flex-row gap-2 text-lg">
-              <a href="/profile" className="nav-link">
-                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  Profile
+              <a href="/" className="nav-link">
+                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                  Trang chủ
                 </div>
               </a>
+              <a href="/user_profile" className="nav-link">
+                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                  Hồ sơ cá nhân
+                </div>
+              </a>
+              
+              {
+                <a href="/register" className="nav-link">
+                  <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                    Đăng ký bảo hiểm
+                  </div>
+                </a> /*
+              <a href="/status_user" className="nav-link">
+                <div className="px-6 py-2.5 rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                  Tình trạng đăng ký 
+                </div>
+              </a> */
+              }
               <a href="/login" className="nav-link" onClick={this.logOut}>
-                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  LogOut
+                <div
+                  className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                >
+                  Đăng xuất
                 </div>
               </a>
             </div>
           ) : (
             <div className="flex flex-row gap-2 text-lg">
+              <a href="/" className="nav-link">
+                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                  Trang chủ
+                </div>
+              </a>
               <Link to={"/signup"} className="nav-link">
-                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  Sign up
+                <div
+                  className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                >
+                  Đăng ký
                 </div>
               </Link>
               <Link to={"/login"} className="nav-link">
-                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
-                  Log in
+                <div className=" rounded-lg hover:bg-pink-400  hover:cursor-pointer hover:ease-linear duration-300">
+                  Đăng nhập
                 </div>
               </Link>
             </div>
@@ -102,7 +135,10 @@ class App extends Component {
         </div>
         {/* {role==""? ( */}
         <div className="min-h-screen flex">
-          <div className="flex-none w-64 h-14">
+          <div
+            className="flex-none w-64 
+          "
+          >
             {currentUser && <SidesMenu />}
           </div>
 
@@ -110,8 +146,7 @@ class App extends Component {
             <div className="flex-1 p-4">
               <Routes>
                 <Route path="/login" element={<LoginScreen />} />
-                <Route path="/signup" element={<Signup />} />
-
+                <Route path="/signup" element={<SignupScreen />} />
                 <Route
                   exact
                   path="/"
@@ -126,8 +161,18 @@ class App extends Component {
                     currentUser ? <EditUser /> : <Navigate replace to="/" />
                   }
                 />
+                {/* <Route path="/profile" element={<Profile />} /> */}
+                <Route path="/register" element={<Register_Insurance />} />
+                <Route path="/user_profile" element={<User_Profile />} />
+                <Route path="/edituser" element={<EditUser/>} />
+                <Route path="/editAccount" element={<EditAccount/>} />
+                <Route path="/healthDeclaration" element={<Health_Declaration/>} />
 
-                <Route path="/profile" element={<Profile />} />
+
+                
+
+              
+
 
               </Routes>
             </div>

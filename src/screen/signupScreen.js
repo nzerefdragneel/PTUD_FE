@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Card, Typography } from "@material-tailwind/react";
-
 import { withRouter } from "../common/with-router";
-import LoginComponent from "../components/login.component";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import signupComponent from "../components/signup.component";
+import SignupComponent from "../components/signup.component";
 
-class LoginScreen extends Component {
+class SignupScreen extends Component {
   render() {
     return (
       <div className="grid grid-cols-12 gap-2 justify-items-center content-around place-items-center mt-3 -ml-2">
@@ -17,26 +15,13 @@ class LoginScreen extends Component {
               color="black"
               className="text-4xl font-bold text-center  mb-2"
             >
-              Đăng nhập tài khoản
-              
+              Đăng ký tài khoản
             </Typography>
             <Typography className="text-base text-zinc-950 mb-6">
               Để có trải nghiệm đầy đủ và tốt nhất, hãy đăng nhập với tư cách
               thành viên của Vietnam Health Insurance
             </Typography>
-            <LoginComponent />
-            <Typography>
-              Bạn chưa có tài khoản?{" "}
-              {
-                <a
-                  href="/signup"
-                  style={{ color: "black", fontStyle: "italic" }}
-                >
-                  Đăng ký thành viên 
-                </a>
-              }{" "}
-              {/* <FontAwesomeIcon icon={faArrowUpRightFromSquare} /> */}
-            </Typography>
+            <SignupComponent />
           </Card>
         </div>
       </div>
@@ -44,4 +29,4 @@ class LoginScreen extends Component {
   }
 }
 
-export default withRouter(LoginScreen);
+export default withRouter(SignupScreen);

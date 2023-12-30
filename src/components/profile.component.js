@@ -24,6 +24,7 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import { SimpleNavbar } from "./simplenavbar.component";
+
 export function SimpleCard() {
   return (
     <Card className="mt-6 w-96 h-auto">
@@ -79,8 +80,7 @@ export default class Profile extends Component {
     return (
     <>
       <div className=" ">
-          
-       
+        
           <div className="grid place-items-center items-center place-content-centers content-center gap-4">
           <Link to={"/edituser"} className=" text-gray-900 hover:none">
         <button  className="rounded-md text-gray-900 px-3 py-2 text-sm font-semibold shadow-sm bg-green-600 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">

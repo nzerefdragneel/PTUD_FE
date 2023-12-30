@@ -37,7 +37,7 @@ function Lading() {
     return (
         <div className="">
             <div className='flex flex-col items-start gap-2 px-2 py-2 my-5 mr-5 -ml-36'>
-                <h1>Lading</h1>
+                <h1>TRANG CHỦ-CHƯA Login</h1>
             </div>
 
 

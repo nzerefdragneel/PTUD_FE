@@ -7,16 +7,19 @@ import AuthVerify from './common/authVerify';
 import { Routes, BrowserRouter, Navigate, Route, Link } from 'react-router-dom';
 import { SidesMenu } from './components/sidebar.component';
 import LoginScreen from './screen/loginScreen';
-import XemGoiBaoHiem from './screen/xemGoiBaoHiem';
+import XemGoiBaoHiemScreen from './screen/xemGoiBaoHiemScreen';
+import DongPhiScreen from './screen/dongPhiScreen';
+import CongTyScreen from './screen/congTyScreen';
 import Home from './components/home.component';
 import Lading from './components/lading.component';
 import Signup from './components/signup.component';
-import GoiBaoHiem from './components/item.component';
-
 import EditUser from './components/edituser.component';
 import Profile from './components/profile.component';
+// import ChiTietGoiBaoHiem from './components/chiTietGoiBaoHiem.component';
 import SimpleFooter from './components/footer.component';
+import ChiTietDongPhi from './components/chiTietDongPhi.component';
 import Bus from './common/bus';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +34,7 @@ class App extends Component {
     componentDidMount() {
         const user = AuthService.getCurrentUser();
         if (user !== null) {
-            const roles = userService.getRoles(user.id);
+            const roles = userService.getRoles(user.ID_TaiKhoan);
             this.setState({
                 currentUser: user,
                 roles: roles,
@@ -90,14 +93,19 @@ class App extends Component {
                                     Sản phẩm
                                 </div>
                             </Link>
-                            <Link to={'/xemGoiBaoHiem'} className="nav-link">
+                            <Link to={'/yeuCauChiTraBaoHiem'} className="nav-link">
                                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
                                     Yêu cầu chi trả bảo hiểm
                                 </div>
                             </Link>
-                            <Link to={'/xemGoiBaoHiem'} className="nav-link">
+                            <Link to={'/dongPhi'} className="nav-link">
                                 <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
                                     Đóng phí
+                                </div>
+                            </Link>
+                            <Link to={'/congTy'} className="nav-link">
+                                <div className="px-6 py-2.5 rounded-lg hover:bg-medium-green hover:cursor-pointer hover:ease-linear duration-300">
+                                    Công ty
                                 </div>
                             </Link>
                             <Link to={'/signup'} className="nav-link">
@@ -123,7 +131,12 @@ class App extends Component {
                             <Routes>
                                 <Route path="/login" element={<LoginScreen />} />
                                 <Route path="/signup" element={<Signup />} />
-                                <Route path="/xemGoiBaoHiem" element={<XemGoiBaoHiem />} />
+                                <Route path="/xemGoiBaoHiem" element={<XemGoiBaoHiemScreen />} />
+                                <Route path="/congTy" element={<CongTyScreen />} />
+                                <Route path="/dongPhi" element={<DongPhiScreen idUser={1} />} />
+                                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+
+                                {/* <Route path="/chi-tiet-goi-bao-hiem/:id" element={<ChiTietGoiBaoHiem />} /> */}
                                 <Route
                                     exact
                                     path="/"

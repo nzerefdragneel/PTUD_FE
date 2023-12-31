@@ -33,18 +33,24 @@ class App extends Component {
         this.state = {
             currentUser: undefined,
             roles: '',
+            token: '',
         };
     }
 
     componentDidMount() {
         const user = AuthService.getCurrentUser();
         if (user !== null) {
-            const roles = userService.getRoles(user.ID_TaiKhoan);
+            const roles = user.taiKhoan.loaiTaiKhoan;
+            const token = user.accessToken;
+
             this.setState({
                 currentUser: user,
                 roles: roles,
+                token: token,
             });
         }
+        alert(user.taiKhoan.loaiTaiKhoan);
+        alert(user.accessToken);
 
         Bus.on('logout', () => {
             this.logOut();
@@ -60,12 +66,13 @@ class App extends Component {
         this.setState({
             currentUser: undefined,
             roles: '',
+            token: '',
         });
     }
 
     render() {
         const currentUser = this.state.currentUser;
-        const roles = this.state.roles;
+        const curentRole = this.state.roles;
 
         return (
             <div className="">
@@ -93,9 +100,9 @@ class App extends Component {
                             </a>
 
                             {
-                                <a href="/register" className="nav-link">
+                                <a href="/xemGoiBaoHiem" className="nav-link">
                                     <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
-                                        Đăng ký bảo hiểm
+                                        Danh mục sản phẩm
                                     </div>
                                 </a> /*
               <a href="/status_user" className="nav-link">
@@ -118,6 +125,11 @@ class App extends Component {
                             <a href="/" className="nav-link">
                                 <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
                                     Trang chủ
+                                </div>
+                            </a>
+                            <a href="/xemGoiBaoHiem" className="nav-link">
+                                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                                    Danh mục sản phẩm
                                 </div>
                             </a>
                             <Link to={'/signup'} className="nav-link">

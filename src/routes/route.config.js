@@ -9,6 +9,7 @@ import CongTyScreen from '../screen/congTyScreen';
 import DongPhiScreen from '../screen/dongPhiScreen';
 import ChiTietDongPhi from '../components/chiTietDongPhi.component';
 import { BookmarkIcon, HomeIcon, InboxIcon, KeyIcon } from '@heroicons/react/24/solid';
+import Status_Register from '../components/status_register.component';
 
 export const appRouters = [
     {
@@ -81,7 +82,7 @@ export const appRouters = [
         title: 'congty',
         name: 'Công ty',
         icon: BookmarkIcon,
-        showInMenu: true,
+        showInMenu: false,
         component: <CongTyScreen />,
     },
     {
@@ -99,6 +100,14 @@ export const appRouters = [
         icon: BookmarkIcon,
         showInMenu: true,
         component: <ChiTietDongPhi />,
+    },
+    {
+        path: '/statusRegister',
+        title: 'statusRegister',
+        name: 'Theo dõi đơn đăng ký',
+        icon: BookmarkIcon,
+        showInMenu: false,
+        component: <Status_Register />,
     },
 ];
 

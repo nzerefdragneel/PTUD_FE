@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Card, CardBody, Typography, List, ListItem, ListItemPrefix } from '@material-tailwind/react';
-
+import AuthService from '../services/auth.service';
+import userService from '../services/user.service';
 export function SimpleCard() {
     return (
         <Card className="mt-6 w-96 h-auto">
@@ -20,6 +21,8 @@ export function SimpleCard() {
 
 const Home = () => {
     const user = JSON.parse(localStorage.getItem('user'));
+
+    console.log(user);
 
     if (user == null) {
         return <Navigate replace to="/" />;

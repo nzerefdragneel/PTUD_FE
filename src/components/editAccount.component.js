@@ -53,8 +53,16 @@ export default class EditAccount extends Component {
       this.state.password
     ).then(
       (response) => {
+        const user = authService.getCurrentUser();
         localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify(response.data));
+        const user_1 = {
+          taiKhoan: response.data,
+          accessToken: user.accessToken,
+        };
+
+        localStorage.setItem("user", JSON.stringify(user_1));
+
+        console.log(response.data);
         this.setState({
           message: response.data.message,
           successful: true,
@@ -62,9 +70,9 @@ export default class EditAccount extends Component {
       },
       (error) => {
         const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
+          error.response ||
+          error.response.data ||
+          error.response.data.message ||
           error.message ||
           error.toString();
 
@@ -96,79 +104,80 @@ export default class EditAccount extends Component {
           }}
         >
           {!this.state.successful && (
-           <>
+            <>
               <div className="flex flex-col  w-full ">
                 <div className="border-b border-gray-900/10">
                   <div className="mt-10 grid grid-cols-1 gap-x-4 gap-y-3 ">
-                  <div className="sm:col-span-4 py-3">
-                       {/* Cập nhật username */}
-                       <h4> Thông tin đăng nhập </h4>
+                    <div className="sm:col-span-4 py-3">
+                      {/* Cập nhật username */}
+                      <h4> Thông tin đăng nhập </h4>
 
-                    <div className="sm:col-span-4">
-                      <label
-                        htmlFor="username"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Username
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="username"
-                          name="username"
-                          type="username"
-                          readOnly="true"
-                          autoComplete="username"
-                          value={this.state.username}
-                          onChange={this.onChangeUsername}
-                          placeholder="username"
-                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
+                      <div className="sm:col-span-4">
+                        <label
+                          htmlFor="username"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          Username
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            id="username"
+                            name="username"
+                            type="username"
+                            readOnly="true"
+                            autoComplete="username"
+                            value={this.state.username}
+                            onChange={this.onChangeUsername}
+                            placeholder="username"
+                            className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                        {/* Đổi mật khẩu  */}
+                        <div className="sm:col-span-4">
+                          <label
+                            htmlFor="email"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
+                            Password
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="password"
+                              name="password"
+                              type="password"
+                              autoComplete="password"
+                              placeholder="password"
+                              value={this.state.password}
+                              onChange={this.onChangePassword}
+                              className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                          </div>
+                        </div>
                       </div>
-                       {/* Đổi mật khẩu  */}
-                    <div className="sm:col-span-4">
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium leading-6 text-gray-900"
+                    </div>
+
+                    <div className=" flex items-center justify-start gap-x-6">
+                      {/* Button - Cancel  */}
+                      <Link
+                        to={"/user_profile"}
+                        className=" text-gray-900 hover:none"
                       >
-                        Password
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="password"
-                          name="password"
-                          type="password"
-                          autoComplete="password"
-                          placeholder="password"
-                          value={this.state.password}
-                          onChange={this.onChangePassword}
-                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
+                        <button className="rounded-md text-gray-900 bg-gray-100 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                          Huỷ
+                        </button>
+                      </Link>
+                      {/* Button - Save  */}
+                      <button
+                        type="submit"
+                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      >
+                        Lưu
+                      </button>
                     </div>
-                    </div>
-
-                    </div>
-
-                  <div className=" flex items-center justify-start gap-x-6">
-                {/* Button - Cancel  */}
-                <Link to={"/user_profile"} className=" text-gray-900 hover:none">
-                  <button className="rounded-md text-gray-900 bg-gray-100 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Huỷ 
-                  </button>
-                </Link>
-                {/* Button - Save  */}
-                <button
-                  type="submit"
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Lưu 
-                </button>
+                  </div>
+                </div>
               </div>
-
-                  </div>
-                  </div>
-                  </div>
-           </>
+            </>
           )}
           {this.state.message && (
             <div className="form-group">

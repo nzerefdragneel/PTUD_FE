@@ -51,6 +51,7 @@ const isIDCard = (value) => {
     );
   }
 };
+// Thêm User vào lần đầu tiên
 export default class EditUser extends Component {
   constructor(props) {
     super(props);
@@ -212,8 +213,8 @@ export default class EditUser extends Component {
       gioiTinh: this.state.gioitinh,
       quocTich: "Việt Nam",
       ngaySinh: "2024-01-01T09:24:22.101Z", // adjust accordingly
-      chieuCao: 143,
-      canNang: 642,
+      chieuCao: parseInt(this.state.chieucao),
+      canNang: parseInt(this.state.cannang),
       soNhaTenDuong: this.state.sonhaTenduong,
       phuongXa: this.state.phuongxa,
       quanHuyen: this.state.quanhuyen,
@@ -222,7 +223,7 @@ export default class EditUser extends Component {
       cmnd: this.state.cmnd,
       ngheNghiep: this.state.nghenghiep,
       chiTietCongViec: this.state.chitietcongviec,
-      thuNhap: 12222,
+      thuNhap: parseInt(this.state.thunhap),
       soTaiKhoan: "901839839833222",
       nganHang: "Argibank",
       soDienThoai: this.state.sodienthoai,
@@ -288,7 +289,7 @@ export default class EditUser extends Component {
                 <div className="border-b border-gray-900/10">
                   <div className="mt-10 grid grid-cols-1 gap-x-4 gap-y-3 ">
                     {/* Button   */}
-                    <div className=" flex items-center justify-start gap-x-6">
+                    <div className=" flex items-center justify-end gap-x-6">
                       {/* Button - Cancel  */}
                       <Link
                         to={"/user_profile"}
@@ -654,7 +655,7 @@ export default class EditUser extends Component {
                           type="number"
                           autoComplete="off"
                           //   validations={required}
-                          value={this.state.thunhap}
+                          value={this.state.thuhap}
                           onChange={this.onChangethunhap}
                           placeholder="Nhập thu thập/ tháng"
                           className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

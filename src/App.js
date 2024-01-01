@@ -1,29 +1,30 @@
-import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import AuthService from './services/auth.service';
-import userService from './services/user.service';
-import AuthVerify from './common/authVerify';
-import { Routes, BrowserRouter, Navigate, Route, Link } from 'react-router-dom';
-import { SidesMenu } from './components/sidebar.component';
-import LoginScreen from './screen/loginScreen';
-import XemGoiBaoHiemScreen from './screen/xemGoiBaoHiemScreen';
-import DongPhiScreen from './screen/dongPhiScreen';
-import CongTyScreen from './screen/congTyScreen';
-import Home from './components/home.component';
-import Lading from './components/lading.component';
-import Signup from './components/signup.component';
-import EditUser from './components/edituser.component';
-import Profile from './components/profile.component';
+import AuthService from "./services/auth.service";
+import userService from "./services/user.service";
+import AuthVerify from "./common/authVerify";
+import { Routes, BrowserRouter, Navigate, Route, Link } from "react-router-dom";
+import { SidesMenu } from "./components/sidebar.component";
+import LoginScreen from "./screen/loginScreen";
+import XemGoiBaoHiemScreen from "./screen/xemGoiBaoHiemScreen";
+import DongPhiScreen from "./screen/dongPhiScreen";
+import CongTyScreen from "./screen/congTyScreen";
+import Home from "./components/home.component";
+import Lading from "./components/lading.component";
+import Signup from "./components/signup.component";
+import EditUser from "./components/edituser.component";
+import Profile from "./components/profile.component";
 // import ChiTietGoiBaoHiem from './components/chiTietGoiBaoHiem.component';
-import SimpleFooter from './components/footer.component';
-import ChiTietDongPhi from './components/chiTietDongPhi.component';
-import Bus from './common/bus';
-import SignupScreen from './screen/signupScreen';
-import Register_Insurance from './components/register.component';
-import User_Profile from './components/user_profile.component';
-import EditAccount from './components/editAccount.component';
-import Health_Declaration from './components/health_declaration.component';
+import SimpleFooter from "./components/footer.component";
+import ChiTietDongPhi from "./components/chiTietDongPhi.component";
+import Bus from "./common/bus";
+import SignupScreen from "./screen/signupScreen";
+import Register_Insurance from "./components/register.component";
+import User_Profile from "./components/user_profile.component";
+import EditAccount from "./components/editAccount.component";
+import Health_Declaration from "./components/health_declaration.component";
+import Status_Register from "./components/status_register.component";
 
 class App extends Component {
   constructor(props) {
@@ -32,8 +33,8 @@ class App extends Component {
 
     this.state = {
       currentUser: undefined,
-      roles: '',
-      token: '',
+      roles: "",
+      token: "",
     };
   }
 
@@ -49,21 +50,21 @@ class App extends Component {
         token: token,
       });
     }
-    Bus.on('logout', () => {
+    Bus.on("logout", () => {
       this.logOut();
     });
   }
 
   componentWillUnmount() {
-    Bus.remove('logout');
+    Bus.remove("logout");
   }
 
   logOut() {
     AuthService.logout();
     this.setState({
       currentUser: undefined,
-      roles: '',
-      token: '',
+      roles: "",
+      token: "",
     });
   }
 
@@ -77,7 +78,11 @@ class App extends Component {
         <div className="pt-3 pb-4 px-32 flex flex-row  justify-between border-b mb-2 bg-black">
           <div className="flex flex-row flex-wrap text-lg  items-center">
             <a href="/" className="nav-link">
-              <img src="./assets/logo_0.png" className="h-16 w-auto mr-2" alt="logo" />
+              <img
+                src="./assets/logo_0.png"
+                className="h-16 w-auto mr-2"
+                alt="logo"
+              />
             </a>
           </div>
 
@@ -129,7 +134,7 @@ class App extends Component {
                   Danh mục sản phẩm
                 </div>
               </a>
-              <Link to={'/signup'} className="nav-link">
+              <Link to={"/signup"} className="nav-link">
                 <div
                   className=" rounded-lg hover:bg-pink-400
                  hover:cursor-pointer hover:ease-linear duration-300"
@@ -137,7 +142,7 @@ class App extends Component {
                   Đăng ký
                 </div>
               </Link>
-              <Link to={'/login'} className="nav-link">
+              <Link to={"/login"} className="nav-link">
                 <div className=" rounded-lg hover:bg-pink-400  hover:cursor-pointer hover:ease-linear duration-300">
                   Đăng nhập
                 </div>
@@ -159,20 +164,38 @@ class App extends Component {
               <Routes>
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="/signup" element={<SignupScreen />} />
-                <Route path="/xemGoiBaoHiem" element={<XemGoiBaoHiemScreen />} />
+                <Route
+                  path="/xemGoiBaoHiem"
+                  element={<XemGoiBaoHiemScreen />}
+                />
                 <Route path="/congTy" element={<CongTyScreen />} />
                 <Route path="/dongPhi" element={<DongPhiScreen idUser={1} />} />
                 <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
                 {/* <Route path="/chi-tiet-goi-bao-hiem/:id" element={<ChiTietGoiBaoHiem />} /> */}
-                <Route exact path="/" element={currentUser ? <Navigate replace to="/home" /> : <Lading />} />
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    currentUser ? <Navigate replace to="/home" /> : <Lading />
+                  }
+                />
                 <Route path="/home" element={<Home />} />
-                <Route path="/edituser" element={currentUser ? <EditUser /> : <Navigate replace to="/" />} />
-                {/* <Route path="/profile" element={<Profile />} /> */}{' '}
+                <Route
+                  path="/edituser"
+                  element={
+                    currentUser ? <EditUser /> : <Navigate replace to="/" />
+                  }
+                />
+                {/* <Route path="/profile" element={<Profile />} /> */}{" "}
                 <Route path="/register" element={<Register_Insurance />} />
                 <Route path="/user_profile" element={<User_Profile />} />
                 <Route path="/edituser" element={<EditUser />} />
                 <Route path="/editAccount" element={<EditAccount />} />
-                <Route path="/healthDeclaration" element={<Health_Declaration />} />
+                <Route path="/statusRegister" element={<Status_Register />} />
+                <Route
+                  path="/healthDeclaration"
+                  element={<Health_Declaration />}
+                />
               </Routes>
             </div>
           </div>

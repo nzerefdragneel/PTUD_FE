@@ -70,14 +70,14 @@ class LoginForm extends Component {
             const accessToken = response.data.accessToken;
             // Lấy giá trị userID
             const userID = response.data.taiKhoan.iD_TaiKhoan;
-            alert(userID);
+
             localStorage.setItem("user", JSON.stringify(response.data));
             console.log(response.data);
             customerService
               .getCustomer(1)
               .then((customerResponse) => {
                 // Nếu có tồn tại ID_KhachHang, chuyển vào /home
-                alert("HOME");
+
                 this.props.router.navigate("/home");
               })
               .catch((customerError) => {

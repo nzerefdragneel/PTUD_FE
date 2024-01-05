@@ -228,8 +228,6 @@ export default class EditUser extends Component {
       nganHang: "Argibank",
       soDienThoai: this.state.sodienthoai,
     };
-    alert(JSON.stringify(requestData, null, 2));
-    alert(user.taiKhoan.iD_TaiKhoan);
 
     customerService.addCustomer(user.taiKhoan.iD_TaiKhoan, requestData).then(
       (response) => {
@@ -344,7 +342,7 @@ export default class EditUser extends Component {
                           id="email"
                           name="email"
                           type="email"
-                          autoComplete="email"
+                          autoComplete="off"
                           value={this.state.email}
                           onChange={this.onChangeemail}
                           //   validations={[required, vemail]}

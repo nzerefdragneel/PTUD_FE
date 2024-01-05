@@ -1,10 +1,16 @@
 import axios from 'axios';
 //phonghoc@i91
-// const API_URL = `${process.env.REACT_APP_SERVICE_URL}/api/GoiBaoHiem/GetAll`;
-const LOCAL_JSON_URL = 'http://localhost:3001';
+const API_URL = `https://localhost:7202/api/KhachHang/`;
+
 class KhachHangService {
     getById(id) {
-        return axios.get(`${LOCAL_JSON_URL}?ID_TaiKhoan=${id}`);
+        return axios.get(`${API_URL}id?id=${id}`);
+    }
+    getAll() {
+        return axios.get(`${API_URL}GetAll`);
+    }
+    getByIdTaiKhoan(id) {
+        return axios.get(`${API_URL}idtk:int?idtk=${id}`);
     }
 }
 

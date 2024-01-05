@@ -6,6 +6,9 @@ class GoiBaoHiemService {
     getAll() {
         return axios.get(API_URL);
     }
+    getByID(id) {
+        return axios.get(`https://localhost:7202/api/GoiBaoHiem/id?id=${id}`);
+    }
 }
 
 export default new GoiBaoHiemService();

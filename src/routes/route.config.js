@@ -6,8 +6,11 @@ import EditAccount from '../components/editAccount.component';
 import Health_Declaration from '../components/health_declaration.component';
 import XemGoiBaoHiemScreen from '../screen/xemGoiBaoHiemScreen';
 import CongTyScreen from '../screen/congTyScreen';
-import DongPhiScreen from '../screen/dongPhiScreen';
+import DongPhi from '../components/dongPhi.component';
 import ChiTietDongPhi from '../components/chiTietDongPhi.component';
+import YeuCauChiTra from '../components/yeuCauChiTra.component';
+import YeuCauTuVan from '../components/yeuCauTuVan.component';
+
 import { BookmarkIcon, HomeIcon, InboxIcon, KeyIcon } from '@heroicons/react/24/solid';
 
 export const appRouters = [
@@ -76,26 +79,50 @@ export const appRouters = [
         showInMenu: true,
         component: <XemGoiBaoHiemScreen />,
     },
-    {
-        path: '/congTy',
-        title: 'congty',
-        name: 'Công ty',
-        icon: BookmarkIcon,
-        showInMenu: true,
-        component: <CongTyScreen />,
-    },
+    // {
+    //     path: '/congTy',
+    //     title: 'congty',
+    //     name: 'Công ty',
+    //     icon: BookmarkIcon,
+    //     showInMenu: true,
+    //     component: <CongTyScreen />,
+    // },
     {
         path: '/dongPhi',
         title: 'dongphi',
         name: 'Đóng phí',
         icon: BookmarkIcon,
         showInMenu: true,
-        component: <DongPhiScreen idUser={1} />,
+        component: <DongPhi />,
     },
     {
         path: '/chiTietDongPhi',
         title: 'ChiTietDongPhi',
         name: 'Chi tiết Đóng phí',
+        icon: BookmarkIcon,
+        showInMenu: true,
+        component: <ChiTietDongPhi />,
+    },
+    {
+        path: '/yeuCauChiTra',
+        title: 'YeuCauChiTra',
+        name: 'Yêu cầu chi trả',
+        icon: BookmarkIcon,
+        showInMenu: true,
+        component: <YeuCauChiTra />,
+    },
+    {
+        path: '/yeuCauTuVan',
+        title: 'yeuCauTuVan',
+        name: 'Yêu cầu tư vấn',
+        icon: BookmarkIcon,
+        showInMenu: true,
+        component: <YeuCauTuVan />,
+    },
+    {
+        path: '/chiTietDongPhi',
+        title: 'chiTietDongPhi',
+        name: 'Chi tiết đóng phí',
         icon: BookmarkIcon,
         showInMenu: true,
         component: <ChiTietDongPhi />,

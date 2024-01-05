@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, Typography } from "@material-tailwind/react";
 import { withRouter } from "../common/with-router";
-import signupComponent from "../components/signup.component";
+
 import SignupComponent from "../components/signup.component";
 
 class SignupScreen extends Component {

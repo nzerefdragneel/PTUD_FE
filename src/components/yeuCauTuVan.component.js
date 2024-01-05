@@ -19,14 +19,15 @@ const required = (value) => {
         );
     }
 };
-const YeuCauChiTra = () => {
+const YeuCauTuVan = () => {
     //lấy idtaikhoan từ bảng tài khoản
     // const user = this.props.dataFromParent.iD_TaiKhoan;
     const user = authService.getCurrentUser();
-    // const [khachHangData, setKhachHangData] = useState({});
+    const [khachHangData, setKhachHangData] = useState({});
     const [GoiBaoHiemData, setGoiBaoHiemData] = useState([]);
     const [QuanLyBaoHiem, setQuanLyBaoHiem] = useState([]);
     const [GoiBaoHiem, setSelectGoiBaoHiem] = useState([]);
+    const [qlbhid, setqlbhid] = useState(null);
     const [nguoiYeuCau, setnguoiYeuCau] = useState(null);
     const [moiQuanHe, setmoiQuanHe] = useState(null);
     const [diaChi, setdiaChi] = useState(null);
@@ -40,9 +41,8 @@ const YeuCauChiTra = () => {
     const [ngayBatDau, setngayBatDau] = useState(null);
     const [ngayKetThuc, setngayKetThuc] = useState(null);
     const [email, setemail] = useState(null);
-    const [hinhHoaDon, sethinhHoaDon] = useState(null);
     const [tinhTrangDuyet, settinhTrangDuyet] = useState(null);
-    // const [danhSachGoiBaoHiem, setDanhSachGoiBaoHiem] = useState([]);
+    const [danhSachGoiBaoHiem, setDanhSachGoiBaoHiem] = useState([]);
     const [danhSachDaLay, setDanhSachDaLay] = useState([]);
     const [showMessage, setShowMessage] = useState(false);
     const [noiDungMessage, setnoiDungMessage] = useState(null);
@@ -99,11 +99,11 @@ const YeuCauChiTra = () => {
     }, []);
 
     const handleYeuCauChiTra = async () => {
-        const qlbhid = QuanLyBaoHiem.find((qlbh) => qlbh.iD_GoiBaoHiem === +GoiBaoHiem);
+        setqlbhid(QuanLyBaoHiem.find((qlbh) => qlbh.iD_GoiBaoHiem === GoiBaoHiem.iD_GoiBaoHiem));
         console.log(qlbhid);
         try {
             const response = await YeuCauChiTraService.EditYeuCauChiTra(
-                qlbhid?.id,
+                qlbhid,
                 soTienYeuCauChiTra,
                 nguoiYeuCau,
                 truongHopChiTra,
@@ -117,7 +117,7 @@ const YeuCauChiTra = () => {
                 hinhThucDieuTri,
                 ngayBatDau,
                 ngayKetThuc,
-                hinhHoaDon,
+                tinhTrangDuyet,
             );
 
             console.log('YeuCauChiTra API Response:', response);
@@ -132,26 +132,7 @@ const YeuCauChiTra = () => {
     const closeMessage = () => {
         setShowMessage(false);
     };
-    const handleNgayBatDauChange = (e) => {
-        const inputValue = e.target.value;
 
-        // Chuyển đổi định dạng ngày
-        const [month, day, year] = inputValue.split('/');
-        const formattedNgayBatDau = `${year}-${month}-${day}`;
-
-        // Cập nhật giá trị state
-        setngayBatDau(formattedNgayBatDau);
-    };
-    const handleNgayKetThucChange = (e) => {
-        const inputValue = e.target.value;
-
-        // Chuyển đổi định dạng ngày
-        const [month, day, year] = inputValue.split('/');
-        const formattedNgayKetThuc = `${year}-${month}-${day}`;
-
-        // Cập nhật giá trị state
-        setngayKetThuc(formattedNgayKetThuc);
-    };
     return (
         <div>
             {showMessage && <DialogDefault handler={closeMessage} message={noiDungMessage} />}
@@ -170,7 +151,7 @@ const YeuCauChiTra = () => {
                         onChange={(e) => setSelectGoiBaoHiem(e.target.value)}
                     >
                         {GoiBaoHiemData.map((goiSanPham) => (
-                            <option key={goiSanPham.iD_GoiBaoHiem} value={goiSanPham.iD_GoiBaoHiem}>
+                            <option key={goiSanPham.iD_GoiBaoHiem} value={goiSanPham.tenBaoHiem}>
                                 {goiSanPham.tenBaoHiem}
                             </option>
                         ))}
@@ -349,19 +330,6 @@ const YeuCauChiTra = () => {
                     />
                 </div>
             </div>
-            <div className="form-group">
-                <label htmlFor="username" className="font-semibold mb-2">
-                    Link Hình hóa đơn
-                </label>
-                <Input
-                    type="text"
-                    name="hinhHoaDon"
-                    value={hinhHoaDon}
-                    required="true"
-                    onChange={(e) => sethinhHoaDon(e.target.value)}
-                    autocomplete="on"
-                />
-            </div>
             <Button onClick={handleYeuCauChiTra} className="bg-blue-500 text-white px-4 py-2">
                 GỬI YÊU CẦU
             </Button>
@@ -369,4 +337,4 @@ const YeuCauChiTra = () => {
     );
 };
 
-export default YeuCauChiTra;
+export default YeuCauTuVan;

@@ -65,6 +65,8 @@ class LoginForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         (response) => {
+          alert(JSON.stringify(response.data));
+
           if (response.data.accessToken && response.data.taiKhoan) {
             // Lấy giá trị accessToken từ response
             const accessToken = response.data.accessToken;
@@ -74,9 +76,30 @@ class LoginForm extends Component {
             localStorage.setItem("user", JSON.stringify(response.data));
             console.log(response.data);
             customerService
-              .getCustomer(1)
+              .getCustomer(userID)
               .then((customerResponse) => {
                 // Nếu có tồn tại ID_KhachHang, chuyển vào /home
+                customerService.getCustomer(userID).then(
+                  (response) => {
+                    localStorage.setItem(
+                      "customer",
+                      JSON.stringify(response.data)
+                    );
+                  },
+                  (error) => {
+                    const resMessage =
+                      error.response ||
+                      error.response.data ||
+                      error.response.data.message ||
+                      error.message ||
+                      error.toString();
+
+                    this.setState({
+                      loading: false,
+                      message: resMessage,
+                    });
+                  }
+                );
 
                 this.props.router.navigate("/home");
               })

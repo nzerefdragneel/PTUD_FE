@@ -6,7 +6,7 @@ import authService from "../services/auth.service";
 import { isEmail } from "validator";
 import customerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
-
+import { getColorClass } from "../utils/colorultils";
 const required = (value) => {
   if (!value) {
     return (
@@ -77,33 +77,31 @@ export default class EditUser extends Component {
 
     // this.onChangeEmail = this.onChangeEmail.bind(this);
     // this.onChangePassword = this.onChangePassword.bind(this);
-    var user = authService.getCurrentUser();
 
-    const userID = user.taiKhoan.iD_TaiKhoan;
-    console.log(user);
+    const user = authService.getCurrentUser();
+    const customer = customerService.getCurrentCustomer();
 
     this.state = {
-      hoten: "",
-      gioitinh: "Nam",
-      quoctich: "",
-      //   ngaysinh: '04052002',
-      chieucao: 0,
-      cannang: 0,
-      sonhaTenduong: "",
-      phuongxa: "",
-      quanhuyen: "",
-      thanhpho: "",
-      email: "",
-      cmnd: "",
-      nghenghiep: "",
-      chitietcongviec: "",
-      thunhap: 0,
-      sotaikhoan: "",
-      nganhang: "",
-      sodienthoai: "",
-      //   iD_CongTy: 1,
-      //   iD_TaiKhoan: userID,
-      //   xacthuc: 'Chưa Xác Thực',
+      hoten: customer.hoTen,
+      gioitinh: customer.gioiTinh,
+      quoctich: customer.quocTich,
+      ngaysinh: customer.ngaySinh,
+      chieucao: customer.chieuCao,
+      cannang: customer.canNang,
+      sonhaTenduong: customer.soNhaTenDuong,
+      phuongxa: customer.phuongXa,
+      quanhuyen: customer.quanHuyen,
+      thanhpho: customer.thanhPho,
+      email: customer.email,
+      cmnd: customer.cmnd,
+      nghenghiep: customer.ngheNghiep,
+      chitietcongviec: customer.chiTietCongViec,
+      thunhap: customer.thuNhap,
+      sotaikhoan: customer.soTaiKhoan,
+      nganhang: customer.nganHang,
+      sodienthoai: customer.soDienThoai,
+      userID: customer.iD_TaiKhoan,
+      xacthuc: customer.xacThuc,
     };
   }
 
@@ -211,8 +209,8 @@ export default class EditUser extends Component {
     const requestData = {
       hoTen: this.state.hoten,
       gioiTinh: this.state.gioitinh,
-      quocTich: "Việt Nam",
-      ngaySinh: "2024-01-01T09:24:22.101Z", // adjust accordingly
+      quocTich: this.state.quoctich,
+      ngaySinh: this.state.ngaysinh, // adjust accordingly
       chieuCao: parseInt(this.state.chieucao),
       canNang: parseInt(this.state.cannang),
       soNhaTenDuong: this.state.sonhaTenduong,
@@ -224,8 +222,8 @@ export default class EditUser extends Component {
       ngheNghiep: this.state.nghenghiep,
       chiTietCongViec: this.state.chitietcongviec,
       thuNhap: parseInt(this.state.thunhap),
-      soTaiKhoan: "901839839833222",
-      nganHang: "Argibank",
+      soTaiKhoan: this.state.sotaikhoan,
+      nganHang: this.state.nganHang,
       soDienThoai: this.state.sodienthoai,
     };
 
@@ -263,6 +261,8 @@ export default class EditUser extends Component {
 
   render() {
     const user = authService.getCurrentUser();
+    const userID = user.taiKhoan.iD_TaiKhoan;
+    const colorClass = getColorClass(this.state.xacthuc);
 
     if (user == null) {
       return <Navigate replace to="/" />;
@@ -305,9 +305,19 @@ export default class EditUser extends Component {
                         Lưu
                       </button>
                     </div>
+
                     {/* Cập nhật tt cá nhân */}
 
                     <div className="sm:col-span-4 py-3">
+                      <div>UserID:{userID}</div>
+                      <div>
+                        Tình trạng tài khoản:
+                        <span className={`text-sm font-bold ${colorClass}`}>
+                          {" "}
+                          {this.state.xacthuc}
+                        </span>
+                      </div>
+
                       <h4> Thông tin cá nhân </h4>
                       {/*Cập nhật họ tên */}
                       <label
@@ -624,22 +634,6 @@ export default class EditUser extends Component {
                         />
                       </div>
 
-                      {/* Cập nhật Công ty */}
-
-                      {/* <label htmlFor="CongTy" className="block text-sm font-medium leading-6 text-gray-900 pt-2">
-                        Công Ty
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="CongTy"
-                          name="CongTy"
-                          type="text"
-                          autoComplete="off"
-                          validations={[required]}
-                          placeholder="Nhập Công ty"
-                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div> */}
                       <label
                         htmlFor="ThuNhap"
                         className="block text-sm font-medium leading-6 text-gray-900 pt-2"
@@ -653,9 +647,47 @@ export default class EditUser extends Component {
                           type="number"
                           autoComplete="off"
                           //   validations={required}
-                          value={this.state.thuhap}
+                          value={this.state.thunhap}
                           onChange={this.onChangethunhap}
                           placeholder="Nhập thu thập/ tháng"
+                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                      <label
+                        htmlFor="NganHang"
+                        className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+                      >
+                        Tên Ngân Hàng
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="NganHang"
+                          name="NganHang"
+                          type="text"
+                          autoComplete="off"
+                          //   validations={required}
+                          value={this.state.nganhang}
+                          onChange={this.onChangenganhang}
+                          placeholder="Nhập tên ngân hàng"
+                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                      <label
+                        htmlFor="sotaikhoan"
+                        className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+                      >
+                        Số Tài Khoản
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="sotaikhoan"
+                          name="sotaikhoan"
+                          type="text"
+                          autoComplete="off"
+                          //   validations={required}
+                          value={this.state.sotaikhoan}
+                          onChange={this.onChangesotaikhoan}
+                          placeholder="Nhập số tài khoản ngân hàng"
                           className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>

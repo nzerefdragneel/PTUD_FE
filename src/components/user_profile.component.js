@@ -2,7 +2,7 @@ import { Navigate, Link } from "react-router-dom";
 import UserService from "../services/user.service";
 import authService from "../services/auth.service";
 import React, { Component, useState, useEffect } from "react";
-
+import { getColorClass } from "../utils/colorultils";
 import {
   Card,
   CardBody,
@@ -27,82 +27,37 @@ import {
 import { SimpleNavbar } from "./simplenavbar.component";
 import customerService from "../services/customer.service";
 
-export function SimpleCard() {
-  return (
-    <Card className="mt-6 w-96 h-auto">
-      <CardBody>
-        <Typography variant="h5" color="blue-gray" className="mb-2">
-          UI/UX Review Check
-        </Typography>
-        <Typography>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to &quot;Naviglio&quot; where you can enjoy the main
-          night life in Barcelona.
-        </Typography>
-      </CardBody>
-    </Card>
-  );
-}
-
-export function SimpleSidebar() {
-  return (
-    <Card className="min-h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <List>
-        <Link to={"/"} className=" text-gray-900 ">
-          <ListItem>
-            <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Home
-          </ListItem>
-        </Link>
-        <Link
-          to={"/profile"}
-          className=" text-gray-900 rounded-2xl bg-slate-200"
-        >
-          <ListItem>
-            <ListItemPrefix>
-              <ShoppingBagIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Profile
-          </ListItem>
-        </Link>
-      </List>
-    </Card>
-  );
-}
-
 const User_Profile = () => {
-  const [customer, setCustomer] = useState(null); // State để lưu thông tin của Customer
+  // const [customer, setCustomer] = useState(null); // State để lưu thông tin của Customer
 
-  useEffect(() => {
-    const fetchCustomerData = async () => {
-      try {
-        const user = authService.getCurrentUser();
-        const user_1 = {
-          taiKhoan: user.taiKhoan,
-          accessToken: user.accessToken,
-        };
+  // useEffect(() => {
+  //   const fetchCustomerData = async () => {
+  //     try {
+  //       const user = authService.getCurrentUser();
+  //       const user_1 = {
+  //         taiKhoan: user.taiKhoan,
+  //         accessToken: user.accessToken,
+  //       };
 
-        const userID = user_1.taiKhoan.iD_TaiKhoan;
+  //       const userID = user_1.taiKhoan.iD_TaiKhoan;
 
-        const customerData = await customerService.getCustomer(userID);
-        setCustomer(customerData);
+  //       const customerData = await customerService.getCustomer(userID);
+  //       setCustomer(customerData);
 
-        // Lưu thông tin của Customer vào state
-      } catch (error) {
-        // Xử lý lỗi nếu cần thiết
-        console.error("Error fetching customer data:", error);
-      }
-    };
+  //       // Lưu thông tin của Customer vào state
+  //     } catch (error) {
+  //       // Xử lý lỗi nếu cần thiết
+  //       console.error("Error fetching customer data:", error);
+  //     }
+  //   };
 
-    fetchCustomerData(); // Gọi hàm fetchCustomerData khi component được mount
-  }, []); // Dùng mảng rỗng để chỉ gọi một lần khi component mount
+  //   fetchCustomerData(); // Gọi hàm fetchCustomerData khi component được mount
+  // }, []); // Dùng mảng rỗng để chỉ gọi một lần khi component mount
 
-  if (!customer) {
-    // Nếu không có thông tin customer, có thể hiển thị một loading spinner hoặc thông báo khác
-    return <p>Loading...</p>;
-  }
+  const user = authService.getCurrentUser();
+  const customer = customerService.getCurrentCustomer();
+  const colorClass = getColorClass(customer.xacThuc);
+
   return (
     <>
       <div className="bg-white overflow-hidden shadow rounded-lg border p-2">
@@ -138,7 +93,7 @@ const User_Profile = () => {
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {customer.email}{" "}
-                <span className="text-green-700 font-bold">
+                <span className={`text-sm font-bold ${colorClass}`}>
                   {" "}
                   {customer.xacThuc}
                 </span>

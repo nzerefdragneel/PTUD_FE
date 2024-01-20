@@ -1,7 +1,4 @@
 import React, { Component, useEffect, useState, useCallback } from 'react';
-
-import UserService from '../services/user.service';
-import { Navigate, Link, useLocation } from 'react-router-dom';
 import KhachHangService from '../services/khachHang.service';
 import QuanLyBaoHiemService from '../services/quanLyBaoHiem.service';
 import YeuCauChiTraService from '../services/yeuCauChiTra.service';
@@ -23,7 +20,6 @@ const YeuCauChiTra = () => {
     //lấy idtaikhoan từ bảng tài khoản
     // const user = this.props.dataFromParent.iD_TaiKhoan;
     const user = authService.getCurrentUser();
-    // const [khachHangData, setKhachHangData] = useState({});
     const [GoiBaoHiemData, setGoiBaoHiemData] = useState([]);
     const [QuanLyBaoHiem, setQuanLyBaoHiem] = useState([]);
     const [GoiBaoHiem, setSelectGoiBaoHiem] = useState([]);
@@ -41,33 +37,17 @@ const YeuCauChiTra = () => {
     const [ngayKetThuc, setngayKetThuc] = useState(null);
     const [email, setemail] = useState(null);
     const [hinhHoaDon, sethinhHoaDon] = useState(null);
-    const [tinhTrangDuyet, settinhTrangDuyet] = useState(null);
-    // const [danhSachGoiBaoHiem, setDanhSachGoiBaoHiem] = useState([]);
     const [danhSachDaLay, setDanhSachDaLay] = useState([]);
     const [showMessage, setShowMessage] = useState(false);
     const [noiDungMessage, setnoiDungMessage] = useState(null);
-    //lấy dữ liệu idkhachhang tu bảng khách hàng
-    // useEffect(() => {
-    //     // Gọi API để lấy dữ liệu từ khachHangService
-    //     // KhachHangService.getById(user.iD_TaiKhoan)
-    //     //     .then((response) => {
-    //     //         setKhachHangData(response.data);
-    //     //     })
-    //     //     .catch((error) => {
-    //     //         console.error('Error fetching data:', error);
-    //     //     });
-    // }, []);
     const iD_TaiKhoan = user.id;
-    //lấy id bảo hiểm từ bảng quản lý bảo hiểm
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const dskh = [];
                 try {
-                    const { data: dsKhacHang } = await KhachHangService.getAll();
-                    const khachHangData = dsKhacHang.find((kh) => kh.iD_TaiKhoan === 6);
-                    //khachHangData.iD_KhachHang
+                    const khachHangData = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
                     const response = await QuanLyBaoHiemService.getByIDKH(khachHangData.iD_KhachHang);
                     const data = response.data;
                     setQuanLyBaoHiem(response.data);
@@ -82,7 +62,7 @@ const YeuCauChiTra = () => {
                             console.error('Error fetching goiBaoHiem data:', error);
                         }
                     }
-                    settinhTrangDuyet('Chưa duyệt');
+
                     setGoiBaoHiemData(dsGoiBaoHiem);
                     setDanhSachDaLay((prevDanhSachDaLay) => [
                         ...prevDanhSachDaLay,
@@ -99,6 +79,83 @@ const YeuCauChiTra = () => {
     }, []);
 
     const handleYeuCauChiTra = async () => {
+        // Kiểm tra xem có trường thông tin nào trống không
+        if (!GoiBaoHiem) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn gói bảo hiểm!');
+            return;
+        }
+        if (!soTienYeuCauChiTra) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập số tiền!');
+            return;
+        }
+        if (!nguoiYeuCau) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập người yêu cầu!');
+            return;
+        }
+        if (!truongHopChiTra) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập trường hợp chi trả!');
+            return;
+        }
+        if (!moiQuanHe) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập mối quan hệ!');
+            return;
+        }
+        if (!noiDieuTri) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập nơi điều trị!');
+            return;
+        }
+        if (!diaChi) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập địa chỉ!');
+            return;
+        }
+        if (!chanDoan) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập chẩn đoán!');
+            return;
+        }
+        if (!dienThoai) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập số điện thoại!');
+            return;
+        }
+        if (!hauQua) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập hậu quả!');
+            return;
+        }
+        if (!email) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập email!');
+            return;
+        }
+        if (!hinhThucDieuTri) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập hình thức điều trị!');
+            return;
+        }
+        if (!ngayBatDau) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn ngày bắt đầu!');
+            return;
+        }
+        if (!ngayKetThuc) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn ngày kết thúc!');
+            return;
+        }
+
+        if (!hinhHoaDon) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn hình hóa đơn!');
+            return;
+        }
         const qlbhid = QuanLyBaoHiem.find((qlbh) => qlbh.iD_GoiBaoHiem === +GoiBaoHiem);
         console.log(qlbhid);
         try {
@@ -132,26 +189,7 @@ const YeuCauChiTra = () => {
     const closeMessage = () => {
         setShowMessage(false);
     };
-    const handleNgayBatDauChange = (e) => {
-        const inputValue = e.target.value;
 
-        // Chuyển đổi định dạng ngày
-        const [month, day, year] = inputValue.split('/');
-        const formattedNgayBatDau = `${year}-${month}-${day}`;
-
-        // Cập nhật giá trị state
-        setngayBatDau(formattedNgayBatDau);
-    };
-    const handleNgayKetThucChange = (e) => {
-        const inputValue = e.target.value;
-
-        // Chuyển đổi định dạng ngày
-        const [month, day, year] = inputValue.split('/');
-        const formattedNgayKetThuc = `${year}-${month}-${day}`;
-
-        // Cập nhật giá trị state
-        setngayKetThuc(formattedNgayKetThuc);
-    };
     return (
         <div>
             {showMessage && <DialogDefault handler={closeMessage} message={noiDungMessage} />}

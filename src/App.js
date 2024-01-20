@@ -25,6 +25,12 @@ import Health_Declaration from './components/health_declaration.component';
 import ChiTietGoiBaoHiem from './components/chiTietGoiBaoHiem.component';
 import YeuCauChiTra from './components/yeuCauChiTra.component';
 import YeuCauTuVan from './components/yeuCauTuVan.component';
+import DongPhi from './components/dongPhi.component';
+import NV_ds_GoiBaoHiem from './components/nv_ds_GoiBaoHiem.component';
+import ChinhSuaGoiBaoHiem from './components/nv_chinhSuaGoiBaoHiem.component';
+import PhatHanhGoiBaoHiem from './components/nv_phatHanhGBH.component';
+import NV_chonLichTuVan from './components/nv_chonLichTuVan.component';
+import NV_chonLichKiHopDong from './components/nv_chonLichKiHopDong.component';
 class App extends Component {
     constructor(props) {
         super(props);
@@ -120,14 +126,47 @@ class App extends Component {
                                     Trang chủ
                                 </div>
                             </a>
-                            <Link to={'/signup'} className="nav-link">
+                            {/* <Link to={'/signup'} className="nav-link">
                                 <div
                                     className=" rounded-lg hover:bg-pink-400
                  hover:cursor-pointer hover:ease-linear duration-300"
                                 >
                                     Đăng ký
                                 </div>
+                            </Link> */}
+
+                            {/* <Link to={'/nhanvien/NV_chonLichTuVan'} className="nav-link">
+                                <div
+                                    className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                                >
+                                    Chọn lịch tư vấn
+                                </div>
+                            </Link> */}
+                            <Link to={'/nhanvien/NV_chonLichKiHopDong'} className="nav-link">
+                                <div
+                                    className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                                >
+                                    Chọn lịch kí hợp đồng
+                                </div>
                             </Link>
+                            {/* <Link to={'/dongPhi'} className="nav-link">
+                                <div
+                                    className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                                >
+                                    Đóng phí
+                                </div>
+                            </Link> */}
+                            {/* <Link to={'/nhanVien/phatHanhGoiBaoHiem'} className="nav-link">
+                                <div
+                                    className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                                >
+                                    Phát hành gói bảo hiểm
+                                </div>
+                            </Link> */}
                             <Link to={'/login'} className="nav-link">
                                 <div className=" rounded-lg hover:bg-pink-400  hover:cursor-pointer hover:ease-linear duration-300">
                                     Đăng nhập
@@ -157,6 +196,12 @@ class App extends Component {
                                 <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
                                 <Route path="/yeuCauTuVan" element={<YeuCauTuVan />} />
                                 <Route path="/yeuCauChiTra" element={<YeuCauChiTra />} />
+                                <Route path="/dongPhi" element={<DongPhi />} />
+                                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+                                <Route path="/nhanVien/goiBaoHiem" element={<NV_ds_GoiBaoHiem />} />
+                                <Route path="/nhanVien/phatHanhGoiBaoHiem" element={<PhatHanhGoiBaoHiem />} />
+                                <Route path="/nhanvien/NV_chonLichTuVan" element={<NV_chonLichTuVan />} />
+                                <Route path="/nhanvien/NV_chonLichKiHopDong" element={<NV_chonLichKiHopDong />} />
                                 <Route
                                     exact
                                     path="/"

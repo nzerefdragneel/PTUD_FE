@@ -6,7 +6,7 @@ import EditAccount from '../components/editAccount.component';
 import Health_Declaration from '../components/health_declaration.component';
 import XemGoiBaoHiemScreen from '../screen/xemGoiBaoHiemScreen';
 import CongTyScreen from '../screen/congTyScreen';
-import DongPhi from '../components/dongPhi.component';
+// import DongPhi from '../components/dongPhi.component';
 import ChiTietDongPhi from '../components/chiTietDongPhi.component';
 import YeuCauChiTra from '../components/yeuCauChiTra.component';
 import YeuCauTuVan from '../components/yeuCauTuVan.component';
@@ -87,14 +87,14 @@ export const appRouters = [
     //     showInMenu: true,
     //     component: <CongTyScreen />,
     // },
-    {
-        path: '/dongPhi',
-        title: 'dongphi',
-        name: 'Đóng phí',
-        icon: BookmarkIcon,
-        showInMenu: true,
-        component: <DongPhi />,
-    },
+    // {
+    //     path: '/dongPhi',
+    //     title: 'dongphi',
+    //     name: 'Đóng phí',
+    //     icon: BookmarkIcon,
+    //     showInMenu: true,
+    //     component: <DongPhi />,
+    // },
     {
         path: '/chiTietDongPhi',
         title: 'ChiTietDongPhi',

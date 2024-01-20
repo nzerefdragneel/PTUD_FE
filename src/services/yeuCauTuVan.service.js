@@ -1,54 +1,23 @@
 import axios from 'axios';
 
-const API_URL = 'https://localhost:7202/api/YeuCauChiTra/YeuCauChiTra';
+const API_URL = 'https://localhost:7202/api/YeuCauTuVan/';
 
 class YeuCauTuVanService {
-    EditYeuCauChiTra(
-        qlbhid,
-        soTienYeuCauChiTra,
-        nguoiYeuCau,
-        truongHopChiTra,
-        moiQuanHe,
-        noiDieuTri,
-        diaChi,
-        chanDoan,
-        dienThoai,
-        hauQua,
-        email,
-        hinhThucDieuTri,
-        ngayBatDau,
-        ngayKetThuc,
-        hinhHoaDon,
-        tinhTrangDuyet,
-    ) {
-        return axios.post(
-            API_URL,
-            {
-                qlbhid,
-                soTienYeuCauChiTra,
-                nguoiYeuCau,
-                truongHopChiTra,
-                moiQuanHe,
-                noiDieuTri,
-                diaChi,
-                chanDoan,
-                dienThoai,
-                hauQua,
-                email,
-                hinhThucDieuTri,
-                ngayBatDau,
-                ngayKetThuc,
-                hinhHoaDon,
-            },
-            // {
-            //     headers: {
-            //         'Cache-Control': 'no-cache',
-            //         'Content-Type': 'application/x-www-form-urlencoded',
-            //         'Access-Control-Allow-Origin': '*',
-            //     },
-            //     mode: 'no-cors',
-            // },
-        );
+    getAll() {
+        return axios.get(`${API_URL}GetAll`);
+    }
+    DatLichTuVan(iD_KhachHang, diaDiem, thoiGian) {
+        return axios.post(`${API_URL}DatLichTuVan`, {
+            iD_KhachHang,
+            diaDiem,
+            thoiGian,
+        });
+    }
+    UpdateNhanVien(iD_YeuCauTuVan, iD_NhanVien) {
+        return axios.post(`${API_URL}UpdateNhanVien`, {
+            iD_YeuCauTuVan,
+            iD_NhanVien,
+        });
     }
 }
 

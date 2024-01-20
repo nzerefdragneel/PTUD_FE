@@ -4,20 +4,26 @@ import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 import ChiTietChinhSachService from '../services/ChiTietChinhSach.service';
 import ChinhSachService from '../services/ChinhSach.service';
+import KhachHangService from '../services/khachHang.service';
 import authService from '../services/auth.service';
 const ChiTietGoiBaoHiem = () => {
     const user = authService.getCurrentUser();
+    // const iD_TaiKhoan = user.id;
+    const iD_TaiKhoan = 12;
     const {
         state: { goiSanPham: goiBaohiem },
     } = useLocation();
     const navigate = useNavigate();
     console.log(goiBaohiem);
+    const [khachHang, setkhachHang] = useState([]);
     const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
     const [danhSachDaLay, setDanhSachDaLay] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const response_kh = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
+                setkhachHang(response_kh.data);
                 const response = await ChiTietChinhSachService.getChiTietChinhSach(goiBaohiem.iD_GoiBaoHiem);
                 const [result1, result2] = await Promise.all([
                     ChiTietChinhSachService.getChiTietChinhSach(goiBaohiem.iD_GoiBaoHiem),
@@ -37,21 +43,17 @@ const ChiTietGoiBaoHiem = () => {
         };
         fetchData();
     }, []);
-    //     const handleClick = (goiSanPham) => {
-    //         if(){
-    // // Chuyển hướng tới trang đăng kí mua bảo hiểm
-    //     navigate(`/register/${goiSanPham.iD_GoiBaoHiem}`, { state: goiSanPham.iD_GoiBaoHiem });
 
-    //         }else{
-    // // chuyển hướng tới trang đăng nhập
-    //         }
-    //         };
-    const handleDangKiBaoHiemClick = () => {
+    const handleDangKiBaoHiemClick = (goiBaohiem) => {
         if (user == null) {
             navigate(`/login`);
         }
-        navigate(`/register/:idGoiBaoHiem`);
-        // Chuyển hướng tới đăng kí bảo hiểm
+        //kiểm tra xác thực
+        if (khachHang.xacThuc === 'Chưa Xác Thực') {
+            alert('Hello, this is an alert!');
+            return;
+        }
+        navigate(`/register/${goiBaohiem.iD_GoiBaoHiem}`);
     };
     return (
         <header className="wrapper mt-8">

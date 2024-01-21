@@ -31,6 +31,8 @@ import ChinhSuaGoiBaoHiem from './components/nv_chinhSuaGoiBaoHiem.component';
 import PhatHanhGoiBaoHiem from './components/nv_phatHanhGBH.component';
 import NV_chonLichTuVan from './components/nv_chonLichTuVan.component';
 import NV_chonLichKiHopDong from './components/nv_chonLichKiHopDong.component';
+import NV_ds_chinhSach from './components/nv_ds_chinhSach.component';
+import NV_ds_GBH from './components/nv_ds_GBH.component';
 class App extends Component {
     constructor(props) {
         super(props);
@@ -143,22 +145,31 @@ class App extends Component {
                                     Chọn lịch tư vấn
                                 </div>
                             </Link> */}
-                            <Link to={'/nhanvien/NV_chonLichKiHopDong'} className="nav-link">
+
+                            {/* <Link to={'/nhanvien/NV_chonLichKiHopDong'} className="nav-link">
                                 <div
                                     className=" rounded-lg hover:bg-pink-400
                  hover:cursor-pointer hover:ease-linear duration-300"
                                 >
                                     Chọn lịch kí hợp đồng
                                 </div>
-                            </Link>
-                            {/* <Link to={'/dongPhi'} className="nav-link">
+                            </Link> */}
+                            {/* <Link to={'/nhanvien/ds_gbh'} className="nav-link">
+                                <div
+                                    className=" rounded-lg hover:bg-pink-400
+                 hover:cursor-pointer hover:ease-linear duration-300"
+                                >
+                                    Chỉnh sửa danh sách chính sách
+                                </div>
+                            </Link> */}
+                            <Link to={'/dongPhi'} className="nav-link">
                                 <div
                                     className=" rounded-lg hover:bg-pink-400
                  hover:cursor-pointer hover:ease-linear duration-300"
                                 >
                                     Đóng phí
                                 </div>
-                            </Link> */}
+                            </Link>
                             {/* <Link to={'/nhanVien/phatHanhGoiBaoHiem'} className="nav-link">
                                 <div
                                     className=" rounded-lg hover:bg-pink-400
@@ -196,12 +207,17 @@ class App extends Component {
                                 <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
                                 <Route path="/yeuCauTuVan" element={<YeuCauTuVan />} />
                                 <Route path="/yeuCauChiTra" element={<YeuCauChiTra />} />
+                                {/* đóng phí */}
                                 <Route path="/dongPhi" element={<DongPhi />} />
                                 <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+                                {/* phát hành gói bảo hiểm */}
                                 <Route path="/nhanVien/goiBaoHiem" element={<NV_ds_GoiBaoHiem />} />
                                 <Route path="/nhanVien/phatHanhGoiBaoHiem" element={<PhatHanhGoiBaoHiem />} />
                                 <Route path="/nhanvien/NV_chonLichTuVan" element={<NV_chonLichTuVan />} />
                                 <Route path="/nhanvien/NV_chonLichKiHopDong" element={<NV_chonLichKiHopDong />} />
+                                {/* chỉnh sửa danh sách chính sách */}
+                                <Route path="/nhanvien/ds_gbh" element={<NV_ds_GBH />} />
+                                <Route path="/nhanvien/chinh-sua-ds-chinh-sach/:id" element={<NV_ds_chinhSach />} />
                                 <Route
                                     exact
                                     path="/"

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import GoiBaoHiemService from '../services/goiBaoHiem.service';
 import { Button } from '@material-tailwind/react';
 
-const NV_ds_GoiBaoHiem = () => {
+const NV_ds_GBH = () => {
     const [danhSachGoiSanPham, setDanhSachGoiSanPham] = useState([]);
     const [danhSachDaLay, setDanhSachDaLay] = useState([]);
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const NV_ds_GoiBaoHiem = () => {
     }, []);
 
     const handleXemChiTietClick = (goiSanPham) => {
-        navigate(`/nhanVien/chinhSuaGoiBaoHiem/${goiSanPham.iD_GoiBaoHiem}`);
+        navigate(`/nhanvien/chinh-sua-ds-chinh-sach/${goiSanPham.iD_GoiBaoHiem}`, { state: { goiSanPham } });
     };
     return (
         <header className="wrapper mt-8 space-y-4 text-center">
@@ -50,4 +50,4 @@ const NV_ds_GoiBaoHiem = () => {
     );
 };
 
-export default NV_ds_GoiBaoHiem;
+export default NV_ds_GBH;

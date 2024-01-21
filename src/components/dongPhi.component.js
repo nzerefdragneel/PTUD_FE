@@ -7,6 +7,7 @@ import GoiBaoHiemService from '../services/goiBaoHiem.service';
 import ChiTietDongPhi from './chiTietDongPhi.component';
 import { Button } from '@material-tailwind/react';
 import authService from '../services/auth.service';
+import PhieuThanhToanBaoHiemService from '../services/phieuThanhToanBaoHiem.service';
 const DongPhi = () => {
     const user = authService.getCurrentUser();
     // const iD_TaiKhoan = user.id;
@@ -18,30 +19,35 @@ const DongPhi = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const dskh = [];
                 try {
                     const khachHangData = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
-                    const response = await HopDongService.getByIdKhachHang(khachHangData.iD_KhachHang);
-                    const data = response.data;
-                    sethopDong(response.data);
-                    const goiChuaLay = data.filter((goi) => !danhSachDaLay.includes(goi.iD_GoiBaoHiem));
-                    // Lấy thông tin từng gói bảo hiểm
-                    const dsGoiBaoHiem = [];
-                    for (const goi of goiChuaLay) {
-                        try {
-                            const { data } = await GoiBaoHiemService.getByID(goi.iD_GoiBaoHiem);
-                            dsGoiBaoHiem.push(data);
-                        } catch (error) {
-                            console.error('Error fetching goiBaoHiem data:', error);
+                    console.log(khachHangData);
+                    const hopDongCuaKH = await HopDongService.getByIdKhachHang(khachHangData.data.iD_KhachHang);
+                    console.log(hopDongCuaKH.status);
+                    if (hopDongCuaKH.status === 200) {
+                        // Xử lý khi thành công
+                        for (const hd of hopDongCuaKH) {
+                            try {
+                                const response = await PhieuThanhToanBaoHiemService.getGoiBaoHiemChuaThanhToan(30);
+                                const data = response.data;
+                                sethopDong(data);
+                            } catch (error) {
+                                console.error('Error fetching goiBaoHiem data:', error);
+                            }
                         }
+                    } else {
+                        alert('Không có hợp đồng nào');
+                        console.error('Error sending email:', hopDongCuaKH.statusText);
                     }
-
-                    setGoiBaoHiemData(dsGoiBaoHiem);
-                    setDanhSachDaLay((prevDanhSachDaLay) => [
-                        ...prevDanhSachDaLay,
-                        ...goiChuaLay.map((goi) => goi.iD_GoiBaoHiem),
-                    ]);
+                    // sethopDong(response.data);
+                    // const goiChuaLay = data.filter((goi) => !danhSachDaLay.includes(goi.iD_GoiBaoHiem));
+                    // Lấy thông tin từng gói bảo hiểm
+                    // const dsGoiBaoHiem = [];
                 } catch (error) {
+                    // if (hopDongCuaKH.status === 404) {
+                    //     // Xử lý khi thành công
+                    //     return <h3>không có hợp đồng nào</h3>;
+                    // }
                     console.error('Error fetching goiBaoHiem data:', error);
                 }
             } catch (error) {

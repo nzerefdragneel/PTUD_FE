@@ -48,7 +48,7 @@ const YeuCauChiTra = () => {
                 const dskh = [];
                 try {
                     const khachHangData = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
-                    const response = await QuanLyBaoHiemService.getByIDKH(khachHangData.iD_KhachHang);
+                    const response = await QuanLyBaoHiemService.getByIDKH(khachHangData.data.iD_KhachHang);
                     const data = response.data;
                     setQuanLyBaoHiem(response.data);
                     const goiChuaLay = data.filter((goi) => !danhSachDaLay.includes(goi.iD_GoiBaoHiem));

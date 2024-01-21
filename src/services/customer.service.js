@@ -24,7 +24,7 @@ class UserService {
 
   getCustomer(iD_Khachhang) {
     // alert(`${API_URL}idtk:int?idtk=${iD_Khachhang}`);
-    return axios.get(`${API_URL}idtk:int?idtk=${iD_Khachhang}`);
+    return axios.get(`${API_URL}GetByIdTaiKhoan?idtk=${iD_Khachhang}`);
   }
   getCurrentCustomer() {
     return JSON.parse(localStorage.getItem("customer"));

@@ -131,7 +131,7 @@ export const appRouters = [
     title: "addCustomer",
     name: "Thêm hồ sơ khách hàng",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <addCustomerComponent />,
   },
 

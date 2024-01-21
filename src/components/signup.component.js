@@ -17,16 +17,6 @@ const required = (value) => {
   }
 };
 
-// const vemail = (value) => {
-//   if (!isEmail(value)) {
-//     return (
-//       <div className="text-error-color text-base" role="alert">
-//         Địa chỉ Email không hợp lệ!
-//       </div>
-//     );
-//   }
-// };
-
 const vPhonenumber = (value) => {
   const phoneNumberRegex = /^[0-9]{10}$/;
   if (!phoneNumberRegex.test(value)) {

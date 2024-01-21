@@ -106,6 +106,29 @@ function AddCustomer() {
     e.preventDefault();
 
     fref.current.validateAll();
+    console.log(userID);
+    console.log(hoten);
+    const requestData = {
+      hoTen: hoten,
+      gioiTinh: gioitinh,
+      quocTich: quoctich,
+      ngaysinh: ngaysinh,
+      chieuCao: parseInt(chieucao),
+      canNang: parseInt(cannang),
+      soNhaTenDuong: sonhatenduong,
+      phuongXa: phuongxa,
+      quanHuyen: quanhuyen,
+      thanhPho: thanhpho,
+      email: email,
+      cmnd: cmnd,
+      ngheNghiep: nghenghiep,
+      chiTietCongViec: chitietcongviec,
+      thuNhap: parseInt(thunhap),
+      soTaiKhoan: sotaikhoan,
+      nganHang: nganhang,
+      soDienThoai: sodienthoai,
+    };
+    console.log(requestData);
 
     customerService.addCustomer(userID, requestData).then(
       (response) => {
@@ -256,29 +279,36 @@ function AddCustomer() {
                     }}
                     className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   >
+                    <option value="None">Chọn giới tính</option>
+
                     <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
                   </select>
                 </div>
               </div>
               {/* Cập nhật sinh nhật */}
-              {/* <div className="sm:col-span-4 px-5 ">
-                          <label htmlFor="NgaySinh" className="block text-sm font-medium leading-6 text-gray-900">
-                            Ngày sinh
-                          </label>
-                          <div className="mt-2">
-                            <input
-                              id="NgaySinh"
-                              name="NgaySinh"
-                              type="date"
-                              autoComplete="off"
-                              validations={required}
-                              value={this.state.ngaysinh}
-                              //   onChange={this.onChangengaysinh}
-                              className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                          </div>
-                        </div> */}
+              <div className="sm:col-span-4 px-5 ">
+                <label
+                  htmlFor="NgaySinh"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Ngày sinh
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="NgaySinh"
+                    name="NgaySinh"
+                    type="date"
+                    autoComplete="off"
+                    onChange={(e) => {
+                      setngaysinh(e.target.value);
+                    }}
+                    validations={required}
+                    //   onChange={this.onChangengaysinh}
+                    className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
               {/* Cập nhật thể trạng - cân nặng */}
               <div className="sm:col-span-4 px-5">
                 <label

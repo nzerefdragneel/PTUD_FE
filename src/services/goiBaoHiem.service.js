@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 //phonghoc@i91
 
 const API_URL = `https://localhost:7202/api/GoiBaoHiem`;
@@ -47,6 +47,7 @@ class GoiBaoHiemService {
             // },
         );
     }
+
 }
 
 export default new GoiBaoHiemService();

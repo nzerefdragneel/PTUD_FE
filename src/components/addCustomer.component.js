@@ -2,14 +2,17 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState } from "react";
 import UserService from "../services/user.service";
 import { withRouter } from "../common/with-router";
-
 import { Navigate, Link } from "react-router-dom";
+
 import authService from "../services/auth.service";
 import { isEmail } from "validator";
 import customerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 import AuthService from "../services/auth.service";
+
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
 const required = (value) => {
   if (!value) {
     return (
@@ -134,7 +137,406 @@ function AddCustomer() {
             <h3 className="text-green-800 ">CẬP NHẬT THÔNG TIN</h3>
           </div>
         </div>
-        <form onSubmit={handleAddCustomer} ref={fref}></form>
+        <Form onSubmit={handleAddCustomer} ref={fref}>
+          <div className="sm:col-span-4 py-3">
+            <h4> Thông tin cá nhân </h4>
+            {/*Cập nhật họ tên */}
+            <label
+              htmlFor="HoTen"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2 "
+            >
+              Họ và tên
+            </label>
+            <div className="mt-2">
+              <input
+                id="HoTen"
+                name="HoTen"
+                type="HoTen"
+                autoComplete="off"
+                validations={[required]}
+                onChange={(e) => {
+                  sethoten(e.target.value);
+                }}
+                //   validations={required}
+                placeholder="Nhập họ và tên"
+                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            {/* Cập nhật email */}
+
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Địa chỉ email
+            </label>
+            <div className="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="off"
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+                //   validations={[required, vemail]}
+                placeholder="Nhập Email cá nhân"
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            {/* Cập nhật sdt */}
+
+            <label
+              htmlFor="SoDienThoai"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Số điện thoại
+            </label>
+            <div className="mt-2">
+              <input
+                id="SoDienThoai"
+                name="SoDienThoai"
+                type="text"
+                pattern="[0-9]{10}"
+                autoComplete="off"
+                //   validations={[required, isPhoneNumber]}
+                placeholder="Nhập Số điện thoại"
+                onChange={(e) => {
+                  setsodienthoai(e.target.value);
+                }}
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+
+            {/* Cập nhật CMND */}
+
+            <label
+              htmlFor="CMND"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Chứng minh nhân dân
+            </label>
+            <div className="mt-2">
+              <input
+                id="CMND"
+                name="CMND"
+                type="text"
+                autoComplete="off"
+                //   validations={[required, isIDCard]}
+                placeholder="Nhập CMND"
+                onChange={(e) => {
+                  setcmnd(e.target.value);
+                }}
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          {/*Cập nhật thể chất */}
+
+          <div className="sm:col-span-4 pb-3">
+            <h4> Thông tin thể chất </h4>
+
+            <div className="flex pt-3 ">
+              {/* Cập nhật giới tính */}
+              <div className="sm:col-span-4 pr-5 ">
+                <label
+                  htmlFor="GioiTinh"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Giới tính
+                </label>
+                <div className="mt-2">
+                  <select
+                    name="GioiTinh"
+                    id="GioiTinh"
+                    form="editform"
+                    onChange={(e) => {
+                      setgioitinh(e.target.value);
+                    }}
+                    className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </select>
+                </div>
+              </div>
+              {/* Cập nhật sinh nhật */}
+              {/* <div className="sm:col-span-4 px-5 ">
+                          <label htmlFor="NgaySinh" className="block text-sm font-medium leading-6 text-gray-900">
+                            Ngày sinh
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="NgaySinh"
+                              name="NgaySinh"
+                              type="date"
+                              autoComplete="off"
+                              validations={required}
+                              value={this.state.ngaysinh}
+                              //   onChange={this.onChangengaysinh}
+                              className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                          </div>
+                        </div> */}
+              {/* Cập nhật thể trạng - cân nặng */}
+              <div className="sm:col-span-4 px-5">
+                <label
+                  htmlFor="CanNang"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Cân nặng
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="CanNang"
+                    name="CanNang"
+                    type="number"
+                    min="0"
+                    max="300"
+                    autoComplete="off"
+                    onChange={(e) => {
+                      setcannang(e.target.value);
+                    }} //   validations={required}
+                    className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              {/* Cập nhật thể trạng - chiều cao*/}
+              <div className="sm:col-span-4 px-5 ">
+                <label
+                  htmlFor="ChieuCao"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Chiều cao
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="ChieuCao"
+                    name="ChieuCao"
+                    type="number"
+                    min="10"
+                    max="200"
+                    autoComplete="off"
+                    onChange={(e) => {
+                      setchieucao(e.target.value);
+                    }} //   validations={required}
+                    className=" block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>{" "}
+            </div>
+          </div>
+
+          {/*Cập nhật địa chỉ  */}
+          <div className="sm:col-span-4 py-3">
+            <h4> Thông tin lưu trú </h4>
+
+            <label
+              htmlFor="SoNhaTenDuong"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Số nhà-Tên Đường
+            </label>
+            <div className="mt-2">
+              <input
+                id="SoNhaTenDuong"
+                name="SoNhaTenDuong"
+                type="text"
+                autoComplete="off"
+                // value="A"
+                onChange={(e) => {
+                  setsonhatenduong(e.target.value);
+                }} //   validations={required}
+                placeholder="Nhập số nhà,tên đường "
+                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <label
+              htmlFor="PhuongXa"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Phường/ Xã
+            </label>
+            <div className="mt-2">
+              <input
+                id="PhuongXa"
+                name="PhuongXa"
+                type="text"
+                autoComplete="off"
+                // value="A"
+                onChange={(e) => {
+                  setphuongxa(e.target.value);
+                }} //   validations={required}
+                placeholder="Nhập phường/ xã "
+                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <label
+              htmlFor="QuanHuyen"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Quận/ Huyện
+            </label>
+            <div className="mt-2">
+              <input
+                id="QuanHuyen"
+                name="QuanHuyen"
+                type="text"
+                autoComplete="off"
+                // value="A"
+                onChange={(e) => {
+                  setquanhuyen(e.target.value);
+                }} //   validations={required}
+                placeholder="Nhập Quận/ Huyện "
+                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <label
+              htmlFor="ThanhPho"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Tỉnh / Thành Phố
+            </label>
+            <div className="mt-2">
+              <input
+                id="ThanhPho"
+                name="ThanhPho"
+                type="text"
+                autoComplete="off"
+                // value="A"
+                onChange={(e) => {
+                  setthanhpho(e.target.value);
+                }} //   validations={required}
+                placeholder="Nhập Thành phố/ Tỉnh   "
+                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          {/*Cập nhật công việc */}
+          <div className="sm:col-span-4 py-3">
+            <h4> Công việc / Tài chính </h4>
+            {/*Nghề nghiệp */}
+            <label
+              htmlFor="NgheNghiep"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2 "
+            >
+              Nghề nghiệp
+            </label>
+            <div className="mt-2">
+              <input
+                id="NgheNghiep"
+                name="NgheNghiep"
+                type="text"
+                autoComplete="off"
+                // value="A"
+                onChange={(e) => {
+                  setnghenghiep(e.target.value);
+                }} //   validations={required}
+                placeholder="Nhập nghề nghiệp"
+                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+
+            {/* Cập nhật công việc cụ thể */}
+
+            <label
+              htmlFor="ChiTietCongViec"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Công việc/ Chức vụ cụ thể
+            </label>
+            <div className="mt-2">
+              <input
+                id="ChiTietCongViec"
+                name="ChiTietCongViec"
+                type="text"
+                autoComplete="off"
+                onChange={(e) => {
+                  setchitietcongviec(e.target.value);
+                }} //   validations={[required]}
+                placeholder="Nhập Công việc/ Chức vụ cụ thể "
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+
+            <label
+              htmlFor="ThuNhap"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Thu Nhập / Tháng
+            </label>
+            <div className="mt-2">
+              <input
+                id="ThuNhap"
+                name="ThuNhap"
+                type="number"
+                autoComplete="off"
+                //   validations={required}
+                onChange={(e) => {
+                  setthunhap(e.target.value);
+                }}
+                placeholder="Nhập thu thập/ tháng"
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <label
+              htmlFor="NganHang"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Tên Ngân Hàng
+            </label>
+            <div className="mt-2">
+              <input
+                id="NganHang"
+                name="NganHang"
+                type="text"
+                autoComplete="off"
+                //   validations={required}
+                onChange={(e) => {
+                  setnganhang(e.target.value);
+                }}
+                placeholder="Nhập tên ngân hàng"
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <label
+              htmlFor="sotaikhoan"
+              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+            >
+              Số Tài Khoản
+            </label>
+            <div className="mt-2">
+              <input
+                id="sotaikhoan"
+                name="sotaikhoan"
+                type="text"
+                autoComplete="off"
+                //   validations={required}
+                onChange={(e) => {
+                  setsotaikhoan(e.target.value);
+                }}
+                placeholder="Nhập số tài khoản ngân hàng"
+                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <div className="form-group">
+              <button
+                className="my-4 
+                rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => {
+                  setIsLoading(true);
+                }}
+              >
+                {isLoading && (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                )}
+                Lưu thông tin
+              </button>
+            </div>
+          </div>
+        </Form>
         {isSubmit && !isSuccess && (
           <div className="text-error-color text-base">{message}</div>
         )}

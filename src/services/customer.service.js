@@ -29,17 +29,33 @@ class UserService {
   getCurrentCustomer() {
     return JSON.parse(localStorage.getItem("customer"));
   }
-
-  addCustomer(idTK, data) {
-    try {
-      alert(data);
-      return axios.post(`${API_URL}ThemKhachHang?idTK=${idTK}`, data);
-    } catch (error) {
-      // Xử lý lỗi
-      console.error("Đã xảy ra lỗi khi thêm khách hàng", error);
-      throw error; // Nếu bạn muốn xử lý lỗi ở phía calling function
-    }
+  addCustomer(userID, requestData) {
+    return axios.post(`${API_URL}ThemKhachHang?idtk=${userID}`, requestData);
   }
+
+  updateCustomer = (customer_id, requestData) => {
+    const apiUrl = `${API_URL}UpdateThongTinCaNhanKhachHang(id)?id=${customer_id}`;
+    console.log(requestData);
+    return axios.put(apiUrl, {
+      hoTen: this.state.hoten,
+      gioiTinh: this.state.gioitinh,
+      quocTich: this.state.quoctich,
+      chieuCao: parseInt(this.state.chieucao),
+      canNang: parseInt(this.state.cannang),
+      soNhaTenDuong: this.state.sonhaTenduong,
+      phuongXa: this.state.phuongxa,
+      quanHuyen: this.state.quanhuyen,
+      thanhPho: this.state.thanhpho,
+      email: this.state.email,
+      cmnd: this.state.cmnd,
+      ngheNghiep: this.state.nghenghiep,
+      chiTietCongViec: this.state.chitietcongviec,
+      thuNhap: parseInt(this.state.thunhap),
+      soTaiKhoan: this.state.sotaikhoan,
+      nganHang: this.state.nganHang,
+      soDienThoai: this.state.sodienthoai,
+    });
+  };
 }
 
 export default new UserService();

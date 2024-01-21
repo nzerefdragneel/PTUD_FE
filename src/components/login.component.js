@@ -65,8 +65,6 @@ class LoginForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         (response) => {
-          alert(JSON.stringify(response.data));
-
           if (response.data.accessToken && response.data.taiKhoan) {
             // Lấy giá trị accessToken từ response
             const accessToken = response.data.accessToken;
@@ -78,36 +76,37 @@ class LoginForm extends Component {
             customerService
               .getCustomer(userID)
               .then((customerResponse) => {
-                // Nếu có tồn tại ID_KhachHang, chuyển vào /home
-                customerService.getCustomer(userID).then(
-                  (response) => {
-                    localStorage.setItem(
-                      "customer",
-                      JSON.stringify(response.data)
-                    );
-                  },
-                  (error) => {
-                    const resMessage =
-                      error.response ||
-                      error.response.data ||
-                      error.response.data.message ||
-                      error.message ||
-                      error.toString();
+                const customerData = customerResponse.data;
 
-                    this.setState({
-                      loading: false,
-                      message: resMessage,
-                    });
-                  }
-                );
-
-                this.props.router.navigate("/home");
+                if (customerData) {
+                  // Nếu có tồn tại ID_KhachHang
+                  localStorage.setItem(
+                    "customer",
+                    JSON.stringify(customerData)
+                  );
+                  this.props.router.navigate("/home");
+                } else {
+                  // Nếu không tồn tại ID_KhachHang
+                  this.props.router.navigate("/addCustomer");
+                }
               })
               .catch((customerError) => {
-                // Nếu không tồn tại ID_KhachHang, chuyển vào /editUser
-                this.props.router.navigate("/edituser");
+                console.error(
+                  "Lỗi khi lấy thông tin khách hàng:",
+                  customerError
+                );
+
+                // Xử lý lỗi nếu cần
+                // ...
+
+                // Chuyển hướng vào /createProfile khi có lỗi
+                const message =
+                  "Tài khoản mới hoặc chưa có hồ sơ người dùng. Vui lòng tạo hồ sơ người dùng để tiếp tục trải nghiệm dịch vụ của chúng tôi";
+                alert(message);
+                this.props.router.navigate("/addCustomer");
               })
               .finally(() => {
+                // Refresh trang sau khi xử lý xong
                 window.location.reload();
               });
           }

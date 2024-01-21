@@ -10,25 +10,6 @@ export default class Register_Insurance extends Component {
   render() {
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.taiKhoan.iD_TaiKhoan;
-    customerService.getCustomer(userId).then(
-      (response) => {
-        alert(JSON.stringify(response.data));
-        localStorage.setItem("customer", JSON.stringify(response.data));
-      },
-      (error) => {
-        const resMessage =
-          error.response ||
-          error.response.data ||
-          error.response.data.message ||
-          error.message ||
-          error.toString();
-
-        this.setState({
-          loading: false,
-          message: resMessage,
-        });
-      }
-    );
 
     return (
       <>

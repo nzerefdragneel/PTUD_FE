@@ -7,6 +7,7 @@ import { isEmail } from "validator";
 import customerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
+
 const required = (value) => {
   if (!value) {
     return (
@@ -205,12 +206,12 @@ export default class EditUser extends Component {
       successful: false,
     });
     const user = authService.getCurrentUser();
+    const customer = customerService.getCurrentCustomer();
 
     const requestData = {
       hoTen: this.state.hoten,
       gioiTinh: this.state.gioitinh,
       quocTich: this.state.quoctich,
-      ngaySinh: this.state.ngaysinh, // adjust accordingly
       chieuCao: parseInt(this.state.chieucao),
       canNang: parseInt(this.state.cannang),
       soNhaTenDuong: this.state.sonhaTenduong,
@@ -227,36 +228,7 @@ export default class EditUser extends Component {
       soDienThoai: this.state.sodienthoai,
     };
 
-    customerService.addCustomer(user.taiKhoan.iD_TaiKhoan, requestData).then(
-      (response) => {
-        const user = authService.getCurrentUser;
-        localStorage.removeItem("user");
-        const user_1 = {
-          taiKhoan: response.data,
-          accessToken: user.accessToken,
-        };
-        console.log(user_1.accessToken);
-
-        localStorage.setItem("user", JSON.stringify(user_1));
-        this.setState({
-          message: response.data.message,
-          successful: true,
-        });
-      },
-      (error) => {
-        const resMessage =
-          error.response ||
-          error.response.data ||
-          error.response.data.message ||
-          error.message ||
-          error.toString();
-
-        this.setState({
-          successful: false,
-          message: error,
-        });
-      }
-    );
+    customerService.updateCustomer(customer.iD_KhachHang, requestData);
   }
 
   render() {

@@ -123,22 +123,6 @@ function Signup() {
               />
             </div>
 
-            {/* <div className="form-group">
-              <label htmlFor="email" className="font-semibold mb-2 mt-2">
-                Email cá nhân
-              </label>
-              <Input
-                type="text"
-                className="form-control p-3 rounded"
-                name="email"
-                placeholder="Nhập email cá nhân"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                validations={[required, vemail]}
-              />
-            </div> */}
-
             <div className="form-group">
               <label htmlFor="password" className="font-semibold mb-2 mt-2">
                 Mật khẩu

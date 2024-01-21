@@ -14,7 +14,6 @@ import Home from "./components/home.component";
 import Lading from "./components/lading.component";
 import Signup from "./components/signup.component";
 import EditUser from "./components/edituser.component";
-import Profile from "./components/profile.component";
 // import ChiTietGoiBaoHiem from './components/chiTietGoiBaoHiem.component';
 import SimpleFooter from "./components/footer.component";
 import ChiTietDongPhi from "./components/chiTietDongPhi.component";
@@ -25,7 +24,7 @@ import User_Profile from "./components/user_profile.component";
 import EditAccount from "./components/editAccount.component";
 import Health_Declaration from "./components/health_declaration.component";
 import Status_Register from "./components/status_register.component";
-
+import AddCustomerComponent from "./components/addCustomer.component";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -192,6 +191,7 @@ class App extends Component {
                 <Route path="/edituser" element={<EditUser />} />
                 <Route path="/editAccount" element={<EditAccount />} />
                 <Route path="/statusRegister" element={<Status_Register />} />
+                <Route path="/addCustomer" element={<AddCustomerComponent />} />
                 <Route
                   path="/healthDeclaration"
                   element={<Health_Declaration />}

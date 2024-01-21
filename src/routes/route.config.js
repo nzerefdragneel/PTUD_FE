@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-
+import addCustomerComponent from "../components/addCustomer.component";
 export const appRouters = [
   {
     path: "/home",
@@ -114,6 +114,14 @@ export const appRouters = [
     icon: BookmarkIcon,
     showInMenu: false,
     component: <Status_Register />,
+  },
+  {
+    path: "/addCustomer",
+    title: "addCustomer",
+    name: "Thêm hồ sơ khách hàng",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <addCustomerComponent />,
   },
 ];
 

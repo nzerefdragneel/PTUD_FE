@@ -3,60 +3,116 @@ import UserService from "../services/user.service";
 import authService from "../services/auth.service";
 import React, { Component, useState, useEffect } from "react";
 import { getColorClass } from "../utils/colorultils";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  List,
-  Button,
-  ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  IconButton,
-} from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import { SimpleNavbar } from "./simplenavbar.component";
 import customerService from "../services/customer.service";
 
-const User_Profile = () => {
-  // const [customer, setCustomer] = useState(null); // State để lưu thông tin của Customer
+// const User_Profile = ({ someProp, someState }) => {
+//   const user = authService.getCurrentUser();
+//   const userID = user.taiKhoan.iD_TaiKhoan;
 
-  // useEffect(() => {
-  //   const fetchCustomerData = async () => {
-  //     try {
-  //       const user = authService.getCurrentUser();
-  //       const user_1 = {
-  //         taiKhoan: user.taiKhoan,
-  //         accessToken: user.accessToken,
-  //       };
+//   useEffect(() => {
+//     const checkAndRemoveConstumer = () => {
+//       // Kiểm tra xem 'constumer' có tồn tại trong localStorage hay không
+//       if (localStorage.getItem("constumer")) {
+//         // Nếu tồn tại, thì xóa nó
+//         localStorage.removeItem("constumer");
+//       }
+//       customerService.getCustomer(userID).then(
+//         (response) => {
+//           localStorage.setItem("customer", JSON.stringify(response.data));
+//         },
+//         (error) => {
+//           const resMessage =
+//             error.response ||
+//             error.response.data ||
+//             error.response.data.message ||
+//             error.message ||
+//             error.toString();
 
-  //       const userID = user_1.taiKhoan.iD_TaiKhoan;
+//           this.setState({
+//             loading: false,
+//             message: resMessage,
+//           });
+//         }
+//       );
+//     };
 
-  //       const customerData = await customerService.getCustomer(userID);
-  //       setCustomer(customerData);
+//     // Thực hiện kiểm tra khi component được tạo ra
+//     checkAndRemoveConstumer();
 
-  //       // Lưu thông tin của Customer vào state
-  //     } catch (error) {
-  //       // Xử lý lỗi nếu cần thiết
-  //       console.error("Error fetching customer data:", error);
-  //     }
-  //   };
+//     // Thực hiện kiểm tra lại khi trang được reload
+//     window.onload = checkAndRemoveConstumer;
 
-  //   fetchCustomerData(); // Gọi hàm fetchCustomerData khi component được mount
-  // }, []); // Dùng mảng rỗng để chỉ gọi một lần khi component mount
+//     // Clean up để tránh memory leak
+//     return () => {
+//       window.onload = null;
+//     };
+//   }, []); // Chạy một lần khi component được tạo ra
 
+//   const customer = customerService.getCurrentCustomer();
+//   const colorClass = getColorClass(customer.xacThuc);
+const User_Profile = ({ someProp, someState }) => {
   const user = authService.getCurrentUser();
-  const customer = customerService.getCurrentCustomer();
-  const colorClass = getColorClass(customer.xacThuc);
+  const userID = user.taiKhoan.iD_TaiKhoan;
+
+  // Sử dụng useState để theo dõi giá trị của customer
+  const [customer, setCustomer] = useState(() => {
+    // Lấy dữ liệu từ localStorage khi component được tạo ra
+    const storedCustomer = localStorage.getItem("customer");
+    return storedCustomer ? JSON.parse(storedCustomer) : null;
+  });
+
+  useEffect(() => {
+    const checkAndRemoveCustomer = () => {
+      customerService.getCustomer(userID).then(
+        (response) => {
+          const updatedCustomer = response.data;
+
+          // Kiểm tra xem có sự thay đổi trong thuộc tính của customer hay không
+          if (!areCustomersEqual(customer, updatedCustomer)) {
+            // Nếu có thay đổi, cập nhật giá trị của customer và lưu vào localStorage
+            setCustomer(updatedCustomer);
+            localStorage.setItem("customer", JSON.stringify(updatedCustomer));
+          }
+        },
+        (error) => {
+          // Xử lý lỗi nếu cần
+        }
+      );
+    };
+
+    // Thực hiện kiểm tra khi component được tạo ra và mỗi khi customer thay đổi
+    checkAndRemoveCustomer();
+  }, [
+    customer,
+    userID /* Thêm các thuộc tính của customer bạn quan tâm vào đây */,
+  ]);
+
+  // Hàm để so sánh sự giống nhau giữa hai đối tượng customer
+  const areCustomersEqual = (customerA, customerB) => {
+    // Bạn có thể tùy chỉnh cách so sánh dựa trên nhu cầu của mình
+    // Ở đây, tôi so sánh dựa trên một vài thuộc tính quan trọng
+    return (
+      customerA &&
+      customerB &&
+      customerA.hoTen === customerB.hoTen &&
+      customerA.email === customerB.email &&
+      // Thêm các thuộc tính khác bạn muốn so sánh
+      customerA.soDienThoai === customerB.soDienThoai &&
+      customerA.soNhaTenDuong === customerB.soNhaTenDuong &&
+      customerA.phuongXa === customerB.phuongXa &&
+      customerA.quanHuyen === customerB.quanHuyen &&
+      customerA.thanhPho === customerB.thanhPho &&
+      customerA.cmnd === customerB.cmnd &&
+      customerA.ngheNghiep === customerB.ngheNghiep &&
+      customerA.chiTietCongViec === customerB.chiTietCongViec &&
+      customerA.thuNhap === customerB.thuNhap &&
+      customerA.nganHang === customerB.nganHang &&
+      customerA.soTaiKhoan === customerB.soTaiKhoan &&
+      customerA.xacThuc === customerB.xacThuc
+    );
+  };
+
+  const colorClass = getColorClass(customer?.xacThuc); // Thêm kiểm tra customer không null trước khi truy cập thuộc tính
 
   return (
     <>
@@ -95,7 +151,7 @@ const User_Profile = () => {
                 {customer.email}{" "}
                 <span className={`text-sm font-bold ${colorClass}`}>
                   {" "}
-                  {customer.xacThuc}
+                  {customer.xacthuc}
                 </span>
               </dd>
             </div>
@@ -191,4 +247,5 @@ const User_Profile = () => {
     </>
   );
 };
+
 export default User_Profile;

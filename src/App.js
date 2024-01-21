@@ -1,41 +1,42 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import AuthService from './services/auth.service';
-import userService from './services/user.service';
-import AuthVerify from './common/authVerify';
-import { Routes, BrowserRouter, Navigate, Route, Link } from 'react-router-dom';
-import { SidesMenu } from './components/sidebar.component';
-import LoginScreen from './screen/loginScreen';
+import AuthService from "./services/auth.service";
+import userService from "./services/user.service";
+import AuthVerify from "./common/authVerify";
+import { Routes, BrowserRouter, Navigate, Route, Link } from "react-router-dom";
+import { SidesMenu } from "./components/sidebar.component";
+import LoginScreen from "./screen/loginScreen";
 // Dong phi: import DongPhiScreen from "./screen/dongPhiScreen";
-import DongPhi from './components/dongPhi.component';
-import XemGoiBaoHiemScreen from './screen/xemGoiBaoHiemScreen';
-import CongTyScreen from './screen/congTyScreen';
-import Home from './components/home.component';
-import Lading from './components/lading.component';
-import Signup from './components/signup.component';
-import EditUser from './components/edituser.component';
-import Profile from './components/profile.component';
-import SimpleFooter from './components/footer.component';
-import ChiTietDongPhi from './components/chiTietDongPhi.component';
-import Bus from './common/bus';
-import SignupScreen from './screen/signupScreen';
-import Register_Insurance from './components/register.component';
-import User_Profile from './components/user_profile.component';
-import EditAccount from './components/editAccount.component';
-import Health_Declaration from './components/health_declaration.component';
-import ChiTietGoiBaoHiem from './components/chiTietGoiBaoHiem.component';
-import YeuCauChiTra from './components/yeuCauChiTra.component';
-import YeuCauTuVan from './components/yeuCauTuVan.component';
+import DongPhi from "./components/dongPhi.component";
+import XemGoiBaoHiemScreen from "./screen/xemGoiBaoHiemScreen";
+import CongTyScreen from "./screen/congTyScreen";
+import Home from "./components/home.component";
+import Lading from "./components/lading.component";
+import Signup from "./components/signup.component";
+import EditUser from "./components/edituser.component";
+import Profile from "./components/profile.component";
+import SimpleFooter from "./components/footer.component";
+import ChiTietDongPhi from "./components/chiTietDongPhi.component";
+import Bus from "./common/bus";
+import SignupScreen from "./screen/signupScreen";
+import Register_Insurance from "./components/register.component";
+import User_Profile from "./components/user_profile.component";
+import EditAccount from "./components/editAccount.component";
+import Health_Declaration from "./components/health_declaration.component";
+import ChiTietGoiBaoHiem from "./components/chiTietGoiBaoHiem.component";
+import YeuCauChiTra from "./components/yeuCauChiTra.component";
+import YeuCauTuVan from "./components/yeuCauTuVan.component";
 // Tinh trang don dang ky: import Status_Register from "./components/status_register.component";
-import NV_ds_GoiBaoHiem from './components/nv_ds_GoiBaoHiem.component';
-import ChinhSuaGoiBaoHiem from './components/nv_chinhSuaGoiBaoHiem.component';
-import PhatHanhGoiBaoHiem from './components/nv_phatHanhGBH.component';
-import NV_chonLichTuVan from './components/nv_chonLichTuVan.component';
-import NV_chonLichKiHopDong from './components/nv_chonLichKiHopDong.component';
-import NV_ds_chinhSach from './components/nv_ds_chinhSach.component';
-import NV_ds_GBH from './components/nv_ds_GBH.component';
-// import AddCustomerComponent from "./components/addCustomer.component";
+import NV_ds_GoiBaoHiem from "./components/nv_ds_GoiBaoHiem.component";
+import ChinhSuaGoiBaoHiem from "./components/nv_chinhSuaGoiBaoHiem.component";
+import PhatHanhGoiBaoHiem from "./components/nv_phatHanhGBH.component";
+import NV_chonLichTuVan from "./components/nv_chonLichTuVan.component";
+import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
+import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
+import NV_ds_GBH from "./components/nv_ds_GBH.component";
+import AddCustomerComponent from "./components/addCustomer.component";
+import Status_Register from "./components/status_register.component";
 
 class App extends Component {
   constructor(props) {
@@ -49,8 +50,7 @@ class App extends Component {
     };
   }
 
-
-   /* Tien:
+  /* Tien:
        componentDidMount() {
         const user = AuthService.getCurrentUser();
         if (user !== null) {
@@ -107,7 +107,6 @@ class App extends Component {
               />
             </a>
           </div>
-
 
           {currentUser ? (
             // Header sau khi đăng nhập
@@ -181,55 +180,79 @@ class App extends Component {
           >
             {currentUser && <SidesMenu />}
           </div>
-                    <div className="flex-1 flex flex-col">
-                        <div className="flex-1 p-4">
-                            <Routes>
-                                <Route path="/login" element={<LoginScreen />} />
-                                <Route path="/signup" element={<SignupScreen />} />
-                                <Route path="/xemGoiBaoHiem" element={<XemGoiBaoHiemScreen />} />
-                                <Route path="/chi-tiet-goi-bao-hiem/:id" element={<ChiTietGoiBaoHiem />} />
-                                <Route path="/congTy" element={<CongTyScreen />} />
-                                <Route path="/register/:idGoiBaoHiem" element={<Register_Insurance />} />
-                                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
-                                <Route path="/yeuCauTuVan" element={<YeuCauTuVan />} />
-                                <Route path="/yeuCauChiTra" element={<YeuCauChiTra />} />
-                                {/* đóng phí */}
-                                <Route path="/dongPhi" element={<DongPhi />} />
-                                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
-                                {/* phát hành gói bảo hiểm */}
-                                <Route path="/nhanVien/goiBaoHiem" element={<NV_ds_GoiBaoHiem />} />
-                                <Route path="/nhanVien/phatHanhGoiBaoHiem" element={<PhatHanhGoiBaoHiem />} />
-                                <Route path="/nhanvien/NV_chonLichTuVan" element={<NV_chonLichTuVan />} />
-                                <Route path="/nhanvien/NV_chonLichKiHopDong" element={<NV_chonLichKiHopDong />} />
-                                {/* chỉnh sửa danh sách chính sách */}
-                                <Route path="/nhanvien/ds_gbh" element={<NV_ds_GBH />} />
-                                <Route path="/nhanvien/chinh-sua-ds-chinh-sach/:id" element={<NV_ds_chinhSach />} />
-                                <Route
-                                    exact
-                                    path="/"
-                                    element={currentUser ? <Navigate replace to="/home" /> : <Lading />}
-                                />
-                                <Route path="/home" element={<Home />} />
-                                <Route
-                                    path="/edituser"
-                                    element={currentUser ? <EditUser /> : <Navigate replace to="/" />}
-                                />
-                                {/* <Route path="/profile" element={<Profile />} /> */}{' '}
-                                <Route path="/register" element={<Register_Insurance />} />
-                                <Route path="/user_profile" element={<User_Profile />} />
-                                <Route path="/edituser" element={<EditUser />} />
-                                <Route path="/editAccount" element={<EditAccount />} />
-                                <Route path="/statusRegister" element={<Status_Register />} />
-                                <Route path="/addCustomer" element={<AddCustomerComponent />} />
-                                <Route path="/healthDeclaration" element={<Health_Declaration />} />
-                            </Routes>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-12 flex flex-col h-48 w-full">
-                    <SimpleFooter></SimpleFooter>
-                </div>
-                <AuthVerify logOut={this.logOut} />
+          <div className="flex-1 flex flex-col">
+            <div className="flex-1 p-4">
+              <Routes>
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/signup" element={<SignupScreen />} />
+                <Route
+                  path="/xemGoiBaoHiem"
+                  element={<XemGoiBaoHiemScreen />}
+                />
+                <Route
+                  path="/chi-tiet-goi-bao-hiem/:id"
+                  element={<ChiTietGoiBaoHiem />}
+                />
+                <Route path="/congTy" element={<CongTyScreen />} />
+                <Route
+                  path="/register/:idGoiBaoHiem"
+                  element={<Register_Insurance />}
+                />
+                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+                <Route path="/yeuCauTuVan" element={<YeuCauTuVan />} />
+                <Route path="/yeuCauChiTra" element={<YeuCauChiTra />} />
+                {/* đóng phí */}
+                <Route path="/dongPhi" element={<DongPhi />} />
+                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+                {/* phát hành gói bảo hiểm */}
+                <Route
+                  path="/nhanVien/goiBaoHiem"
+                  element={<NV_ds_GoiBaoHiem />}
+                />
+                <Route
+                  path="/nhanVien/phatHanhGoiBaoHiem"
+                  element={<PhatHanhGoiBaoHiem />}
+                />
+                <Route
+                  path="/nhanvien/NV_chonLichTuVan"
+                  element={<NV_chonLichTuVan />}
+                />
+                <Route
+                  path="/nhanvien/NV_chonLichKiHopDong"
+                  element={<NV_chonLichKiHopDong />}
+                />
+                {/* chỉnh sửa danh sách chính sách */}
+                <Route path="/nhanvien/ds_gbh" element={<NV_ds_GBH />} />
+                <Route
+                  path="/nhanvien/chinh-sua-ds-chinh-sach/:id"
+                  element={<NV_ds_chinhSach />}
+                />
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    currentUser ? <Navigate replace to="/home" /> : <Lading />
+                  }
+                />
+                <Route path="/home" element={<Home />} />
+                <Route
+                  path="/edituser"
+                  element={
+                    currentUser ? <EditUser /> : <Navigate replace to="/" />
+                  }
+                />
+                {/* <Route path="/profile" element={<Profile />} /> */}{" "}
+                <Route path="/register" element={<Register_Insurance />} />
+                <Route path="/user_profile" element={<User_Profile />} />
+                <Route path="/edituser" element={<EditUser />} />
+                <Route path="/editAccount" element={<EditAccount />} />
+                <Route path="/statusRegister" element={<Status_Register />} />
+                <Route path="/addCustomer" element={<AddCustomerComponent />} />
+                <Route
+                  path="/healthDeclaration"
+                  element={<Health_Declaration />}
+                />
+              </Routes>
             </div>
           </div>
         </div>

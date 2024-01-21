@@ -32,10 +32,6 @@ class AuthService {
     return axios.post(API_URL + "/DangKi", requestData);
   }
 
-
-        return axios.post(API_URL + '/DangKi', requestData);
-    }
-
     forgotPassword(email) {
         return axios.post(
             API_URL + 'forgot-password',

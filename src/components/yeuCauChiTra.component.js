@@ -1,125 +1,410 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component, useEffect, useState, useCallback } from 'react';
 import KhachHangService from '../services/khachHang.service';
-import HopDongService from '../services/hopDong.service';
-import ChiTietDongPhi from './chiTietDongPhi.component';
-import { Button } from '@material-tailwind/react';
+import QuanLyBaoHiemService from '../services/quanLyBaoHiem.service';
+import YeuCauChiTraService from '../services/yeuCauChiTra.service';
+import GoiBaoHiemService from '../services/goiBaoHiem.service';
+import authService from '../services/auth.service';
+import { Button, Input } from '@material-tailwind/react';
+import DialogDefault from './dialog';
 
-// const DongPhi = ({ idUser }) => {
-//     // const [khachHang, setkhachHang] = useState([]);
-//     const [danhSachGoiSanPham, setDanhSachGoiSanPham] = useState([]);
-//     const [danhSachDaLay, setDanhSachDaLay] = useState([]);
+const required = (value) => {
+    if (!value) {
+        return (
+            <div className="text-error-color text-base" role="alert">
+                Thông tin này không được bỏ trống !
+            </div>
+        );
+    }
+};
+const YeuCauChiTra = () => {
+    //lấy idtaikhoan từ bảng tài khoản
+    // const user = this.props.dataFromParent.iD_TaiKhoan;
+    const user = authService.getCurrentUser();
+    const [GoiBaoHiemData, setGoiBaoHiemData] = useState([]);
+    const [QuanLyBaoHiem, setQuanLyBaoHiem] = useState([]);
+    const [GoiBaoHiem, setSelectGoiBaoHiem] = useState([]);
+    const [nguoiYeuCau, setnguoiYeuCau] = useState(null);
+    const [moiQuanHe, setmoiQuanHe] = useState(null);
+    const [diaChi, setdiaChi] = useState(null);
+    const [dienThoai, setdienThoai] = useState(null);
+    const [soTienYeuCauChiTra, setsoTienYeuCauChiTra] = useState(null);
+    const [truongHopChiTra, settruongHopChiTra] = useState(null);
+    const [noiDieuTri, setnoiDieuTri] = useState(null);
+    const [chanDoan, setchanDoan] = useState(null);
+    const [hauQua, sethauQua] = useState(null);
+    const [hinhThucDieuTri, sethinhThucDieuTri] = useState(null);
+    const [ngayBatDau, setngayBatDau] = useState(null);
+    const [ngayKetThuc, setngayKetThuc] = useState(null);
+    const [email, setemail] = useState(null);
+    const [hinhHoaDon, sethinhHoaDon] = useState(null);
+    const [danhSachDaLay, setDanhSachDaLay] = useState([]);
+    const [showMessage, setShowMessage] = useState(false);
+    const [noiDungMessage, setnoiDungMessage] = useState(null);
+    const iD_TaiKhoan = user.id;
 
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             try {
-//                 const khachHangResponse = await KhachHangService.getById(idUser);
-//                 const idKhachHang = khachHangResponse.data.ID_KhachHang;
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const dskh = [];
+                try {
+                    const khachHangData = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
+                    const response = await QuanLyBaoHiemService.getByIDKH(khachHangData.data.iD_KhachHang);
+                    const data = response.data;
+                    setQuanLyBaoHiem(response.data);
+                    const goiChuaLay = data.filter((goi) => !danhSachDaLay.includes(goi.iD_GoiBaoHiem));
+                    // Lấy thông tin từng gói bảo hiểm
+                    const dsGoiBaoHiem = [];
+                    for (const goi of goiChuaLay) {
+                        try {
+                            const { data } = await GoiBaoHiemService.getByID(goi.iD_GoiBaoHiem);
+                            dsGoiBaoHiem.push(data);
+                        } catch (error) {
+                            console.error('Error fetching goiBaoHiem data:', error);
+                        }
+                    }
 
-//                 const hopDongResponse = await HopDongService.getById(idKhachHang);
-//                 console.log(hopDongResponse);
-//                 const data = hopDongResponse.data.HopDong; // Truy cập đến mảng HopDong trong đối tượng
-//                 if (Array.isArray(data)) {
-//                     const goiChuaLay = data.filter((goi) => !danhSachDaLay.includes(goi.ID_HopDong));
+                    setGoiBaoHiemData(dsGoiBaoHiem);
+                    setDanhSachDaLay((prevDanhSachDaLay) => [
+                        ...prevDanhSachDaLay,
+                        ...goiChuaLay.map((goi) => goi.iD_GoiBaoHiem),
+                    ]);
+                } catch (error) {
+                    console.error('Error fetching goiBaoHiem data:', error);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
 
-//                     setDanhSachGoiSanPham((prevGoiSanPham) => [...prevGoiSanPham, ...goiChuaLay]);
-//                     setDanhSachDaLay((prevDanhSachDaLay) => [
-//                         ...prevDanhSachDaLay,
-//                         ...goiChuaLay.map((goi) => goi.ID_HopDong),
-//                     ]);
-//                 } else {
-//                     console.error('Error: Data from API is not an array');
-//                 }
-//             } catch (error) {
-//                 console.error('Error fetching data:', error);
-//             }
-//         };
-//         fetchData();
-//     }, [idUser, danhSachDaLay]);
+    const handleYeuCauChiTra = async () => {
+        // Kiểm tra xem có trường thông tin nào trống không
+        if (!GoiBaoHiem) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn gói bảo hiểm!');
+            return;
+        }
+        if (!soTienYeuCauChiTra) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập số tiền!');
+            return;
+        }
+        if (!nguoiYeuCau) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập người yêu cầu!');
+            return;
+        }
+        if (!truongHopChiTra) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập trường hợp chi trả!');
+            return;
+        }
+        if (!moiQuanHe) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập mối quan hệ!');
+            return;
+        }
+        if (!noiDieuTri) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập nơi điều trị!');
+            return;
+        }
+        if (!diaChi) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập địa chỉ!');
+            return;
+        }
+        if (!chanDoan) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập chẩn đoán!');
+            return;
+        }
+        if (!dienThoai) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập số điện thoại!');
+            return;
+        }
+        if (!hauQua) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập hậu quả!');
+            return;
+        }
+        if (!email) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập email!');
+            return;
+        }
+        if (!hinhThucDieuTri) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa nhập hình thức điều trị!');
+            return;
+        }
+        if (!ngayBatDau) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn ngày bắt đầu!');
+            return;
+        }
+        if (!ngayKetThuc) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn ngày kết thúc!');
+            return;
+        }
 
-//     return (
-//         <header className="wrapper mt-8">
-//             <div className="grid grid-cols-3 gap-4">
-//                 {danhSachGoiSanPham.map((goiSanPham) => (
-//                     <div
-//                         key={goiSanPham.ID_HopDong}
-//                         className="goiBaoHiemItem border border-solid border-teal-500 p-4 bg-blue-100 rounded-md"
-//                     >
-//                         <h3 className="text-lg font-semibold mb-2">{goiSanPham.NgayKyKet}</h3>
-//                         <p className="text-gray-600 mb-4">{goiSanPham.ID_GoiBaoHiem}</p>
-//                         <Button
-//                             component={Link}
-//                             to={`/product/${goiSanPham.iD_GoiBaoHiem}`}
-//                             className="bg-blue-500 text-white px-4 py-2"
-//                         >
-//                             Xem chi tiết
-//                         </Button>
-//                     </div>
-//                 ))}
-//             </div>
-//         </header>
-//     );
-// };
+        if (!hinhHoaDon) {
+            setShowMessage(true);
+            setnoiDungMessage('Bạn chưa chọn hình hóa đơn!');
+            return;
+        }
+        const qlbhid = QuanLyBaoHiem.find((qlbh) => qlbh.iD_GoiBaoHiem === +GoiBaoHiem);
+        console.log(qlbhid);
+        try {
+            const response = await YeuCauChiTraService.EditYeuCauChiTra(
+                qlbhid?.id,
+                soTienYeuCauChiTra,
+                nguoiYeuCau,
+                truongHopChiTra,
+                moiQuanHe,
+                noiDieuTri,
+                diaChi,
+                chanDoan,
+                dienThoai,
+                hauQua,
+                email,
+                hinhThucDieuTri,
+                ngayBatDau,
+                ngayKetThuc,
+                hinhHoaDon,
+            );
 
-// export default DongPhi;
+            console.log('YeuCauChiTra API Response:', response);
+            setShowMessage(true);
+            setnoiDungMessage('Gửi yêu cầu thành công!');
+        } catch (error) {
+            setShowMessage(true);
+            setnoiDungMessage('Vui lòng kiểm tra lại thông tin!');
+            console.error('Error sending YeuCauChiTra request:', error);
+        }
+    };
+    const closeMessage = () => {
+        setShowMessage(false);
+    };
 
-const DongPhi = ({ idUser }) => {
     return (
         <div>
-            <div className="border border-black border-opacity-100 p-4 mb-4 flex items-center justify-between">
-                <div className="text-center">
-                    <h3 className="font-bold text-lg">Tên bảo hiểm</h3>
-                    <h3 className="text-sm">Bảo hiểm sức khỏe</h3>
+            {showMessage && <DialogDefault handler={closeMessage} message={noiDungMessage} />}
+            <div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Chọn gói bảo hiểm
+                    </label>
+
+                    <select
+                        name="GoiBaoHiem"
+                        value={GoiBaoHiem}
+                        id="GoiBaoHiem"
+                        form="healthDeclaration"
+                        className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        onChange={(e) => setSelectGoiBaoHiem(e.target.value)}
+                    >
+                        {GoiBaoHiemData.map((goiSanPham) => (
+                            <option key={goiSanPham.iD_GoiBaoHiem} value={goiSanPham.iD_GoiBaoHiem}>
+                                {goiSanPham.tenBaoHiem}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Họ tên người yêu cầu
+                    </label>
+                    <Input
+                        type="text"
+                        name="nguoiYeuCau"
+                        value={nguoiYeuCau}
+                        required="true"
+                        onChange={(e) => setnguoiYeuCau(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Mối quan hệ với chủ sở hữu bảo hiểm
+                    </label>
+                    <Input
+                        type="text"
+                        name="moiQuanHe"
+                        value={moiQuanHe}
+                        required="true"
+                        onChange={(e) => setmoiQuanHe(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Địa chỉ
+                    </label>
+                    <Input
+                        type="text"
+                        name="diaChi"
+                        value={diaChi}
+                        required="true"
+                        onChange={(e) => setdiaChi(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Số điện thoại
+                    </label>
+                    <Input
+                        type="text"
+                        name="dienThoai"
+                        value={dienThoai}
+                        required="true"
+                        onChange={(e) => setdienThoai(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Email
+                    </label>
+                    <Input
+                        type="email"
+                        name="email"
+                        value={email}
+                        required="true"
+                        onChange={(e) => setemail(e.target.value)}
+                        autocomplete="on"
+                    />
                 </div>
 
-                <div className="text-center">
-                    <h3 className="font-bold text-lg">Tên gói</h3>
-                    <h3 className="text-sm">Gói vàng</h3>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Số tiền yêu cầu chi trả `(VNĐ)`
+                    </label>
+                    <Input
+                        type="text"
+                        name="soTienYeuCauChiTra"
+                        value={soTienYeuCauChiTra}
+                        required="true"
+                        onChange={(e) => setsoTienYeuCauChiTra(e.target.value)}
+                        autocomplete="on"
+                    />
                 </div>
-
-                <div className="text-center">
-                    <h3 className="font-bold text-lg ">Tình trạng thanh toán</h3>
-                    <h3 className="text-sm text-red-500">chưa thanh toán</h3>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Trường hợp chi trả
+                    </label>
+                    <Input
+                        type="text"
+                        name="truongHopChiTra"
+                        value={truongHopChiTra}
+                        required="true"
+                        onChange={(e) => settruongHopChiTra(e.target.value)}
+                        autocomplete="on"
+                    />
                 </div>
-
-                <Button
-                    variant="filled"
-                    component={Link}
-                    to="/chiTietDongPhi/1"
-                    // to={`/chiTietDongPhi/${goiSanPham.iD_GoiBaoHiem}`}
-                    className="bg-blue-500 text-white px-4 py-2 text-lg"
-                >
-                    Thanh toán
-                </Button>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Nơi điều trị
+                    </label>
+                    <Input
+                        type="text"
+                        name="noiDieuTri"
+                        value={noiDieuTri}
+                        required="true"
+                        onChange={(e) => setnoiDieuTri(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Kết quả chẩn đoán
+                    </label>
+                    <Input
+                        type="text"
+                        name="chanDoan"
+                        value={chanDoan}
+                        required="true"
+                        onChange={(e) => setchanDoan(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Hậu quả
+                    </label>
+                    <Input
+                        type="text"
+                        name="hauQua"
+                        value={hauQua}
+                        required="true"
+                        onChange={(e) => sethauQua(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Hình thức điều trị
+                    </label>
+                    <Input
+                        type="text"
+                        name="hinhThucDieuTri"
+                        value={hinhThucDieuTri}
+                        required="true"
+                        onChange={(e) => sethinhThucDieuTri(e.target.value)}
+                        autocomplete="on"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Ngày bắt đầu điều trị
+                    </label>
+                    <input
+                        id="ngayBatDau"
+                        name="ngayBatDau"
+                        type="date"
+                        autoComplete="off"
+                        validations={required}
+                        onInput={(e) => setngayBatDau(e.target.value)}
+                        className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="username" className="font-semibold mb-2">
+                        Ngày kết thúc điều trị
+                    </label>
+                    <input
+                        id="ngayKetThuc"
+                        name="ngayKetThuc"
+                        type="date"
+                        autoComplete="off"
+                        validations={required}
+                        onInput={(e) => setngayKetThuc(e.target.value)}
+                        className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                </div>
             </div>
-
-            <div className="border border-black border-opacity-100 p-4 mb-4 flex items-center justify-between">
-                <div className="text-center">
-                    <h3 className="font-bold text-lg">Tên bảo hiểm</h3>
-                    <h3 className="text-sm">Bảo hiểm sức khỏe</h3>
-                </div>
-
-                <div className="text-center">
-                    <h3 className="font-bold text-lg">Tên gói</h3>
-                    <h3 className="text-sm">Gói bạc</h3>
-                </div>
-
-                <div className="text-center">
-                    <h3 className="font-bold text-lg ">Tình trạng thanh toán</h3>
-                    <h3 className="text-sm text-red-500">chưa thanh toán</h3>
-                </div>
-
-                <Button
-                    variant="contained"
-                    component={Link}
-                    to="/chiTietDongPhi"
-                    className="bg-blue-500 text-white px-4 py-2 text-lg"
-                >
-                    Thanh toán
-                </Button>
+            <div className="form-group">
+                <label htmlFor="username" className="font-semibold mb-2">
+                    Link Hình hóa đơn
+                </label>
+                <Input
+                    type="text"
+                    name="hinhHoaDon"
+                    value={hinhHoaDon}
+                    required="true"
+                    onChange={(e) => sethinhHoaDon(e.target.value)}
+                    autocomplete="on"
+                />
             </div>
+            <Button onClick={handleYeuCauChiTra} className="bg-blue-500 text-white px-4 py-2">
+                GỬI YÊU CẦU
+            </Button>
         </div>
     );
 };
 
-export default DongPhi;
+export default YeuCauChiTra;

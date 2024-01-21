@@ -1,11 +1,12 @@
-import axios from "axios";
-const bcrypt = require("bcryptjs");
+import axios from 'axios';
+const bcrypt = require('bcryptjs');
 
 // const API_URL = 'https://web-api-be.onrender.com/api/auth/';
 
 // const API_URL = `${process.env.REACT_APP_URL_API}/api/TaiKhoan/DangKi`;
 
 // const API_URL=`${process.env.REACT_APP_SERVICE_URL}/api/auth/`;
+
 const API_URL = "https://localhost:7202/api/TaiKhoan";
 
 class AuthService {
@@ -31,45 +32,50 @@ class AuthService {
     return axios.post(API_URL + "/DangKi", requestData);
   }
 
-  forgotPassword(email) {
-    return axios.post(
-      API_URL + "forgot-password",
-      {
-        email,
-      },
-      {
-        headers: {
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Access-Control-Allow-Origin": "*",
-        },
-        mode: "no-cors",
-      }
-    );
-  }
 
-  resetPassword(email, token, password) {
-    return axios.post(
-      API_URL + "reset-password",
-      {
-        email,
-        token,
-        password,
-      },
-      {
-        headers: {
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Access-Control-Allow-Origin": "*",
-        },
-        mode: "no-cors",
-      }
-    );
-  }
+        return axios.post(API_URL + '/DangKi', requestData);
+    }
+
+    forgotPassword(email) {
+        return axios.post(
+            API_URL + 'forgot-password',
+            {
+                email,
+            },
+            {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Access-Control-Allow-Origin': '*',
+                },
+                mode: 'no-cors',
+            },
+        );
+    }
+
+/*    resetPassword(email, token, password) {
+        return axios.post(
+            API_URL + 'reset-password',
+            {
+                email,
+                token,
+                password,
+            },
+            {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Access-Control-Allow-Origin': '*',
+                },
+                mode: 'no-cors',
+            },
+        );
+    }*/
 
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
+
 }
 
 export default new AuthService();

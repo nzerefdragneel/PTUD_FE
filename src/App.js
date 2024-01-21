@@ -37,6 +37,7 @@ import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
+import Nv_ds_allCS from "./components/nv_ds_allCS.component";
 
 class App extends Component {
   constructor(props) {
@@ -221,6 +222,7 @@ class App extends Component {
                   path="/nhanvien/NV_chonLichKiHopDong"
                   element={<NV_chonLichKiHopDong />}
                 />
+                <Route path="/nhanvien/dsCSach" element={<Nv_ds_allCS />} />
                 {/* chỉnh sửa danh sách chính sách */}
                 <Route path="/nhanvien/ds_gbh" element={<NV_ds_GBH />} />
                 <Route

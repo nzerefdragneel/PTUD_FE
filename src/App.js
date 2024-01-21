@@ -37,7 +37,7 @@ import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
-
+import Manage_Application from "./components/Maganage_Application.component";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -248,6 +248,10 @@ class App extends Component {
                 <Route path="/editAccount" element={<EditAccount />} />
                 <Route path="/statusRegister" element={<Status_Register />} />
                 <Route path="/addCustomer" element={<AddCustomerComponent />} />
+                <Route
+                  path="/manageApplications"
+                  element={<Manage_Application />}
+                />
                 <Route
                   path="/healthDeclaration"
                   element={<Health_Declaration />}

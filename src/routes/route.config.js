@@ -13,7 +13,7 @@ import YeuCauTuVan from "../components/yeuCauTuVan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
-
+import Manage_Application from "../components/Maganage_Application.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -67,7 +67,7 @@ export const appRouters = [
     title: "editAccount",
     name: "Cài đặt tài khoản ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditAccount />,
   },
   {
@@ -75,7 +75,7 @@ export const appRouters = [
     title: "healthDeclacation",
     name: "Khai báo sức khoẻ  ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <Health_Declaration />,
   },
   {
@@ -152,12 +152,12 @@ export const appRouters = [
     component: <YeuCauTuVan />,
   },
   {
-    path: "/chiTietDongPhi",
-    title: "chiTietDongPhi",
-    name: "Chi tiết đóng phí",
+    path: "/manageApplications",
+    title: "manageApplications",
+    name: "Phiếu Đăng Ký Chờ Duyệt",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <ChiTietDongPhi />,
+    component: <Manage_Application />,
   },
 ];
 

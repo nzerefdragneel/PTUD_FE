@@ -27,11 +27,12 @@ const required = (value) => {
 //   }
 // };
 
-const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
+const vPhonenumber = (value) => {
+  const phoneNumberRegex = /^[0-9]{10}$/;
+  if (!phoneNumberRegex.test(value)) {
     return (
       <div className="text-error-color text-base" role="alert">
-        Tên đăng nhập phải từ 3-20 kí tự!
+        Số điện thoại phải gồm 10 chữ số ( 0- 9 )
       </div>
     );
   }
@@ -46,8 +47,6 @@ const vpassword = (value) => {
     );
   }
 };
-
-
 
 function parseJwt(token) {
   var base64Url = token.split(".")[1];
@@ -67,7 +66,7 @@ function parseJwt(token) {
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-//   const [passwor setConfirmPassword] = useState("");
+  //   const [passwor setConfirmPassword] = useState("");
 
   // const [email, setEmail] = useState("");
   const fref = useRef(null);
@@ -90,9 +89,9 @@ function Signup() {
       },
       (error) => {
         const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
+          error.response ||
+          error.response.data ||
+          error.response.data.message ||
           error.message ||
           error.toString();
         setMessage(resMessage.toString());
@@ -102,7 +101,7 @@ function Signup() {
       }
     );
   };
-  
+
   return (
     <div className="col-md-12">
       <div className="">
@@ -116,29 +115,13 @@ function Signup() {
                 type="text"
                 className="form-control p-3 rounded required"
                 name="username"
-                placeholder="Nhập tên đăng nhập"
+                placeholder="Nhập số điện thoại"
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
-                validations={[required, vusername]}
+                validations={[required, vPhonenumber]}
               />
             </div>
-
-            {/* <div className="form-group">
-              <label htmlFor="email" className="font-semibold mb-2 mt-2">
-                Email cá nhân
-              </label>
-              <Input
-                type="text"
-                className="form-control p-3 rounded"
-                name="email"
-                placeholder="Nhập email cá nhân"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                validations={[required, vemail]}
-              />
-            </div> */}
 
             <div className="form-group">
               <label htmlFor="password" className="font-semibold mb-2 mt-2">
@@ -187,13 +170,14 @@ function Signup() {
             </div>
           </div>
         </Form>
-  
-    
+
         {isSubmit && !isSuccess && (
           <div className="text-error-color text-base">{message}</div>
         )}
         {isSubmit && isSuccess && (
-          <div className="alert alert-success text-base">{message}</div>
+          <div className="alert alert-success text-base">
+            Đăng ký thành công{" "}
+          </div>
         )}
       </div>
     </div>
@@ -201,4 +185,3 @@ function Signup() {
 }
 
 export default withRouter(Signup);
-

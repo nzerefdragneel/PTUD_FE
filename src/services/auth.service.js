@@ -1,51 +1,34 @@
 import axios from "axios";
 const bcrypt = require("bcryptjs");
 
-// // const API_URL = "https://web-api-be.onrender.com/api/auth/";
+// const API_URL = 'https://web-api-be.onrender.com/api/auth/';
 
-const API_URL = `${process.env.REACT_APP_SERVICE_URL}/api/auth/`;
+// const API_URL = `${process.env.REACT_APP_URL_API}/api/TaiKhoan/DangKi`;
 
-//const API_URL = "http://localhost:8080/api/auth/";
+// const API_URL=`${process.env.REACT_APP_SERVICE_URL}/api/auth/`;
+const API_URL = "https://localhost:7202/api/TaiKhoan";
+
 class AuthService {
   login(username, password) {
-    return axios.post(
-      API_URL + "signin",
-      {
-        username,
-        password,
-      },
-      {
-        headers: {
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Access-Control-Allow-Origin": "*",
-        },
-        mode: "no-cors",
-      }
-    );
+    const URL_Login = `${API_URL}/DangNhap(TenDangNhap:string,MatKhau:string)?tenDN=${username}&MK=${password}`;
+
+    return axios.get(URL_Login);
   }
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.clear();
   }
 
-  register(username, email, password) {
-    return axios.post(
-      API_URL + "signup",
-      {
-        username,
-        email,
-        password,
-      },
-      {
-        headers: {
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Access-Control-Allow-Origin": "*",
-        },
-        mode: "no-cors",
-      }
-    );
+  register(username, password, _loaitaikhoan, _tinhTrang) {
+    const requestData = {
+      iD_TaiKhoan: 0,
+      tenDangNhap: username,
+      matKhau: password,
+      loaiTaiKhoan: "KH",
+      tinhTrang: "Hoạt động",
+    };
+
+    return axios.post(API_URL + "/DangKi", requestData);
   }
 
   forgotPassword(email) {
@@ -87,8 +70,6 @@ class AuthService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
-
-  
 }
 
 export default new AuthService();

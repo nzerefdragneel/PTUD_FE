@@ -7,6 +7,7 @@ import AuthService from "../services/auth.service";
 
 import { withRouter } from "../common/with-router";
 import { Navigate } from "react-router-dom";
+import customerService from "../services/customer.service";
 
 const required = (value) => {
   if (!value) {
@@ -64,17 +65,57 @@ class LoginForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         (response) => {
-          if (response.data.id) {
+          if (response.data.accessToken && response.data.taiKhoan) {
+            // Lấy giá trị accessToken từ response
+            const accessToken = response.data.accessToken;
+            // Lấy giá trị userID
+            const userID = response.data.taiKhoan.iD_TaiKhoan;
+
             localStorage.setItem("user", JSON.stringify(response.data));
-            this.props.router.navigate("/home");
+            console.log(response.data);
+            customerService
+              .getCustomer(userID)
+              .then((customerResponse) => {
+                const customerData = customerResponse.data;
+
+                if (customerData) {
+                  // Nếu có tồn tại ID_KhachHang
+                  localStorage.setItem(
+                    "customer",
+                    JSON.stringify(customerData)
+                  );
+                  this.props.router.navigate("/home");
+                } else {
+                  // Nếu không tồn tại ID_KhachHang
+                  this.props.router.navigate("/addCustomer");
+                }
+              })
+              .catch((customerError) => {
+                console.error(
+                  "Lỗi khi lấy thông tin khách hàng:",
+                  customerError
+                );
+
+                // Xử lý lỗi nếu cần
+                // ...
+
+                // Chuyển hướng vào /createProfile khi có lỗi
+                const message =
+                  "Tài khoản mới hoặc chưa có hồ sơ người dùng. Vui lòng tạo hồ sơ người dùng để tiếp tục trải nghiệm dịch vụ của chúng tôi";
+                alert(message);
+                this.props.router.navigate("/addCustomer");
+              })
+              .finally(() => {
+                // Refresh trang sau khi xử lý xong
+                window.location.reload();
+              });
           }
-          window.location.reload();
         },
         (error) => {
           const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
+            error.response ||
+            error.response.data ||
+            error.response.data.message ||
             error.message ||
             error.toString();
 
@@ -103,13 +144,13 @@ class LoginForm extends Component {
           >
             <div className="form-group">
               <label htmlFor="username" className="font-semibold mb-2">
-                Tên đăng nhập
+                Số điện thoại
               </label>
               <Input
                 type="text"
                 className="form-control"
                 name="username"
-                placeholder="Tên đăng nhập"
+                placeholder="Nhập số điện thoại"
                 value={this.state.username}
                 onChange={this.onChangeUsername}
                 validations={[required]}
@@ -130,7 +171,6 @@ class LoginForm extends Component {
                 validations={[required]}
               />
             </div>
-         
 
             <div className="form-group">
               <button
@@ -160,7 +200,6 @@ class LoginForm extends Component {
             />
           </Form>
         </div>
-        
       </div>
     );
   }

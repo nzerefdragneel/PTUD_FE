@@ -14,6 +14,18 @@ class UserService {
 
     return axios.post(url, { id, tinhTrang });
   }
+  ThemNhanVienByADMIN(username, password, _loaitaikhoan, _tinhTrang) {
+    const requestData = {
+      iD_TaiKhoan: 0,
+      tenDangNhap: username,
+      matKhau: password,
+      loaiTaiKhoan: "NV",
+      tinhTrang: "Hoạt Động",
+    };
+
+    return axios.post(API_URL + "ThemTaiKhoanByADMIN", requestData);
+  }
+
   //   EditUser(userId, username, email, password) {
   //     return axios.put(
   //       API_URL + "edituser",

@@ -13,7 +13,8 @@ import YeuCauTuVan from "../components/yeuCauTuVan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
-
+import AdminAccountList from "../components/AdminAccountList.component";
+import ThemNhanVienComponent from "../components/AdminAddNV.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -62,6 +63,22 @@ export const appRouters_qtv = [
     icon: BookmarkIcon,
     showInMenu: true,
     component: <EditAccount />,
+  },
+  {
+    path: "/adminAccountList",
+    title: "adminAccountList",
+    name: "Danh sách tài khoản",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <AdminAccountList />,
+  },
+  {
+    path: "/adminAdd",
+    title: "adminAdd",
+    name: "Thêm nhân sự ",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <ThemNhanVienComponent />,
   },
   // {
   //   path: "/editAccount",

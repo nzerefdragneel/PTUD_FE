@@ -45,6 +45,7 @@ import Nv_duyetYeuCauChiTra from "./components/nv_duyetYeuCauChiTra.component";
 import PhieuDangKyList from "./components/Maganage_Application.component";
 import DanhSachKyKetList from "./components/Calendar_Application.component";
 import AdminAccountList from "./components/AdminAccountList.component";
+import ThemNhanVienComponent from "./components/AdminAddNV.component";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -280,6 +281,7 @@ class App extends Component {
                   path="/adminAccountList"
                   element={<AdminAccountList />}
                 />
+                <Route path="/adminAdd" element={<ThemNhanVienComponent />} />
               </Routes>
             </div>
           </div>

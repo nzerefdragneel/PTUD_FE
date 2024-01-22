@@ -16,6 +16,7 @@ import addCustomerComponent from "../components/addCustomer.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import AdminAccountList from "../components/AdminAccountList.component";
+import ThemNhanVienComponent from "../components/AdminAddNV.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -161,6 +162,14 @@ export const appRouters = [
     icon: BookmarkIcon,
     showInMenu: false,
     component: <AdminAccountList />,
+  },
+  {
+    path: "/adminAdd",
+    title: "adminAdd",
+    name: "Thêm tài khoản nhân viên ",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <ThemNhanVienComponent />,
   },
 ];
 

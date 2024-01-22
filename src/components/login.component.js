@@ -18,6 +18,26 @@ const required = (value) => {
     );
   }
 };
+const vPhonenumber = (value) => {
+  const phoneNumberRegex = /^[0-9]{10}$/;
+  if (!phoneNumberRegex.test(value)) {
+    return (
+      <div className="text-error-color text-base" role="alert">
+        Số điện thoại phải gồm 10 chữ số ( 0- 9 )
+      </div>
+    );
+  }
+};
+
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="text-error-color text-base" role="alert">
+        Mật khẩu phải có độ dài từ 6-40 kí tư
+      </div>
+    );
+  }
+};
 
 class LoginForm extends Component {
   constructor(props) {
@@ -153,7 +173,7 @@ class LoginForm extends Component {
                 placeholder="Nhập số điện thoại"
                 value={this.state.username}
                 onChange={this.onChangeUsername}
-                validations={[required]}
+                validations={[required, vPhonenumber]}
               />
             </div>
 
@@ -168,7 +188,7 @@ class LoginForm extends Component {
                 placeholder="Mật khẩu"
                 value={this.state.password}
                 onChange={this.onChangePassword}
-                validations={[required]}
+                validations={[required, vpassword]}
               />
             </div>
 

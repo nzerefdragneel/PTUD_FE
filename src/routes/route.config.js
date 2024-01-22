@@ -138,22 +138,22 @@ export const appRouters = [
     showInMenu: true,
     component: <YeuCauTuVan />,
   },
-  {
-    path: "/manageApplications",
-    title: "manageApplications",
-    name: "Phiếu Đăng Ký Chờ Duyệt",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <PhieuDangKyList />,
-  },
-  {
-    path: "/calendarApplications",
-    title: "calendarApplications",
-    name: "Danh sách đã duyệt",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <DanhSachKyKetList />,
-  },
+  // {
+  //   path: "/manageApplications",
+  //   title: "manageApplications",
+  //   name: "Phiếu Đăng Ký Chờ Duyệt",
+  //   icon: BookmarkIcon,
+  //   showInMenu: false,
+  //   component: <PhieuDangKyList />,
+  // },
+  // {
+  //   path: "/calendarApplications",
+  //   title: "calendarApplications",
+  //   name: "Danh sách đã duyệt",
+  //   icon: BookmarkIcon,
+  //   showInMenu: false,
+  //   component: <DanhSachKyKetList />,
+  // },
   {
     path: "/adminAccountList",
     title: "adminAccountList",
@@ -162,7 +162,6 @@ export const appRouters = [
     showInMenu: false,
     component: <AdminAccountList />,
   },
-
 ];
 
 export const routers = [...appRouters];

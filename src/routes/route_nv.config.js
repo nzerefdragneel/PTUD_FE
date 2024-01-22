@@ -14,7 +14,8 @@ import NV_ds_chinhSach from "../components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "../components/nv_ds_GBH.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
-
+import PhieuDangKyList from "../components/Maganage_Application.component";
+import DanhSachKyKetList from "../components/Calendar_Application.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -53,7 +54,7 @@ export const appRouters_nv = [
     title: "edituser",
     name: "Cập nhật thông tin ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditUser />,
   },
   {
@@ -61,7 +62,7 @@ export const appRouters_nv = [
     title: "editAccount",
     name: "Cài đặt tài khoản ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditAccount />,
   },
 
@@ -121,6 +122,22 @@ export const appRouters_nv = [
     icon: BookmarkIcon,
     showInMenu: true,
     component: <NV_chonLichKiHopDong />,
+  },
+  {
+    path: "/manageApplications",
+    title: "manageApplications",
+    name: "Phiếu Đăng Ký Chờ Duyệt",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <PhieuDangKyList />,
+  },
+  {
+    path: "/calendarApplications",
+    title: "calendarApplications",
+    name: "Danh sách đã duyệt",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <DanhSachKyKetList />,
   },
   // {
   //   path: "/nhanvien/NV_chonLichKiHopDong",

@@ -12,7 +12,7 @@ class UserService {
   chinhSuaTinhTrangHoatDong(id, tinhTrang) {
     const url = `${API_URL}ChinhSuaTinhTrangHoatDong`;
 
-    return axios.put(url, { id, tinhTrang });
+    return axios.post(url, { id, tinhTrang });
   }
   //   EditUser(userId, username, email, password) {
   //     return axios.put(

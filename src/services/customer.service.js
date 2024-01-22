@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = `${process.env.REACT_APP_URL_API}/api/KhachHang/`;
 //const API_TEST = `${process.env.REACT_APP_SERVICE_URL}/api/test/`;
 
-class UserService {
+class CustomerService {
   // getRoles(id) {
   //     axios
   //         .get(`${API_URL}getroles?id=${id}`, {
@@ -58,4 +58,4 @@ class UserService {
   };
 }
 
-export default new UserService();
+export default new CustomerService();

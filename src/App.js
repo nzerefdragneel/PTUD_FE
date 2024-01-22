@@ -37,7 +37,9 @@ import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
-
+import PhieuDangKyList from "./components/Maganage_Application.component";
+import DanhSachKyKetList from "./components/Calendar_Application.component";
+import AdminAccountList from "./components/AdminAccountList.component";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -249,8 +251,20 @@ class App extends Component {
                 <Route path="/statusRegister" element={<Status_Register />} />
                 <Route path="/addCustomer" element={<AddCustomerComponent />} />
                 <Route
+                  path="/manageApplications"
+                  element={<PhieuDangKyList />}
+                />
+                <Route
+                  path="/calendarApplications"
+                  element={<DanhSachKyKetList />}
+                />
+                <Route
                   path="/healthDeclaration"
                   element={<Health_Declaration />}
+                />
+                <Route
+                  path="/adminAccountList"
+                  element={<AdminAccountList />}
                 />
               </Routes>
             </div>

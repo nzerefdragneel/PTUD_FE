@@ -55,11 +55,12 @@ const User_Profile = ({ someProp, someState }) => {
   const userID = user.taiKhoan.iD_TaiKhoan;
 
   // Sử dụng useState để theo dõi giá trị của customer
-  const [customer, setCustomer] = useState(() => {
+  const [customer_0, setCustomer] = useState(() => {
     // Lấy dữ liệu từ localStorage khi component được tạo ra
     const storedCustomer = localStorage.getItem("customer");
     return storedCustomer ? JSON.parse(storedCustomer) : null;
   });
+  const customer = customer_0[0];
 
   useEffect(() => {
     const checkAndRemoveCustomer = () => {
@@ -68,7 +69,7 @@ const User_Profile = ({ someProp, someState }) => {
           const updatedCustomer = response.data;
 
           // Kiểm tra xem có sự thay đổi trong thuộc tính của customer hay không
-          if (!areCustomersEqual(customer, updatedCustomer)) {
+          if (!areCustomersEqual(customer_0, updatedCustomer)) {
             // Nếu có thay đổi, cập nhật giá trị của customer và lưu vào localStorage
             setCustomer(updatedCustomer);
             localStorage.setItem("customer", JSON.stringify(updatedCustomer));
@@ -83,7 +84,7 @@ const User_Profile = ({ someProp, someState }) => {
     // Thực hiện kiểm tra khi component được tạo ra và mỗi khi customer thay đổi
     checkAndRemoveCustomer();
   }, [
-    customer,
+    customer_0,
     userID /* Thêm các thuộc tính của customer bạn quan tâm vào đây */,
   ]);
 
@@ -113,7 +114,6 @@ const User_Profile = ({ someProp, someState }) => {
   };
 
   const colorClass = getColorClass(customer?.xacThuc); // Thêm kiểm tra customer không null trước khi truy cập thuộc tính
-
   return (
     <>
       <div className="bg-white overflow-hidden shadow rounded-lg border p-2">

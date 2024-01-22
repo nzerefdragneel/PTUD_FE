@@ -94,7 +94,7 @@ export const appRouters = [
     name: "Đóng phí",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <DongPhi idUser={1} />,
+    component: <DongPhi />,
   },
   // {
   //     path: '/congTy',
@@ -104,22 +104,7 @@ export const appRouters = [
   //     showInMenu: true,
   //     component: <CongTyScreen />,
   // },
-  // {
-  //     path: '/dongPhi',
-  //     title: 'dongphi',
-  //     name: 'Đóng phí',
-  //     icon: BookmarkIcon,
-  //     showInMenu: true,
-  //     component: <DongPhi />,
-  // },
-  {
-    path: "/chiTietDongPhi",
-    title: "ChiTietDongPhi",
-    name: "Chi tiết Đóng phí",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <ChiTietDongPhi />,
-  },
+
   {
     path: "/statusRegister",
     title: "statusRegister",
@@ -177,6 +162,7 @@ export const appRouters = [
     showInMenu: false,
     component: <AdminAccountList />,
   },
+
 ];
 
 export const routers = [...appRouters];

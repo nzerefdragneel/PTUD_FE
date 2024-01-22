@@ -6,6 +6,9 @@ import userService from "./services/user.service";
 import AuthVerify from "./common/authVerify";
 import { Routes, BrowserRouter, Navigate, Route, Link } from "react-router-dom";
 import { SidesMenu } from "./components/sidebar.component";
+import { SidesMenu_nv } from "./components/sidebar_nv.component";
+import { SidesMenu_QTV } from "./components/sidebar_qtv.component";
+import { SidesMenu_TC } from "./components/sidebar_taiChinh.component";
 import LoginScreen from "./screen/loginScreen";
 // Dong phi: import DongPhiScreen from "./screen/dongPhiScreen";
 import DongPhi from "./components/dongPhi.component";
@@ -69,10 +72,10 @@ class App extends Component {
     const user = AuthService.getCurrentUser();
     if (user !== null) {
       const token = user.accessToken;
-      // const role = user.taiKhoan.loaiTaiKhoan;
+      const role = user.taiKhoan.loaiTaiKhoan;
       this.setState({
         currentUser: user,
-        // roles: role,
+        roles: role,
         token: token,
       });
     }
@@ -97,7 +100,7 @@ class App extends Component {
   render() {
     const currentUser = this.state.currentUser;
     const curentRole = this.state.roles;
-
+    console.log(currentUser);
     return (
       <div className="">
         {/* headers */}
@@ -182,7 +185,11 @@ class App extends Component {
             className="flex-none w-64 
           "
           >
-            {currentUser && <SidesMenu />}
+            {currentUser &&
+              ((curentRole === "KH" && <SidesMenu />) ||
+                (curentRole === "NV" && <SidesMenu_nv />) ||
+                (curentRole === "ADMIN" && <SidesMenu_QTV />) ||
+                (curentRole === "NVTC" && <SidesMenu_TC />))}
           </div>
           <div className="flex-1 flex flex-col">
             <div className="flex-1 p-4">
@@ -210,11 +217,11 @@ class App extends Component {
                 <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
                 {/* phát hành gói bảo hiểm */}
                 <Route
-                  path="/nhanVien/goiBaoHiem"
+                  path="/nhanvien/goiBaoHiem"
                   element={<NV_ds_GoiBaoHiem />}
                 />
                 <Route
-                  path="/nhanVien/phatHanhGoiBaoHiem"
+                  path="/nhanvien/phatHanhGoiBaoHiem"
                   element={<PhatHanhGoiBaoHiem />}
                 />
                 <Route

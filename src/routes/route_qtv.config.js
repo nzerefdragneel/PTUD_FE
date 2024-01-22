@@ -21,7 +21,7 @@ import {
   KeyIcon,
 } from "@heroicons/react/24/solid";
 
-export const appRouters = [
+export const appRouters_qtv = [
   {
     path: "/home",
     title: "home",
@@ -46,14 +46,7 @@ export const appRouters = [
   //   showInMenu: true,
   //   component:<Profile/>
   // },
-  {
-    path: "/register",
-    title: "register",
-    name: "Đăng ký bảo hiểm ",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <Register_Insurance />,
-  },
+
   {
     path: "/edituser",
     title: "edituser",
@@ -70,72 +63,22 @@ export const appRouters = [
     showInMenu: true,
     component: <EditAccount />,
   },
-  {
-    path: "/healthDeclaration",
-    title: "healthDeclacation",
-    name: "Khai báo sức khoẻ  ",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <Health_Declaration />,
-  },
-  {
-    path: "/xemGoiBaoHiem",
-    title: "goibaohiem",
-    name: "Xem gói bảo hiểm",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <XemGoiBaoHiemScreen />,
-  },
-  {
-    path: "/dongPhi",
-    title: "dongphi",
-    name: "Đóng phí",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <DongPhi />,
-  },
   // {
-  //     path: '/congTy',
-  //     title: 'congty',
-  //     name: 'Công ty',
-  //     icon: BookmarkIcon,
-  //     showInMenu: true,
-  //     component: <CongTyScreen />,
+  //   path: "/editAccount",
+  //   title: "editAccount",
+  //   name: "Danh sách người dùng ",
+  //   icon: BookmarkIcon,
+  //   showInMenu: true,
+  //   component: <EditAccount />,
   // },
-
-  {
-    path: "/statusRegister",
-    title: "statusRegister",
-    name: "Theo dõi đơn đăng ký",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <Status_Register />,
-  },
-  {
-    path: "/addCustomer",
-    title: "addCustomer",
-    name: "Thêm hồ sơ khách hàng",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <addCustomerComponent />,
-  },
-
-  {
-    path: "/yeuCauChiTra",
-    title: "YeuCauChiTra",
-    name: "Yêu cầu chi trả",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <YeuCauChiTra />,
-  },
-  {
-    path: "/yeuCauTuVan",
-    title: "yeuCauTuVan",
-    name: "Yêu cầu tư vấn",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <YeuCauTuVan />,
-  },
+  // {
+  //   path: "/editAccount",
+  //   title: "editAccount",
+  //   name: "Thêm nhân viên ",
+  //   icon: BookmarkIcon,
+  //   showInMenu: true,
+  //   component: <EditAccount />,
+  // },
 ];
 
-export const routers = [...appRouters];
+export const routers = [...appRouters_qtv];

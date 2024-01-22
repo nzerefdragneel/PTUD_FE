@@ -13,7 +13,8 @@ import YeuCauTuVan from "../components/yeuCauTuVan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
-import Manage_Application from "../components/Maganage_Application.component";
+import PhieuDangKyList from "../components/Maganage_Application.component";
+import DanhSachKyKetList from "../components/Calendar_Application.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -156,8 +157,16 @@ export const appRouters = [
     title: "manageApplications",
     name: "Phiếu Đăng Ký Chờ Duyệt",
     icon: BookmarkIcon,
-    showInMenu: true,
-    component: <Manage_Application />,
+    showInMenu: false,
+    component: <PhieuDangKyList />,
+  },
+  {
+    path: "/calendarApplications",
+    title: "calendarApplications",
+    name: "Danh sách đã duyệt",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <DanhSachKyKetList />,
   },
 ];
 

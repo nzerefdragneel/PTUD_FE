@@ -3,7 +3,7 @@ import PhieuDangKiService from "../services/phieuDangKi.service";
 import GoiBaoHiemService from "../services/goiBaoHiem.service";
 import AuthService from "../services/auth.service";
 
-const PhieuDangKyList = () => {
+const DanhSachKyKetList = () => {
   const [phieudangkyList, setPhieuDangKyList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -15,7 +15,7 @@ const PhieuDangKyList = () => {
 
         // Lọc ra những phiếu đăng ký có tinhTrangDuyet là "Chưa Duyệt"
         const chuaDuyetPhieudangkyData = phieudangkyData.filter(
-          (phieudangky) => phieudangky.tinhTrangDuyet === "Chưa Duyệt"
+          (phieudangky) => phieudangky.tinhTrangDuyet === "Đã Duyệt"
         );
 
         const startIndex = (currentPage - 1) * 3;
@@ -49,50 +49,9 @@ const PhieuDangKyList = () => {
     fetchData();
   }, [currentPage]);
 
-  const handleAction = async (iD_PhieuDangKi, action) => {
-    const user = AuthService.getCurrentUser();
-    alert(user.taiKhoan.iD_TaiKhoan);
-    try {
-      let updatedPhieuDangKy;
-
-      // Tạo updatedPhieuDangKy dựa trên loại action
-      if (action === "duyet") {
-        updatedPhieuDangKy = {
-          tinhTrangDuyet: "Đã Duyệt",
-          diaDiemKiKet: "string", // Thay đổi địa điểm kí kết nếu cần
-          toKhaiSucKhoe: "N/A",
-          //   iD_NhanVien: 1, // Thay đổi tờ khai sức khỏe nếu cần
-        };
-        alert(JSON.stringify(updatedPhieuDangKy));
-      } else if (action === "tuchoi") {
-        updatedPhieuDangKy = {
-          tinhTrangDuyet: "Từ Chối",
-          diaDiemKiKet: "string", // Thay đổi địa điểm kí kết nếu cần
-          toKhaiSucKhoe: "N/A",
-          //   iD_NhanVien: user.taiKhoan.iD_TaiKhoan, // Thay đổi tờ khai sức khỏe nếu cần
-        };
-      }
-
-      // Gọi API PUT để cập nhật phiếu đăng ký
-      const response = await PhieuDangKiService.xetDuyetPhieuDangKy(
-        iD_PhieuDangKi,
-        updatedPhieuDangKy
-      );
-
-      // Xóa phần tử khỏi danh sách sau khi hành động thành công
-      setPhieuDangKyList((prevList) =>
-        prevList.filter((item) => item.iD_PhieuDangKi !== iD_PhieuDangKi)
-      );
-
-      console.log(`Đã ${action} phiếu đăng ký:`, response.data);
-    } catch (error) {
-      console.error(`Error performing ${action} action:`, error);
-    }
-  };
-
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Phiếu Đăng Ký Chờ Duyệt</h1>
+      <h1 className="text-2xl font-bold mb-4">Danh sách đã Duyệt</h1>
       {phieudangkyList.length === 0 ? (
         <p>Chưa có phiếu đăng ký nào chờ duyệt.</p>
       ) : (
@@ -106,10 +65,7 @@ const PhieuDangKyList = () => {
                 <div>
                   <strong>ID:</strong> {phieudangky.iD_PhieuDangKi}
                 </div>
-                <div>
-                  <strong>Tình trạng duyệt:</strong>{" "}
-                  {phieudangky.tinhTrangDuyet}
-                </div>
+
                 <div>
                   <strong>Địa điểm kí kết:</strong> {phieudangky.diaDiemKiKet}
                 </div>
@@ -139,24 +95,6 @@ const PhieuDangKyList = () => {
                     ? phieudangky.goiBaoHiem.tenGoi
                     : "N/A"}
                 </div>
-                <div className="mt-4 flex items-center">
-                  <button
-                    className="bg-green-500 text-white p-2 rounded mr-2"
-                    onClick={() =>
-                      handleAction(phieudangky.iD_PhieuDangKi, "duyet")
-                    }
-                  >
-                    Duyệt
-                  </button>
-                  <button
-                    className="bg-red-500 text-white p-2 rounded"
-                    onClick={() =>
-                      handleAction(phieudangky.iD_PhieuDangKi, "tuchoi")
-                    }
-                  >
-                    Từ chối
-                  </button>
-                </div>
               </li>
             ))}
           </ul>
@@ -181,4 +119,4 @@ const PhieuDangKyList = () => {
   );
 };
 
-export default PhieuDangKyList;
+export default DanhSachKyKetList;

@@ -15,6 +15,7 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
+import AdminAccountList from "../components/AdminAccountList.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -167,6 +168,14 @@ export const appRouters = [
     icon: BookmarkIcon,
     showInMenu: false,
     component: <DanhSachKyKetList />,
+  },
+  {
+    path: "/adminAccountList",
+    title: "adminAccountList",
+    name: "Danh sách tài khoản",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <AdminAccountList />,
   },
 ];
 

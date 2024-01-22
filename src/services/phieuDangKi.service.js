@@ -8,7 +8,7 @@ class PhieuDangKiService {
   }
   xetDuyetPhieuDangKy(id, updatedPhieuDangKy) {
     const url = `${API_URL}XetDuyetPhieuDangKy/${id}`;
-    return axios.put(url, updatedPhieuDangKy);
+    return axios.post(url, updatedPhieuDangKy);
   }
 
   UpdateNhanVien(iD_PhieuDangKi, iD_NhanVien) {

@@ -61,7 +61,6 @@ const PhieuDangKyList = () => {
           tinhTrangDuyet: "Đã Duyệt",
           diaDiemKiKet: "string", // Thay đổi địa điểm kí kết nếu cần
           toKhaiSucKhoe: "N/A",
-          //   iD_NhanVien: 1, // Thay đổi tờ khai sức khỏe nếu cần
         };
         alert(JSON.stringify(updatedPhieuDangKy));
       } else if (action === "tuchoi") {
@@ -69,7 +68,6 @@ const PhieuDangKyList = () => {
           tinhTrangDuyet: "Từ Chối",
           diaDiemKiKet: "string", // Thay đổi địa điểm kí kết nếu cần
           toKhaiSucKhoe: "N/A",
-          //   iD_NhanVien: user.taiKhoan.iD_TaiKhoan, // Thay đổi tờ khai sức khỏe nếu cần
         };
       }
 

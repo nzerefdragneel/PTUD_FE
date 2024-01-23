@@ -59,6 +59,10 @@ class CustomerService {
     //   // });
     // };
   }
+  verifyCustomer(customer_id) {
+    const apiUrl = `${API_URL}XacThucKhachHang(idkh)?idkh=${customer_id}`;
+    return axios.post(apiUrl);
+  }
 }
 
 export default new CustomerService();

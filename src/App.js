@@ -50,6 +50,8 @@ import Nhanvien_Profile from "./components/NV_profile.component";
 import AddNhanVien from "./components/addNhanVien.component";
 import AddNhanVienTC from "./components/addNhanVienTC.component";
 import AddAdmin from "./components/addAdmin.component";
+import VerifyEmailComponent from "./components/verifyEmail.component";
+import VerifyScreen from "./screen/verifyScreen";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -293,6 +295,7 @@ class App extends Component {
                 <Route path="/addNhanVien" element={<AddNhanVien />} />
                 <Route path="/addNhanVienTC" element={<AddNhanVienTC />} />
                 <Route path="/addAdmin" element={<AddAdmin />} />
+                <Route path="/VerifyEmail" element={<VerifyScreen />} />
               </Routes>
             </div>
           </div>

@@ -82,14 +82,14 @@ export const appRouters_nv = [
     showInMenu: true,
     component: <NV_ds_GoiBaoHiem />,
   },
-  // {
-  //   path: "/nhanVien/goiBaoHiem",
-  //   title: "phatHanhGoiBaoHiem",
-  //   name: "Phát hành chính sách",
-  //   icon: BookmarkIcon,
-  //   showInMenu: true,
-  //   component: <NV_ds_GoiBaoHiem />,
-  // },
+  {
+    path: "/nhanVien/dsCSach",
+    title: "phatHanhGoiBaoHiem",
+    name: "Phát hành chính sách",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_ds_chinhSach />,
+  },
   {
     path: "/nhanvien/ds_gbh",
     title: "chinhSuaDanhSachChinhSach",

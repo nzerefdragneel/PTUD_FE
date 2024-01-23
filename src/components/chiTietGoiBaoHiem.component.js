@@ -1,108 +1,155 @@
-import React, { useEffect, useState, Component } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@material-tailwind/react';
-import { useNavigate } from 'react-router-dom';
-import ChiTietChinhSachService from '../services/ChiTietChinhSach.service';
-import ChinhSachService from '../services/ChinhSach.service';
-import KhachHangService from '../services/khachHang.service';
-import authService from '../services/auth.service';
+import React, { useEffect, useState, Component } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+import HopDongService from "../services/hopDong.service";
+import ChiTietChinhSachService from "../services/ChiTietChinhSach.service";
+import ChinhSachService from "../services/ChinhSach.service";
+import KhachHangService from "../services/khachHang.service";
+import authService from "../services/auth.service";
 const ChiTietGoiBaoHiem = () => {
-    const user = authService.getCurrentUser();
-    // const iD_TaiKhoan = user.id;
-    const iD_TaiKhoan = 12;
-    const {
-        state: { goiSanPham: goiBaohiem },
-    } = useLocation();
-    const navigate = useNavigate();
-    console.log(goiBaohiem);
-    const [khachHang, setkhachHang] = useState([]);
-    const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
-    const [danhSachDaLay, setDanhSachDaLay] = useState([]);
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response_kh = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
-                setkhachHang(response_kh.data);
-                const response = await ChiTietChinhSachService.getChiTietChinhSach(goiBaohiem.iD_GoiBaoHiem);
-                const [result1, result2] = await Promise.all([
-                    ChiTietChinhSachService.getChiTietChinhSach(goiBaohiem.iD_GoiBaoHiem),
-                    ChiTietChinhSachService.getChiTietChinhSach(goiBaohiem.iD_GoiBaoHiem),
-                ]);
-                const data = response.data;
-                const goiChuaLay = data.filter((goi) => !danhSachDaLay.includes(goi.iD_ChinhSach));
+  const {
+    state: { goiSanPham: goiBaohiem },
+  } = useLocation();
+  const navigate = useNavigate();
+  console.log(goiBaohiem);
+  const [kiemTra, setkiemTra] = useState(false);
+  const [khachHang, setkhachHang] = useState([]);
+  const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
+  // const [danhSachDaLay, setDanhSachDaLay] = useState([]);
 
-                setDanhSachChinhSach((prevGoiSanPham) => [...prevGoiSanPham, ...goiChuaLay]);
-                setDanhSachDaLay((prevDanhSachDaLay) => [
-                    ...prevDanhSachDaLay,
-                    ...goiChuaLay.map((goi) => goi.iD_ChinhSach),
-                ]);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const cs = await ChiTietChinhSachService.getByIdGoiBaoHiem(
+          goiBaohiem.iD_GoiBaoHiem
+        );
+        const data = cs.data;
+        // console.log(response_kh.data[0]);
+        const ds_cs = [];
+        for (const dt of data) {
+          try {
+            const ds_chinhSach = await ChinhSachService.getByIdCS(
+              dt.iD_ChinhSach
+            );
+            ds_cs.push(ds_chinhSach.data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+        setDanhSachChinhSach(ds_cs);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      if (iD_TaiKhoan !== null) {
+        try {
+          const response_kh = await KhachHangService.getByIdTaiKhoan(
+            iD_TaiKhoan
+          );
+          setkhachHang(response_kh.data[0]);
+          console.log(response_kh.data[0]);
+          try {
+            const res = await HopDongService.getByIdKhachHang(
+              response_kh.data[0].iD_KhachHang
+            );
+            const hd_conHieuLuc = res.data.filter(
+              (hd) =>
+                hd.iD_GoiBaoHiem === goiBaohiem.iD_GoiBaoHiem &&
+                hd.trangThai === "Hiệu Lực"
+            );
+            if (hd_conHieuLuc.length !== 0) {
+              setkiemTra(true);
             }
-        };
-        fetchData();
-    }, []);
-
-    const handleDangKiBaoHiemClick = (goiBaohiem) => {
-        if (user == null) {
-            navigate(`/login`);
+            console.log(hd_conHieuLuc.length);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
         }
-        //kiểm tra xác thực
-        if (khachHang.xacThuc === 'Chưa Xác Thực') {
-            alert('Hello, this is an alert!');
-            return;
-        }
-        navigate(`/register/${goiBaohiem.iD_GoiBaoHiem}`);
+      }
     };
-    return (
-        <header className="wrapper mt-8">
-            <div className="baoHiem border border-black p-4 mb-4">
-                <div className="TieuDe flex items-center">
-                    <h2 className="mr-2">{goiBaohiem.tenBaoHiem}</h2>
-                    <div className="vertical-line bg-black h-6 mx-2"></div>
-                    <p>{goiBaohiem.moTa}</p>
-                </div>
+    fetchData();
+  }, []);
 
-                <img
-                    src={goiBaohiem.hinhAnh}
-                    alt="Bao Hiem Image"
-                    className="anhbaohiem"
-                    style={{ maxWidth: '100%', height: 'auto' }}
-                />
-                <div className="thongtinbaohiem">
-                    <p>Tên gói: {goiBaohiem.tenGoi}</p>
-                    <p>Giá tiền: {goiBaohiem.giaTien}</p>
-                    <p>Thời hạn:{goiBaohiem.thoiHan}</p>
-                    <p>Ngày phát hành: {goiBaohiem.ngayPhatHanh}</p>
-                </div>
+  const handleDangKiBaoHiemClick = async (goiBaohiem) => {
+    if (user === null) {
+      navigate(`/login`);
+      return;
+    }
+
+    //kiểm tra xác thực
+    // console.log();
+    if (khachHang.xacThuc === "Chưa Xác Thực") {
+      alert("Bạn chưa xác thực email! Vui lòng quay lại sau!");
+      return;
+    }
+    navigate(`/register/${goiBaohiem.iD_GoiBaoHiem}`, {
+      state: { goiBaohiem },
+    });
+  };
+  return (
+    <header className="wrapper mt-8">
+      <div className="baoHiem border border-black p-4 mb-4">
+        <div className="TieuDe flex items-center">
+          <h2 className="mr-2">{goiBaohiem.tenBaoHiem}</h2>
+        </div>
+
+        <img
+          src={goiBaohiem.hinhAnh}
+          alt="Bao Hiem Image"
+          className="anhbaohiem"
+          style={{ maxWidth: "100%", height: "auto" }}
+        />
+        <div className="thongtinbaohiem">
+          <p>Tên gói: {goiBaohiem.tenGoi}</p>
+          <p>Mô tả: {goiBaohiem.moTa}</p>
+          <p>Giá tiền: {goiBaohiem.giaTien}</p>
+          <p>Thời hạn:{goiBaohiem.thoiHan}</p>
+          <p>Ngày phát hành: {goiBaohiem.ngayPhatHanh.slice(0, 10)}</p>
+        </div>
+      </div>
+      <div className="danhsachchinhsach flex flex-col gap-4">
+        {danhSachChinhSach.map((chinhSach) => (
+          <div
+            key={chinhSach.iD_ChinhSach}
+            className="ChinhSachItem border border-solid border-teal-500 p-4 mb-4"
+          >
+            <div className="IDChinhSach mb-4">
+              <h3>Chính sách {chinhSach.iD_ChinhSach}</h3>
+
+              <p className="text-gray-600 mb-4">
+                Tên chính sách: {chinhSach.tenChinhSach}
+              </p>
             </div>
-            <div className="danhsachchinhsach flex flex-col gap-4">
-                {danhSachChinhSach.map((chinhSach) => (
-                    <div
-                        key={chinhSach.iD_ChinhSach}
-                        className="ChinhSachItem border border-solid border-teal-500 p-4 mb-4"
-                    >
-                        <div className="IDChinhSach mb-4">
-                            <h3>Chính sách {chinhSach.iD_ChinhSach}</h3>
-
-                            {/* tên chính sách */}
-                        </div>
-                        <p className="text-gray-600 mb-4">Hạn mức chi trả: {chinhSach.hanMucChiTra}</p>
-                        <p className="text-gray-600 mb-4">Điều kiện áp dụng: {chinhSach.dieuKienApDung}</p>
-                        <p className="text-gray-600 mb-4">Mô tả: {chinhSach.moTa}</p>
-                    </div>
-                ))}
-            </div>
-
-            <Button
-                onClick={() => handleDangKiBaoHiemClick(goiBaohiem.iD_GoiBaoHiem)}
-                className="bg-blue-500 text-white px-4 py-2"
-            >
-                Đăng ký ngay
-            </Button>
-        </header>
-    );
+            <p className="text-gray-600 mb-4">
+              Hạn mức chi trả: {chinhSach.hanMucChiTra} VNĐ
+            </p>
+            <p className="text-gray-600 mb-4">
+              Điều kiện áp dụng: {chinhSach.dieuKienApDung}
+            </p>
+            <p className="text-gray-600 mb-4">Mô tả: {chinhSach.mota}</p>
+          </div>
+        ))}
+      </div>
+      {kiemTra ? (
+        <div className="bg-blue-500 text-white px-4 py-2">Đang dùng</div>
+      ) : (
+        <Button
+          onClick={() => handleDangKiBaoHiemClick(goiBaohiem)}
+          className="bg-blue-500 text-white px-4 py-2"
+        >
+          Đăng ký ngay
+        </Button>
+      )}
+    </header>
+  );
 };
 
 export default ChiTietGoiBaoHiem;

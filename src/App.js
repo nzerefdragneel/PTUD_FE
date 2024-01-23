@@ -209,7 +209,10 @@ class App extends Component {
                   path="/register/:idGoiBaoHiem"
                   element={<Register_Insurance />}
                 />
-                <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+                <Route
+                  path="/chiTietDongPhi/:id"
+                  element={<ChiTietDongPhi />}
+                />
                 <Route path="/yeuCauTuVan" element={<YeuCauTuVan />} />
                 <Route path="/yeuCauChiTra" element={<YeuCauChiTra />} />
                 {/* đóng phí */}

@@ -10,7 +10,8 @@ const YeuCauTuVan = () => {
   const user = authService.getCurrentUser();
   const iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
   console.log(user);
-  // const iD_TaiKhoan = 12;
+  //cờ kiểm tra nếu user gởi lại cùng một nội dung
+  const [daGuiYeuCau, setDaGuiYeuCau] = useState(false);
   const [diaDiem, setdiaDiem] = useState(null);
   const [ngay, setngay] = useState(null);
   const [gio, setgio] = useState(null);
@@ -32,10 +33,14 @@ const YeuCauTuVan = () => {
   }, []);
 
   const handleYeuCauTuVan = async () => {
+    // Kiểm tra xem đã gửi yêu cầu chưa
+    if (daGuiYeuCau) {
+      setShowMessage(true);
+      setnoiDungMessage("Bạn đã gửi yêu cầu, vui lòng đợi xử lý!");
+      return;
+    }
     //kiểm tra khách hàng đã xác thực hay chưa
-    console.log(khachHang);
-    console.log(khachHang[0].xacThuc);
-    console.log(khachHang[0].iD_KhachHang);
+
     if (khachHang[0].xacThuc === "Chưa Xác Thực") {
       setShowMessage(true);
       setnoiDungMessage("Tài khoản chưa xác thực. Vui lòng quay lại sau!");
@@ -57,17 +62,31 @@ const YeuCauTuVan = () => {
       setnoiDungMessage("Không thể bỏ trống giờ tư vấn!");
       return;
     }
+    // // Kiểm tra ngày có sau ngày hiện tại không
+    // const ngayHienTai = new Date();
+    // const ngayChon = new Date(`${ngay}T${gio}`);
+    // if (ngayChon <= ngayHienTai) {
+    //   setShowMessage(true);
+    //   setnoiDungMessage(
+    //     "Vui lòng chọn ngày và giờ tư vấn sau thời điểm hiện tại!"
+    //   );
+    //   return;
+    // }
     // Kiểm tra ngày có sau ngày hiện tại không
-    const ngayHienTai = new Date();
-    const ngayChon = new Date(`${ngay}T${gio}`);
-    if (ngayChon <= ngayHienTai) {
-      setShowMessage(true);
-      setnoiDungMessage(
-        "Vui lòng chọn ngày và giờ tư vấn sau thời điểm hiện tại!"
-      );
-      return;
-    }
+    // const ngayHienTai = new Date();
+    // const ngayChon = new Date(`${ngay}T${gio}`);
 
+    // // Tính ngày hiện tại cộng thêm 7 ngày
+    // const ngayHienTaiCong7Ngay = new Date(ngayHienTai.getTime());
+    // ngayHienTaiCong7Ngay.setDate(ngayHienTaiCong7Ngay.getDate() + 7);
+
+    // if (ngayChon < ngayHienTaiCong7Ngay) {
+    //   setShowMessage(true);
+    //   setnoiDungMessage(
+    //     "Vui lòng chọn ngày và giờ tư vấn trong khoảng một tuần tới!"
+    //   );
+    //   return;
+    // }
     const thoiGian = ngay + "T" + gio;
     console.log(thoiGian);
     try {
@@ -76,11 +95,13 @@ const YeuCauTuVan = () => {
         diaDiem,
         thoiGian
       );
+      setDaGuiYeuCau(true);
       console.log("YeuCauTuVan API Response:", response);
       setShowMessage(true);
       setnoiDungMessage("Gửi yêu cầu thành công!");
     } catch (error) {
       setShowMessage(true);
+      setDaGuiYeuCau(false);
       setnoiDungMessage("Vui lòng kiểm tra lại thông tin!");
       console.error("Error sending YeuCauTuVan request:", error);
     }

@@ -20,10 +20,11 @@ const YeuCauChiTra = () => {
   // const user = this.props.dataFromParent.iD_TaiKhoan;
   const user = authService.getCurrentUser();
   const iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
-  // let flat = false;
+  //cờ kiểm tra nếu user gởi lại cùng một nội dung
+  const [daGuiYeuCau, setDaGuiYeuCau] = useState(false);
   const [GoiBaoHiemData, setGoiBaoHiemData] = useState([]);
   const [QuanLyBaoHiem, setQuanLyBaoHiem] = useState([]);
-  const [GoiBaoHiem, setSelectGoiBaoHiem] = useState([]);
+  const [GBH, setSelectGoiBaoHiem] = useState(null);
   const [nguoiYeuCau, setnguoiYeuCau] = useState(null);
   const [moiQuanHe, setmoiQuanHe] = useState(null);
   const [diaChi, setdiaChi] = useState(null);
@@ -83,6 +84,8 @@ const YeuCauChiTra = () => {
             }
           }
           console.log(dsGoiBaoHiem);
+          console.log(GoiBaoHiemData);
+
           setGoiBaoHiemData(dsGoiBaoHiem);
           console.log(GoiBaoHiemData);
           setDanhSachDaLay((prevDanhSachDaLay) => [
@@ -101,14 +104,14 @@ const YeuCauChiTra = () => {
   }, []);
 
   const handleYeuCauChiTra = async () => {
-    console.log(GoiBaoHiem);
+    console.log(GBH);
     // Kiểm tra xem có trường thông tin nào trống không
-    if (GoiBaoHiem.length === 0) {
+    if (!GBH) {
       setShowMessage(true);
       setnoiDungMessage("Bạn chưa chọn gói bảo hiểm!");
       return;
     }
-    console.log(GoiBaoHiem);
+    console.log(GBH);
     if (!soTienYeuCauChiTra) {
       setShowMessage(true);
       setnoiDungMessage("Bạn chưa nhập số tiền!");
@@ -180,9 +183,7 @@ const YeuCauChiTra = () => {
       setnoiDungMessage("Bạn chưa chọn hình hóa đơn!");
       return;
     }
-    const qlbhid = QuanLyBaoHiem.find(
-      (qlbh) => qlbh.iD_GoiBaoHiem === +GoiBaoHiem
-    );
+    const qlbhid = QuanLyBaoHiem.find((qlbh) => qlbh.iD_GoiBaoHiem === +GBH);
     // const qlbhid = QuanLyBaoHiem.find(
     //   (qlbh) => qlbh.iD_GoiBaoHiem === GoiBaoHiem.iD_GoiBaoHiem
     // );
@@ -232,14 +233,18 @@ const YeuCauChiTra = () => {
 
             <select
               name="GoiBaoHiem"
-              value={GoiBaoHiem}
+              value={GBH}
               id="GoiBaoHiem"
               form="healthDeclaration"
               className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               onChange={(e) => setSelectGoiBaoHiem(e.target.value)}
             >
+              <option value=""> -- Chọn -- </option>
               {GoiBaoHiemData.map((goiSanPham) => (
-                <option key={goiSanPham.iD_GoiBaoHiem} value={goiSanPham}>
+                <option
+                  key={goiSanPham.iD_GoiBaoHiem}
+                  value={goiSanPham.iD_GoiBaoHiem}
+                >
                   {goiSanPham.tenBaoHiem}
                 </option>
               ))}

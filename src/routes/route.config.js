@@ -49,7 +49,7 @@ export const appRouters = [
   //   component:<Profile/>
   // },
   {
-    path: "/register",
+    path: "/register/:idGoiBaoHiem",
     title: "register",
     name: "Đăng ký bảo hiểm ",
     icon: BookmarkIcon,
@@ -162,7 +162,6 @@ export const appRouters = [
     showInMenu: false,
     component: <AdminAccountList />,
   },
-
 ];
 
 export const routers = [...appRouters];

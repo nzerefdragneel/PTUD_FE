@@ -13,7 +13,7 @@ import YeuCauTuVan from "../components/yeuCauTuVan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
-
+import Nhanvien_Profile from "../components/NV_profile.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -31,12 +31,12 @@ export const appRouters_taiChinh = [
     component: <Home />,
   },
   {
-    path: "/user_profile",
-    title: "user_profile",
-    name: "Profile",
+    path: "/nhanvien_Profile",
+    title: "nhanvien_Profile",
+    name: "Hồ sơ nhân viên",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <User_Profile />,
+    component: <Nhanvien_Profile />,
   },
   // {
   //   path: "/profile",

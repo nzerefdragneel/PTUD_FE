@@ -4,7 +4,7 @@ import UserService from "../services/user.service";
 import { Navigate, Link } from "react-router-dom";
 import authService from "../services/auth.service";
 import { isEmail } from "validator";
-import customerService from "../services/customer.service";
+import CustomerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 
@@ -80,7 +80,7 @@ export default class EditUser extends Component {
     // this.onChangePassword = this.onChangePassword.bind(this);
 
     const user = authService.getCurrentUser();
-    const customer = customerService.getCurrentCustomer();
+    const customer = CustomerService.getCurrentCustomer();
 
     this.state = {
       hoten: customer.hoTen,
@@ -206,7 +206,7 @@ export default class EditUser extends Component {
       successful: false,
     });
     const user = authService.getCurrentUser();
-    const customer = customerService.getCurrentCustomer();
+    const customer = CustomerService.getCurrentCustomer();
 
     const requestData = {
       hoTen: this.state.hoten,
@@ -218,17 +218,16 @@ export default class EditUser extends Component {
       phuongXa: this.state.phuongxa,
       quanHuyen: this.state.quanhuyen,
       thanhPho: this.state.thanhpho,
-      email: this.state.email,
       cmnd: this.state.cmnd,
       ngheNghiep: this.state.nghenghiep,
       chiTietCongViec: this.state.chitietcongviec,
       thuNhap: parseInt(this.state.thunhap),
       soTaiKhoan: this.state.sotaikhoan,
-      nganHang: this.state.nganHang,
+      nganHang: this.state.nganhang,
       soDienThoai: this.state.sodienthoai,
     };
 
-    customerService.updateCustomer(customer.iD_KhachHang, requestData);
+    CustomerService.updateCustomer(customer.iD_KhachHang, requestData);
   }
 
   render() {

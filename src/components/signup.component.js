@@ -84,7 +84,7 @@ function Signup() {
           error.response.data.message ||
           error.message ||
           error.toString();
-        setMessage(resMessage.toString());
+        setMessage(error.response.data);
         setIsSubmit(true);
         setSuccess(false);
         setIsLoading(false);
@@ -162,7 +162,7 @@ function Signup() {
         </Form>
 
         {isSubmit && !isSuccess && (
-          <div className="text-error-color text-base">{message}</div>
+          <div className="text-error-color text-base">Lỗi: {message}</div>
         )}
         {isSubmit && isSuccess && (
           <div className="alert alert-success text-base">

@@ -8,6 +8,7 @@ import AuthService from "../services/auth.service";
 import { withRouter } from "../common/with-router";
 import { Navigate } from "react-router-dom";
 import customerService from "../services/customer.service";
+import nhanVienService from "../services/nhanVien.service";
 
 const required = (value) => {
   if (!value) {
@@ -86,49 +87,133 @@ class LoginForm extends Component {
       AuthService.login(this.state.username, this.state.password).then(
         (response) => {
           if (response.data.accessToken && response.data.taiKhoan) {
-            // Lấy giá trị accessToken từ response
-            const accessToken = response.data.accessToken;
-            // Lấy giá trị userID
             const userID = response.data.taiKhoan.iD_TaiKhoan;
+            const userRole = response.data.taiKhoan.loaiTaiKhoan;
+            const message =
+              "Tài khoản mới cần được cập nhật thông tin, ấn OK để chuyển đến trang cập nhật thông tin";
 
             localStorage.setItem("user", JSON.stringify(response.data));
             console.log(response.data);
-            customerService
-              .getCustomer(userID)
-              .then((customerResponse) => {
-                const customerData = customerResponse.data;
 
-                if (customerData) {
-                  // Nếu có tồn tại ID_KhachHang
-                  localStorage.setItem(
-                    "customer",
-                    JSON.stringify(customerData)
+            if (userRole === "KH") {
+              // Handling for customer role
+              customerService
+                .getCustomer(userID)
+                .then((customerResponse) => {
+                  const customerData = customerResponse.data;
+
+                  if (customerData) {
+                    localStorage.setItem(
+                      "customer",
+                      JSON.stringify(customerData)
+                    );
+                    this.props.router.navigate("/home");
+                  } else {
+                    this.props.router.navigate("/addCustomer");
+                  }
+                })
+                .catch((customerError) => {
+                  console.error(
+                    "Error fetching customer information:",
+                    customerError
                   );
-                  this.props.router.navigate("/home");
-                } else {
-                  // Nếu không tồn tại ID_KhachHang
+
+                  alert(message);
                   this.props.router.navigate("/addCustomer");
-                }
-              })
-              .catch((customerError) => {
-                console.error(
-                  "Lỗi khi lấy thông tin khách hàng:",
-                  customerError
-                );
+                })
+                .finally(() => {
+                  window.location.reload();
+                });
+            }
+            if (userRole === "NV") {
+              // Handling for customer role
+              customerService
+                .getCustomer(userID)
+                .then((customerResponse) => {
+                  const customerData = customerResponse.data;
 
-                // Xử lý lỗi nếu cần
-                // ...
+                  if (customerData) {
+                    localStorage.setItem(
+                      "customer",
+                      JSON.stringify(customerData)
+                    );
+                    this.props.router.navigate("/home");
+                  } else {
+                    this.props.router.navigate("/addNhanVien");
+                  }
+                })
+                .catch((customerError) => {
+                  console.error(
+                    "Error fetching customer information:",
+                    customerError
+                  );
 
-                // Chuyển hướng vào /createProfile khi có lỗi
-                const message =
-                  "Tài khoản mới hoặc chưa có hồ sơ người dùng. Vui lòng tạo hồ sơ người dùng để tiếp tục trải nghiệm dịch vụ của chúng tôi";
-                alert(message);
-                this.props.router.navigate("/addCustomer");
-              })
-              .finally(() => {
-                // Refresh trang sau khi xử lý xong
-                window.location.reload();
-              });
+                  alert(message);
+                  this.props.router.navigate("/addNhanVien");
+                })
+                .finally(() => {
+                  window.location.reload();
+                });
+            }
+            if (userRole === "NVTC") {
+              // Handling for customer role
+              customerService
+                .getCustomer(userID)
+                .then((customerResponse) => {
+                  const customerData = customerResponse.data;
+
+                  if (customerData) {
+                    localStorage.setItem(
+                      "customer",
+                      JSON.stringify(customerData)
+                    );
+                    this.props.router.navigate("/home");
+                  } else {
+                    this.props.router.navigate("/addNhanVienTC");
+                  }
+                })
+                .catch((customerError) => {
+                  console.error(
+                    "Error fetching customer information:",
+                    customerError
+                  );
+
+                  alert(message);
+                  this.props.router.navigate("/addNhanVienTC");
+                })
+                .finally(() => {
+                  window.location.reload();
+                });
+            }
+            if (userRole === "ADMIN") {
+              nhanVienService
+                .getNhanVien(userID)
+                .then((nhanVienResponse) => {
+                  const nhanVienData = nhanVienResponse.data;
+
+                  if (nhanVienData) {
+                    localStorage.setItem(
+                      "nhanvien",
+                      JSON.stringify(nhanVienData)
+                    );
+                    this.props.router.navigate("/home");
+                  } else {
+                    this.props.router.navigate("/addAdmin");
+                  }
+                })
+                .catch((nhanvienError) => {
+                  console.error(
+                    "Error fetching customer information:",
+                    nhanvienError
+                  );
+
+                  alert(message);
+                  this.props.router.navigate("/addAdmin");
+                })
+                .finally(() => {
+                  window.location.reload();
+                });
+            }
           }
         },
         (error) => {

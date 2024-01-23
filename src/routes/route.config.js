@@ -155,22 +155,6 @@ export const appRouters = [
   //   showInMenu: false,
   //   component: <DanhSachKyKetList />,
   // },
-  {
-    path: "/adminAccountList",
-    title: "adminAccountList",
-    name: "Danh sách tài khoản",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <AdminAccountList />,
-  },
-  {
-    path: "/adminAdd",
-    title: "adminAdd",
-    name: "Thêm tài khoản nhân viên ",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <ThemNhanVienComponent />,
-  },
 ];
 
 export const routers = [...appRouters];

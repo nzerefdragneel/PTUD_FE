@@ -22,6 +22,7 @@ import {
   InboxIcon,
   KeyIcon,
 } from "@heroicons/react/24/solid";
+import Nhanvien_Profile from "../components/NV_profile.component";
 
 export const appRouters_nv = [
   {
@@ -33,12 +34,12 @@ export const appRouters_nv = [
     component: <Home />,
   },
   {
-    path: "/user_profile",
-    title: "user_profile",
-    name: "Profile",
+    path: "/nhanvien_Profile",
+    title: "nhanvien_Profile",
+    name: "Hồ sơ nhân viên",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <User_Profile />,
+    component: <Nhanvien_Profile />,
   },
   // {
   //   path: "/profile",
@@ -64,15 +65,6 @@ export const appRouters_nv = [
     icon: BookmarkIcon,
     showInMenu: false,
     component: <EditAccount />,
-  },
-
-  {
-    path: "/addCustomer",
-    title: "addCustomer",
-    name: "Thêm hồ sơ khách hàng",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <addCustomerComponent />,
   },
 
   {

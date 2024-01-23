@@ -63,6 +63,12 @@ class CustomerService {
     const apiUrl = `${API_URL}XacThucKhachHang(idkh)?idkh=${customer_id}`;
     return axios.post(apiUrl);
   }
+
+  updateEmail(iD_KhachHang, email) {
+    return axios.post(
+      `${API_URL}UpdateEmailKhachHang(id)?id=${iD_KhachHang}&Email=${email}`
+    );
+  }
 }
 
 export default new CustomerService();

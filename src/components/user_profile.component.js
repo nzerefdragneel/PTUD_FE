@@ -4,7 +4,7 @@ import authService from "../services/auth.service";
 import React, { Component, useState, useEffect } from "react";
 import { getColorClass } from "../utils/colorultils";
 import CustomerService from "../services/customer.service";
-
+import SendEmailVerifyService from "../services/sendEmailVerify.service";
 const User_Profile = () => {
   const user = authService.getCurrentUser();
   const userID = user.taiKhoan.iD_TaiKhoan;
@@ -38,9 +38,21 @@ const User_Profile = () => {
           </Link>
           <Link to={"/editAccount"} className="text-black hover:none">
             <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Đổi mật khẩu
+              Cài đặt email
             </button>
           </Link>
+          <button
+            onClick={() => {
+              // Gửi lại email xác thực khi nhấn nút
+              SendEmailVerifyService.SendEmail(
+                customer.iD_KhachHang,
+                customer.email
+              ).then(alert("Email xác thức đã được gửi vào email của bạn"));
+            }}
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Gửi lại Email Xác thực
+          </button>
         </div>
         <div className="px-4 py-3 sm:px-6">
           <h1 className="font-semibold leading-6 text-lg text-gray-900">

@@ -18,6 +18,7 @@ const Nv_ds_allCS = () => {
     thoiGianPhatHanh: "",
   });
   const navigate = useNavigate();
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -76,6 +77,7 @@ const Nv_ds_allCS = () => {
     try {
       await PhatHanhCSService.addChinhSach(newPolicy);
       setShowForm(false);
+      setShowSuccessPopup(true);
       setNewPolicy({
         tenChinhSach: "",
         hanMucChiTra: "",
@@ -201,6 +203,15 @@ const Nv_ds_allCS = () => {
             </Button>
           </div>
         </form>
+      ) : showSuccessPopup ? (
+        <div className="my-8">
+          <div className="p-4 bg-white shadow-lg rounded text-center">
+            <p>Thêm chính sách thành công!</p>
+            <Button color="green" onClick={() => setShowSuccessPopup(false)}>
+              OK
+            </Button>
+          </div>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {danhSachChinhSach.map((chinhSach) => (

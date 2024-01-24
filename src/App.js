@@ -52,6 +52,8 @@ import AddNhanVienTC from "./components/addNhanVienTC.component";
 import AddAdmin from "./components/addAdmin.component";
 import VerifyEmailComponent from "./components/verifyEmail.component";
 import VerifyScreen from "./screen/verifyScreen";
+import { Toaster } from "react-hot-toast";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -111,6 +113,7 @@ class App extends Component {
     return (
       <div className="">
         {/* headers */}
+        <Toaster />
         <div className="pt-3 pb-4 px-32 flex flex-row  justify-between border-b mb-2 bg-black">
           <div className="flex flex-row flex-wrap text-lg  items-center">
             <a href="/" className="nav-link">

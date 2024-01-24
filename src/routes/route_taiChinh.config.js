@@ -8,12 +8,12 @@ import XemGoiBaoHiemScreen from "../screen/xemGoiBaoHiemScreen";
 import CongTyScreen from "../screen/congTyScreen";
 import DongPhi from "../components/dongPhi.component";
 import ChiTietDongPhi from "../components/chiTietDongPhi.component";
-import YeuCauChiTra from "../components/yeuCauChiTra.component";
 import YeuCauTuVan from "../components/yeuCauTuVan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
+import Nv_duyetYeuCauChiTra from "../components/nv_duyetYeuCauChiTra.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -64,12 +64,12 @@ export const appRouters_taiChinh = [
     component: <EditAccount />,
   },
   {
-    path: "/editAccount",
-    title: "editAccount",
+    path: "/nhanvien/duyetYCCT",
+    title: "duyetYCCT",
     name: "Xử lý yêu cầu chi trả ",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <EditAccount />,
+    component: <Nv_duyetYeuCauChiTra />,
   },
   {
     path: "/editAccount",

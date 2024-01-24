@@ -62,31 +62,50 @@ const YeuCauTuVan = () => {
       setnoiDungMessage("Không thể bỏ trống giờ tư vấn!");
       return;
     }
-    // // Kiểm tra ngày có sau ngày hiện tại không
-    // const ngayHienTai = new Date();
-    // const ngayChon = new Date(`${ngay}T${gio}`);
-    // if (ngayChon <= ngayHienTai) {
-    //   setShowMessage(true);
-    //   setnoiDungMessage(
-    //     "Vui lòng chọn ngày và giờ tư vấn sau thời điểm hiện tại!"
-    //   );
-    //   return;
-    // }
+    const chiChuaKhoangTrang = (dc) => {
+      const addressRegex = /^\s+$/;
+
+      return addressRegex.test(dc);
+    };
+    //kiểm tra thông tin trường địa chỉ
+    const diaChiHopLe = (dc) => {
+      const addressRegex = /^[^a-zA-Z0-9]+$/; // Biểu thức chính quy cho địa chỉ
+
+      return addressRegex.test(dc);
+    };
+    //kiểm tra chỉ chứa toàn số
+    const diaChiChiChuaSo = (address) => {
+      const numberRegex = /^\d+$/; // Biểu thức chính quy cho chuỗi chỉ chứa số
+
+      return numberRegex.test(address);
+    };
+    // Sử dụng hàm diaChiHopLe
+    if (diaChiHopLe(diaDiem)) {
+      setShowMessage(true);
+      setnoiDungMessage("Địa điểm bạn nhập không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(diaDiem)) {
+      setShowMessage(true);
+      setnoiDungMessage("Địa điểm bạn nhập không hợp lệ!");
+      return;
+    }
+    if (diaChiChiChuaSo(diaDiem)) {
+      setShowMessage(true);
+      setnoiDungMessage("Địa điểm bạn nhập không hợp lệ!");
+      return;
+    }
     // Kiểm tra ngày có sau ngày hiện tại không
-    // const ngayHienTai = new Date();
-    // const ngayChon = new Date(`${ngay}T${gio}`);
+    const ngayHienTai = new Date();
+    const ngayChon = new Date(`${ngay}T${gio}`);
+    if (ngayChon <= ngayHienTai) {
+      setShowMessage(true);
+      setnoiDungMessage(
+        "Vui lòng chọn ngày và giờ tư vấn sau thời điểm hiện tại!"
+      );
+      return;
+    }
 
-    // // Tính ngày hiện tại cộng thêm 7 ngày
-    // const ngayHienTaiCong7Ngay = new Date(ngayHienTai.getTime());
-    // ngayHienTaiCong7Ngay.setDate(ngayHienTaiCong7Ngay.getDate() + 7);
-
-    // if (ngayChon < ngayHienTaiCong7Ngay) {
-    //   setShowMessage(true);
-    //   setnoiDungMessage(
-    //     "Vui lòng chọn ngày và giờ tư vấn trong khoảng một tuần tới!"
-    //   );
-    //   return;
-    // }
     const thoiGian = ngay + "T" + gio;
     console.log(thoiGian);
     try {
@@ -125,12 +144,13 @@ const YeuCauTuVan = () => {
             <Input
               type="text"
               name="diaDiem"
+              maxLength="100"
               // className={`form-control ${isUsernameValid ? '' : 'border-red-500'}`}
               value={diaDiem}
               required
               onChange={(e) => setdiaDiem(e.target.value)}
               autoComplete="on"
-              placeholder="17 Âu Cơ, Cô Giang, quận 1, Hồ Chí Minh"
+              placeholder="ví dụ: 17 Âu Cơ, Cô Giang, quận 1, Hồ Chí Minh"
             />
           </div>
         </div>

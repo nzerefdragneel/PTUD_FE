@@ -30,9 +30,11 @@ import Health_Declaration from "./components/health_declaration.component";
 import ChiTietGoiBaoHiem from "./components/chiTietGoiBaoHiem.component";
 import YeuCauChiTra from "./components/yeuCauChiTra.component";
 import YeuCauTuVan from "./components/yeuCauTuVan.component";
+import GoiBaoHiemCuaToi from "./components/goiBaoHiemCuaToi.component";
+import ChiTietGoiBaoHiemCuaToi from "./components/chiTietGoiBaoHiemCuaToi.component";
 // Tinh trang don dang ky: import Status_Register from "./components/status_register.component";
 import NV_ds_GoiBaoHiem from "./components/nv_ds_GoiBaoHiem.component";
-import ChinhSuaGoiBaoHiem from "./components/nv_chinhSuaGoiBaoHiem.component";
+// import ChinhSuaGoiBaoHiem from "./components/nv_chinhSuaGoiBaoHiem.component";
 import PhatHanhGoiBaoHiem from "./components/nv_phatHanhGBH.component";
 import NV_chonLichTuVan from "./components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
@@ -218,6 +220,15 @@ class App extends Component {
                 {/* đóng phí */}
                 <Route path="/dongPhi" element={<DongPhi />} />
                 <Route path="/chiTietDongPhi" element={<ChiTietDongPhi />} />
+                {/* gói bảo hiểm của tôi */}
+                <Route
+                  path="/goiBaoHiemCuaToi"
+                  element={<GoiBaoHiemCuaToi />}
+                />
+                <Route
+                  path="/chi-tiet-goi-bao-hiem-cua-khach-hang/:id"
+                  element={<ChiTietGoiBaoHiemCuaToi />}
+                />
                 {/* phát hành gói bảo hiểm */}
                 <Route
                   path="/nhanvien/goiBaoHiem"

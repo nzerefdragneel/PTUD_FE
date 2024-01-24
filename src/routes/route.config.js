@@ -16,6 +16,7 @@ import addCustomerComponent from "../components/addCustomer.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import AdminAccountList from "../components/AdminAccountList.component";
+import GoiBaoHiemCuaToi from "../components/goiBaoHiemCuaToi.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -39,6 +40,14 @@ export const appRouters = [
     icon: BookmarkIcon,
     showInMenu: true,
     component: <User_Profile />,
+  },
+  {
+    path: "/goiBaoHiemCuaToi",
+    title: "goiBaoHiemCuaToi",
+    name: "Gói bảo hiểm của tôi",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <GoiBaoHiemCuaToi />,
   },
   // {
   //   path: "/profile",

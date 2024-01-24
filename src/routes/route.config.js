@@ -16,6 +16,7 @@ import addCustomerComponent from "../components/addCustomer.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import AdminAccountList from "../components/AdminAccountList.component";
+import GoiBaoHiemCuaToi from "../components/goiBaoHiemCuaToi.component";
 import ThemNhanVienComponent from "../components/AdminAddNV.component";
 import {
   BookmarkIcon,
@@ -41,6 +42,14 @@ export const appRouters = [
     showInMenu: true,
     component: <User_Profile />,
   },
+  {
+    path: "/goiBaoHiemCuaToi",
+    title: "goiBaoHiemCuaToi",
+    name: "Gói bảo hiểm của tôi",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <GoiBaoHiemCuaToi />,
+  },
   // {
   //   path: "/profile",
   //   title: "profile",
@@ -50,7 +59,7 @@ export const appRouters = [
   //   component:<Profile/>
   // },
   {
-    path: "/register",
+    path: "/register/:idGoiBaoHiem",
     title: "register",
     name: "Đăng ký bảo hiểm ",
     icon: BookmarkIcon,
@@ -139,22 +148,32 @@ export const appRouters = [
     showInMenu: true,
     component: <YeuCauTuVan />,
   },
-  // {
-  //   path: "/manageApplications",
-  //   title: "manageApplications",
-  //   name: "Phiếu Đăng Ký Chờ Duyệt",
-  //   icon: BookmarkIcon,
-  //   showInMenu: false,
-  //   component: <PhieuDangKyList />,
-  // },
-  // {
-  //   path: "/calendarApplications",
-  //   title: "calendarApplications",
-  //   name: "Danh sách đã duyệt",
-  //   icon: BookmarkIcon,
-  //   showInMenu: false,
-  //   component: <DanhSachKyKetList />,
-  // },
+
+  {
+    path: "/manageApplications",
+    title: "manageApplications",
+    name: "Phiếu Đăng Ký Chờ Duyệt",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <PhieuDangKyList />,
+  },
+  {
+    path: "/calendarApplications",
+    title: "calendarApplications",
+    name: "Danh sách đã duyệt",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <DanhSachKyKetList />,
+  },
+  {
+    path: "/adminAccountList",
+    title: "adminAccountList",
+    name: "Danh sách tài khoản",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <AdminAccountList />,
+  },
+
 ];
 
 export const routers = [...appRouters];

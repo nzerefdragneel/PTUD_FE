@@ -1,14 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://localhost:7202/api/ChiTietChinhSach/GetAllChitietchinhsach/';
+const API_URL = "https://localhost:7202/api/ChiTietChinhSach/";
 
 class ChiTietChinhSachService {
-    getChiTietChinhSach(id) {
-        return axios.get(`${API_URL}idGoiBaoHiem?idGoiBaoHiem=${id}`);
-    }
-    getById(idGoiBaoHiem) {
-        return axios.get(`${API_URL}?idGoiBaoHiem=${idGoiBaoHiem}`);
-    }
+  getByIdGoiBaoHiem(idGoiBaoHiem) {
+    return axios.get(
+      `${API_URL}GetByIdGoiBaoHiem?idGoiBaoHiem=${idGoiBaoHiem}`
+    );
+  }
 }
 
 export default new ChiTietChinhSachService();

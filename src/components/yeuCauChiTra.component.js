@@ -1,8 +1,9 @@
 import React, { Component, useEffect, useState, useCallback } from "react";
 import KhachHangService from "../services/khachHang.service";
-import QuanLyBaoHiemService from "../services/quanLyBaoHiem.service";
+import HopDongService from "../services/hopDong.service";
 import YeuCauChiTraService from "../services/yeuCauChiTra.service";
 import GoiBaoHiemService from "../services/goiBaoHiem.service";
+import QuanLyBaoHiemService from "../services/quanLyBaoHiem.service";
 import authService from "../services/auth.service";
 import { Button, Input } from "@material-tailwind/react";
 import DialogDefault from "./dialog";
@@ -16,14 +17,21 @@ const required = (value) => {
   }
 };
 const YeuCauChiTra = () => {
+  const [kiemTra, setkiemTra] = useState(false);
   //lấy idtaikhoan từ bảng tài khoản
   // const user = this.props.dataFromParent.iD_TaiKhoan;
   const user = authService.getCurrentUser();
-  const iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
-  // let flat = false;
+  let iD_TaiKhoan = null;
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  }
+
+  //cờ kiểm tra nếu user gởi lại cùng một nội dung
+  const [daGuiYeuCau, setDaGuiYeuCau] = useState(false);
   const [GoiBaoHiemData, setGoiBaoHiemData] = useState([]);
+  const [baoHiemDangDung, setbaoHiemDangDung] = useState([]);
   const [QuanLyBaoHiem, setQuanLyBaoHiem] = useState([]);
-  const [GoiBaoHiem, setSelectGoiBaoHiem] = useState([]);
+  const [GBH, setSelectGoiBaoHiem] = useState(null);
   const [nguoiYeuCau, setnguoiYeuCau] = useState(null);
   const [moiQuanHe, setmoiQuanHe] = useState(null);
   const [diaChi, setdiaChi] = useState(null);
@@ -40,7 +48,7 @@ const YeuCauChiTra = () => {
   const [hinhHoaDon, sethinhHoaDon] = useState(null);
   const [danhSachDaLay, setDanhSachDaLay] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
-  const [kiemTra, setkiemTra] = useState(false);
+
   const [noiDungMessage, setnoiDungMessage] = useState(null);
 
   console.log(user.taiKhoan.iD_TaiKhoan);
@@ -52,44 +60,47 @@ const YeuCauChiTra = () => {
         );
         console.log(khachHangData);
         try {
-          const response = await QuanLyBaoHiemService.getByIDKH(
+          const response = await HopDongService.getByIdKhachHang(
             khachHangData.data[0].iD_KhachHang
           );
-          console.log(response.data);
-          setkiemTra(true);
+
           const baoHiemConHieuLuc = response.data.filter(
-            (goi) => new Date(goi.thoiGianKetThuc) > new Date()
+            (hd) => hd.trangThai === "Hiệu Lực"
           );
           console.log(baoHiemConHieuLuc.length);
-          if (baoHiemConHieuLuc.length === 0) {
-            setkiemTra(false);
-            return;
+          if (baoHiemConHieuLuc.length !== 0) {
+            setkiemTra(true);
           }
           setQuanLyBaoHiem(baoHiemConHieuLuc);
-          const goiChuaLay = baoHiemConHieuLuc.filter(
-            (goi) => !danhSachDaLay.includes(goi.iD_GoiBaoHiem)
-          );
+
           // Lấy thông tin từng gói bảo hiểm
           const dsGoiBaoHiem = [];
-          for (const goi of goiChuaLay) {
+          for (const goi of baoHiemConHieuLuc) {
             try {
-              console.log(goi.iD_GoiBaoHiem);
-              console.log(goi);
               const duLieu = await GoiBaoHiemService.getByID(goi.iD_GoiBaoHiem);
-              console.log(duLieu);
+
               dsGoiBaoHiem.push(duLieu.data);
             } catch (error) {
               console.error("Error fetching goiBaoHiem data:", error);
             }
           }
           console.log(dsGoiBaoHiem);
-          setGoiBaoHiemData(dsGoiBaoHiem);
           console.log(GoiBaoHiemData);
-          setDanhSachDaLay((prevDanhSachDaLay) => [
-            ...prevDanhSachDaLay,
-            ...goiChuaLay.map((goi) => goi.iD_GoiBaoHiem),
-          ]);
-          // {GoiBaoHiemData?()}
+
+          setGoiBaoHiemData(dsGoiBaoHiem);
+          try {
+            const dl = await QuanLyBaoHiemService.getByIDKH(
+              khachHangData.data[0].iD_KhachHang
+            );
+            const bHiem = dl.data.filter((bh) => {
+              const ngayKT = new Date(bh.thoiGianKetThuc);
+              const ngayHT = new Date();
+              return ngayKT > ngayHT;
+            });
+            setbaoHiemDangDung(bHiem);
+          } catch (error) {
+            console.error("Error fetching  data:", error);
+          }
         } catch (error) {
           console.error("Error fetching goiBaoHiem data:", error);
         }
@@ -101,14 +112,14 @@ const YeuCauChiTra = () => {
   }, []);
 
   const handleYeuCauChiTra = async () => {
-    console.log(GoiBaoHiem);
+    console.log(GBH);
     // Kiểm tra xem có trường thông tin nào trống không
-    if (GoiBaoHiem.length === 0) {
+    if (!GBH) {
       setShowMessage(true);
       setnoiDungMessage("Bạn chưa chọn gói bảo hiểm!");
       return;
     }
-    console.log(GoiBaoHiem);
+    console.log(GBH);
     if (!soTienYeuCauChiTra) {
       setShowMessage(true);
       setnoiDungMessage("Bạn chưa nhập số tiền!");
@@ -180,12 +191,179 @@ const YeuCauChiTra = () => {
       setnoiDungMessage("Bạn chưa chọn hình hóa đơn!");
       return;
     }
-    const qlbhid = QuanLyBaoHiem.find(
-      (qlbh) => qlbh.iD_GoiBaoHiem === +GoiBaoHiem
-    );
-    // const qlbhid = QuanLyBaoHiem.find(
-    //   (qlbh) => qlbh.iD_GoiBaoHiem === GoiBaoHiem.iD_GoiBaoHiem
-    // );
+    //kiểm tra hợp lệ
+
+    const chiChuaKhoangTrang = (dc) => {
+      const addressRegex = /^\s+$/;
+
+      return addressRegex.test(dc);
+    };
+    //kiểm tra thông tin trường địa chỉ
+    const diaChiHopLe = (dc) => {
+      const addressRegex = /^[^a-zA-Z0-9]+$/; // Biểu thức chính quy cho địa chỉ
+
+      return addressRegex.test(dc);
+    };
+    //kiểm tra chỉ chứa toàn số
+    const ChiChuaSo = (address) => {
+      const numberRegex = /^\d+$/; // Biểu thức chính quy cho chuỗi chỉ chứa số
+
+      return numberRegex.test(address);
+    };
+    if (diaChiHopLe(nguoiYeuCau)) {
+      setShowMessage(true);
+      setnoiDungMessage("Tên người yêu cầu không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(nguoiYeuCau)) {
+      setShowMessage(true);
+      setnoiDungMessage("Tên người yêu cầu không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(nguoiYeuCau)) {
+      setShowMessage(true);
+      setnoiDungMessage("Tên người yêu cầu không hợp lệ!");
+      return;
+    }
+    if (
+      moiQuanHe !== "con" &&
+      moiQuanHe !== "vợ" &&
+      moiQuanHe !== "chồng" &&
+      moiQuanHe !== "cha" &&
+      moiQuanHe !== "mẹ" &&
+      moiQuanHe !== "anh" &&
+      moiQuanHe !== "chị" &&
+      moiQuanHe !== "em" &&
+      moiQuanHe !== "người thân" &&
+      moiQuanHe !== "người giám hộ" &&
+      moiQuanHe !== "người quen" &&
+      moiQuanHe !== "ông" &&
+      moiQuanHe !== "bà" &&
+      moiQuanHe !== "cháu" &&
+      moiQuanHe !== "khác"
+    ) {
+      setShowMessage(true);
+      setnoiDungMessage("Vui lòng chỉ chọn mối quan hệ trong trường có sẵn!");
+      return;
+    }
+    if (diaChiHopLe(diaChi)) {
+      setShowMessage(true);
+      setnoiDungMessage("Địa chỉ bạn nhập không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(diaChi)) {
+      setShowMessage(true);
+      setnoiDungMessage("Địa chỉ không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(diaChi)) {
+      setShowMessage(true);
+      setnoiDungMessage("Địa chỉ không hợp lệ!");
+      return;
+    }
+    if (!ChiChuaSo(dienThoai)) {
+      setShowMessage(true);
+      setnoiDungMessage("Số điện thoại bạn nhập không hợp lệ!");
+      return;
+    }
+    function emailHopLe(e) {
+      // Biểu thức chính quy kiểm tra địa chỉ email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(e);
+    }
+    if (!emailHopLe(email)) {
+      setShowMessage(true);
+      setnoiDungMessage("Email bạn nhập không hợp lệ!");
+      return;
+    }
+    function soTienHopLe(t) {
+      // Biểu thức chính quy kiểm tra số tiền
+      const amountRegex = /^\d+(\.\d{1,3})?$/;
+      return amountRegex.test(t);
+    }
+    if (!soTienHopLe(soTienYeuCauChiTra)) {
+      setShowMessage(true);
+      setnoiDungMessage("Số tiền bạn nhập không hợp lệ!");
+      return;
+    }
+    if (diaChiHopLe(truongHopChiTra)) {
+      setShowMessage(true);
+      setnoiDungMessage("Trường hợp chi trả không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(truongHopChiTra)) {
+      setShowMessage(true);
+      setnoiDungMessage("Trường hợp chi trả không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(truongHopChiTra)) {
+      setShowMessage(true);
+      setnoiDungMessage("Trường hợp chi trả không hợp lệ!");
+      return;
+    }
+    if (diaChiHopLe(noiDieuTri)) {
+      setShowMessage(true);
+      setnoiDungMessage("Nơi điều trị không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(noiDieuTri)) {
+      setShowMessage(true);
+      setnoiDungMessage("Nơi điều trị không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(noiDieuTri)) {
+      setShowMessage(true);
+      setnoiDungMessage("Nơi điều trị không hợp lệ!");
+      return;
+    }
+    if (diaChiHopLe(chanDoan)) {
+      setShowMessage(true);
+      setnoiDungMessage("Kết quả chẩn đoán không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(chanDoan)) {
+      setShowMessage(true);
+      setnoiDungMessage("Kết quả chẩn đoán không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(chanDoan)) {
+      setShowMessage(true);
+      setnoiDungMessage("Kết quả chẩn đoán không hợp lệ!");
+      return;
+    }
+    if (diaChiHopLe(hauQua)) {
+      setShowMessage(true);
+      setnoiDungMessage("Hậu quả không hợp lệ!");
+      return;
+    }
+    if (chiChuaKhoangTrang(hauQua)) {
+      setShowMessage(true);
+      setnoiDungMessage("Hậu quả không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(hauQua)) {
+      setShowMessage(true);
+      setnoiDungMessage("Hậu quả không hợp lệ!");
+      return;
+    }
+    if (diaChiHopLe(hinhThucDieuTri)) {
+      setShowMessage(true);
+      setnoiDungMessage("Hình thức điều trị không hợp lệ!");
+      return;
+    }
+
+    if (chiChuaKhoangTrang(hinhThucDieuTri)) {
+      setShowMessage(true);
+      setnoiDungMessage("Hình thức điều trị không hợp lệ!");
+      return;
+    }
+    if (ChiChuaSo(hinhThucDieuTri)) {
+      setShowMessage(true);
+      setnoiDungMessage("Hình thức điều trị không hợp lệ!");
+      return;
+    }
+    const qlbhid = baoHiemDangDung.find((qlbh) => qlbh.iD_GoiBaoHiem === +GBH);
+
     console.log(qlbhid);
     try {
       const response = await YeuCauChiTraService.EditYeuCauChiTra(
@@ -232,15 +410,19 @@ const YeuCauChiTra = () => {
 
             <select
               name="GoiBaoHiem"
-              value={GoiBaoHiem}
+              value={GBH}
               id="GoiBaoHiem"
               form="healthDeclaration"
               className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               onChange={(e) => setSelectGoiBaoHiem(e.target.value)}
             >
+              <option value=""> -- Chọn -- </option>
               {GoiBaoHiemData.map((goiSanPham) => (
-                <option key={goiSanPham.iD_GoiBaoHiem} value={goiSanPham}>
-                  {goiSanPham.tenBaoHiem}
+                <option
+                  key={goiSanPham.iD_GoiBaoHiem}
+                  value={goiSanPham.iD_GoiBaoHiem}
+                >
+                  {goiSanPham.tenBaoHiem} (Gói {goiSanPham.tenGoi})
                 </option>
               ))}
             </select>
@@ -252,10 +434,12 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="nguoiYeuCau"
+              maxLength="30"
               value={nguoiYeuCau}
               required="true"
               onChange={(e) => setnguoiYeuCau(e.target.value)}
               autocomplete="on"
+              placeholder="ví dụ: Nguyễn Văn A"
             />
           </div>
           <div className="form-group">
@@ -265,11 +449,31 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="moiQuanHe"
+              maxLength="20"
               value={moiQuanHe}
               required="true"
               onChange={(e) => setmoiQuanHe(e.target.value)}
               autocomplete="on"
+              placeholder="ví dụ: con "
+              list="moiQuanHeList"
             />
+            <datalist id="moiQuanHeList">
+              <option value="con" />
+              <option value="vợ" />
+              <option value="chồng" />
+              <option value="cha" />
+              <option value="mẹ" />
+              <option value="anh" />
+              <option value="chị" />
+              <option value="em" />
+              <option value="người thân" />
+              <option value="người giám hộ" />
+              <option value="người quen" />
+              <option value="ông" />
+              <option value="bà" />
+              <option value="cháu" />
+              <option value="khác" />
+            </datalist>
           </div>
           <div className="form-group">
             <label htmlFor="username" className="font-semibold mb-2">
@@ -278,8 +482,10 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="diaChi"
+              maxLength="100"
               value={diaChi}
               required="true"
+              placeholder="ví dụ: 17 Âu Cơ, Cô Giang, quận 1, Hồ Chí Minh"
               onChange={(e) => setdiaChi(e.target.value)}
               autocomplete="on"
             />
@@ -291,6 +497,8 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="dienThoai"
+              maxLength="10"
+              placeholder="ví dụ: 0123456789"
               value={dienThoai}
               required="true"
               onChange={(e) => setdienThoai(e.target.value)}
@@ -304,6 +512,8 @@ const YeuCauChiTra = () => {
             <Input
               type="email"
               name="email"
+              maxLength="30"
+              placeholder="ví dụ: nguyenvana@gmail.com"
               value={email}
               required="true"
               onChange={(e) => setemail(e.target.value)}
@@ -313,11 +523,13 @@ const YeuCauChiTra = () => {
 
           <div className="form-group">
             <label htmlFor="username" className="font-semibold mb-2">
-              Số tiền yêu cầu chi trả `(VNĐ)`
+              Số tiền yêu cầu chi trả (VNĐ)
             </label>
             <Input
               type="text"
+              maxLength="21"
               name="soTienYeuCauChiTra"
+              placeholder="ví dụ: 150000.567 ---(tối đa 3 số thập phân sau dấu chấm)"
               value={soTienYeuCauChiTra}
               required="true"
               onChange={(e) => setsoTienYeuCauChiTra(e.target.value)}
@@ -330,7 +542,9 @@ const YeuCauChiTra = () => {
             </label>
             <Input
               type="text"
+              maxLength="50"
               name="truongHopChiTra"
+              placeholder="ví dụ: nằm viện"
               value={truongHopChiTra}
               required="true"
               onChange={(e) => settruongHopChiTra(e.target.value)}
@@ -344,6 +558,8 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="noiDieuTri"
+              placeholder="ví dụ: bệnh viện Tân Phú"
+              maxLength="100"
               value={noiDieuTri}
               required="true"
               onChange={(e) => setnoiDieuTri(e.target.value)}
@@ -357,6 +573,8 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="chanDoan"
+              placeholder="nhập kết quả chẩn đoán"
+              maxLength="50"
               value={chanDoan}
               required="true"
               onChange={(e) => setchanDoan(e.target.value)}
@@ -370,6 +588,8 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="hauQua"
+              placeholder="nhập hậu quả"
+              maxLength="50"
               value={hauQua}
               required="true"
               onChange={(e) => sethauQua(e.target.value)}
@@ -383,6 +603,8 @@ const YeuCauChiTra = () => {
             <Input
               type="text"
               name="hinhThucDieuTri"
+              placeholder="nhập hình thức điều trị ví dụ: uống thuốc,..."
+              maxLength="50"
               value={hinhThucDieuTri}
               required="true"
               onChange={(e) => sethinhThucDieuTri(e.target.value)}
@@ -420,11 +642,12 @@ const YeuCauChiTra = () => {
 
           <div className="form-group">
             <label htmlFor="username" className="font-semibold mb-2">
-              Link Hình hóa đơn
+              Hình hóa đơn
             </label>
             <Input
               type="text"
               name="hinhHoaDon"
+              maxLength="100"
               value={hinhHoaDon}
               required="true"
               onChange={(e) => sethinhHoaDon(e.target.value)}

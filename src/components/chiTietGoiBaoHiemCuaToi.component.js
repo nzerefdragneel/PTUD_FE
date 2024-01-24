@@ -7,7 +7,7 @@ import ChiTietChinhSachService from "../services/ChiTietChinhSach.service";
 import ChinhSachService from "../services/ChinhSach.service";
 import KhachHangService from "../services/khachHang.service";
 import authService from "../services/auth.service";
-const ChiTietGoiBaoHiem = () => {
+const ChiTietGoiBaoHiemCuaToi = () => {
   const user = authService.getCurrentUser();
   let iD_TaiKhoan = null;
   if (user !== null) {
@@ -28,15 +28,23 @@ const ChiTietGoiBaoHiem = () => {
     const fetchData = async () => {
       try {
         const cs = await ChiTietChinhSachService.getByIdGoiBaoHiem(
-          goiBaohiem.iD_GoiBaoHiem
+          goiBaohiem.idGBH
         );
+        //lấy ra những chính sách mà lúc khách hàng mua đang áp dụng
         const data = cs.data.filter(
-          (gbh) => gbh.ngayKetThuc !== "0001-01-01T00:00:00"
+          (gbh) => gbh.ngayBatDau <= goiBaohiem.ngayKiKet
         );
-
+        const ds_csTruocNgayKetThuc = [];
+        for (const dt of data) {
+          if (dt.ngayKetThuc === "0001-01-01T00:00:00") {
+            ds_csTruocNgayKetThuc.push(dt);
+          } else if (dt.ngayKetThuc >= goiBaohiem.ngayKiKet) {
+            ds_csTruocNgayKetThuc.push(dt);
+          }
+        }
         // console.log(response_kh.data[0]);
         const ds_cs = [];
-        for (const dt of data) {
+        for (const dt of ds_csTruocNgayKetThuc) {
           try {
             const ds_chinhSach = await ChinhSachService.getByIdCS(
               dt.iD_ChinhSach
@@ -63,7 +71,7 @@ const ChiTietGoiBaoHiem = () => {
             );
             const hd_conHieuLuc = res.data.filter(
               (hd) =>
-                hd.iD_GoiBaoHiem === goiBaohiem.iD_GoiBaoHiem &&
+                hd.iD_GoiBaoHiem === goiBaohiem.idGBH &&
                 hd.trangThai === "Hiệu Lực"
             );
             if (hd_conHieuLuc.length !== 0) {
@@ -82,17 +90,6 @@ const ChiTietGoiBaoHiem = () => {
   }, []);
 
   const handleDangKiBaoHiemClick = async (goiBaohiem) => {
-    if (user === null) {
-      navigate(`/login`);
-      return;
-    }
-
-    //kiểm tra xác thực
-    // console.log();
-    if (khachHang.xacThuc === "Chưa Xác Thực") {
-      alert("Bạn chưa xác thực email! Vui lòng quay lại sau!");
-      return;
-    }
     navigate(`/register/${goiBaohiem.iD_GoiBaoHiem}`, {
       state: { goiBaohiem },
     });
@@ -111,6 +108,7 @@ const ChiTietGoiBaoHiem = () => {
           style={{ maxWidth: "100%", height: "auto" }}
         />
         <div className="thongtinbaohiem">
+          <p>Ngày kí kết hợp đồng: {goiBaohiem.ngayKiKet.slice(0, 10)}</p>
           <p>Giá tiền: {goiBaohiem.giaTien}</p>
           <p>Thời hạn:{goiBaohiem.thoiHan} tháng</p>
           <p>Ngày phát hành: {goiBaohiem.ngayPhatHanh.slice(0, 10)}</p>
@@ -150,11 +148,11 @@ const ChiTietGoiBaoHiem = () => {
           onClick={() => handleDangKiBaoHiemClick(goiBaohiem)}
           className="bg-blue-500 text-white px-4 py-2"
         >
-          Đăng ký ngay
+          Tái tục
         </Button>
       )}
     </header>
   );
 };
 
-export default ChiTietGoiBaoHiem;
+export default ChiTietGoiBaoHiemCuaToi;

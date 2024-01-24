@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { withRouter } from "../common/with-router";
-
+import { Link } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { isEmail } from "validator";
-
+import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
 
 const required = (value) => {
@@ -53,9 +53,9 @@ function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
-function Signup() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function ThemNhanVienComponent() {
+  const [tenDangNhap, setUsername] = useState("");
+  const [matKhau, setPassword] = useState("");
   //   const [passwor setConfirmPassword] = useState("");
 
   // const [email, setEmail] = useState("");
@@ -69,41 +69,32 @@ function Signup() {
     e.preventDefault();
 
     fref.current.validateAll();
-    const userNameRegex = /^[0-9]{10}$/;
-    if (!userNameRegex.test(username)) {
-      alert("SDT phải có độ dài là 10 (0-9)");
-      setIsLoading(false);
-    } else {
-      if (password.length < 6 || password.length > 40) {
-        alert("Mật khẩu phải từ 6-40 kí tự");
+
+    UserService.ThemNhanVienByADMIN(tenDangNhap, matKhau).then(
+      (response) => {
+        setSuccess(true);
+        setMessage(response.data.message);
+        setIsSubmit(true);
         setIsLoading(false);
-      } else {
-        AuthService.register(username, password).then(
-          (response) => {
-            setSuccess(true);
-            setMessage(response.data.message);
-            setIsSubmit(true);
-            setIsLoading(false);
-          },
-          (error) => {
-            const resMessage =
-              error.response ||
-              error.response.data ||
-              error.response.data.message ||
-              error.message ||
-              error.toString();
-            setMessage(error.response.data);
-            setIsSubmit(true);
-            setSuccess(false);
-            setIsLoading(false);
-          }
-        );
+      },
+      (error) => {
+        const resMessage =
+          error.response ||
+          error.response.data ||
+          error.response.data.message ||
+          error.message ||
+          error.toString();
+        setMessage(resMessage.toString());
+        setIsSubmit(true);
+        setSuccess(false);
+        setIsLoading(false);
       }
-    }
+    );
   };
 
   return (
     <div className="col-md-12">
+      <h1 className="text-2xl font-bold mb-4">Thêm Tài Khoản Nhân Sự </h1>
       <div className="">
         <Form onSubmit={handleRegister} ref={fref}>
           <div>
@@ -172,16 +163,21 @@ function Signup() {
         </Form>
 
         {isSubmit && !isSuccess && (
-          <div className="text-error-color text-base">Lỗi: {message}</div>
+          <div className="text-error-color text-base">{message}</div>
         )}
         {isSubmit && isSuccess && (
           <div className="alert alert-success text-base">
-            Đăng ký thành công{" "}
+            Thêm nhân viên thành công{" "}
           </div>
         )}
       </div>
+      <Link to={"/adminAccountList"} className=" text-gray-900 hover:none">
+        <button className="rounded-md bg-red-500 px-3 py-2 my-3 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Xem danh sách tài khoản
+        </button>
+      </Link>
     </div>
   );
 }
 
-export default withRouter(Signup);
+export default withRouter(ThemNhanVienComponent);

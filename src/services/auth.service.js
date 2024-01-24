@@ -1,5 +1,5 @@
-import axios from 'axios';
-const bcrypt = require('bcryptjs');
+import axios from "axios";
+const bcrypt = require("bcryptjs");
 
 // const API_URL = 'https://web-api-be.onrender.com/api/auth/';
 
@@ -20,36 +20,34 @@ class AuthService {
     localStorage.clear();
   }
 
-  register(username, password, _loaitaikhoan, _tinhTrang) {
+  register(username, password) {
+    const url = `${API_URL}/DangKi`;
     const requestData = {
-      iD_TaiKhoan: 0,
       tenDangNhap: username,
       matKhau: password,
-      loaiTaiKhoan: "KH",
-      tinhTrang: "Hoạt động",
     };
 
     return axios.post(API_URL + "/DangKi", requestData);
   }
 
-    forgotPassword(email) {
-        return axios.post(
-            API_URL + 'forgot-password',
-            {
-                email,
-            },
-            {
-                headers: {
-                    'Cache-Control': 'no-cache',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Access-Control-Allow-Origin': '*',
-                },
-                mode: 'no-cors',
-            },
-        );
-    }
+  forgotPassword(email) {
+    return axios.post(
+      API_URL + "forgot-password",
+      {
+        email,
+      },
+      {
+        headers: {
+          "Cache-Control": "no-cache",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+        },
+        mode: "no-cors",
+      }
+    );
+  }
 
-/*    resetPassword(email, token, password) {
+  /*    resetPassword(email, token, password) {
         return axios.post(
             API_URL + 'reset-password',
             {
@@ -71,7 +69,6 @@ class AuthService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
-
 }
 
 export default new AuthService();

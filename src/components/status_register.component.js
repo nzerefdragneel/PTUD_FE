@@ -1,139 +1,169 @@
-import { Navigate, Link } from "react-router-dom";
-import UserService from "../services/user.service";
-import authService from "../services/auth.service";
-import React, { Component, useState, useEffect } from "react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  List,
-  Button,
-  ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  IconButton,
-} from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import { SimpleNavbar } from "./simplenavbar.component";
-import customerService from "../services/customer.service";
-import registerInsuranceService from "../services/registerInsurance.service";
+import React, { useState, useEffect } from "react";
+import PhieuDangKiService from "../services/phieuDangKi.service";
+import CustomerService from "../services/customer.service";
+import GoiBaoHiemService from "../services/goiBaoHiem.service";
 
-export function SimpleCard() {
-  return (
-    <Card className="mt-6 w-96 h-auto">
-      <CardBody>
-        <Typography variant="h5" color="blue-gray" className="mb-2">
-          UI/UX Review Check
-        </Typography>
-        <Typography>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to &quot;Naviglio&quot; where you can enjoy the main
-          night life in Barcelona.
-        </Typography>
-      </CardBody>
-    </Card>
-  );
-}
+const CustomerPhieuDangKyList = () => {
+  const [phieuDangKyList, setPhieuDangKyList] = useState([]);
+  const [goiBaoHiemInfo, setGoiBaoHiemInfo] = useState({});
+  const [currentTab, setCurrentTab] = useState("Chưa duyệt");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [itemsPerPage] = useState(4);
 
-export function SimpleSidebar() {
-  return (
-    <Card className="min-h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <List>
-        <Link to={"/"} className=" text-gray-900 ">
-          <ListItem>
-            <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Home
-          </ListItem>
-        </Link>
-        <Link
-          to={"/profile"}
-          className=" text-gray-900 rounded-2xl bg-slate-200"
-        >
-          <ListItem>
-            <ListItemPrefix>
-              <ShoppingBagIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Profile
-          </ListItem>
-        </Link>
-      </List>
-    </Card>
-  );
-}
-
-const Status_Register = () => {
-  const [customer, setCustomer] = useState(null); // State để lưu thông tin của Customer
+  const customer = CustomerService.getCurrentCustomer();
+  const customerId = customer.iD_KhachHang;
 
   useEffect(() => {
-    const fetchCustomerData = async () => {
+    const fetchData = async () => {
       try {
-        const user = authService.getCurrentUser();
-        const user_1 = {
-          taiKhoan: user.taiKhoan,
-          accessToken: user.accessToken,
-        };
+        const response = await PhieuDangKiService.GetbyKH(customerId);
+        const fetchedPhieuDangKyList = response.data;
 
-        const userID = user_1.taiKhoan.iD_TaiKhoan;
+        // Lặp qua danh sách phiếu đăng ký để lấy thông tin về gói bảo hiểm
+        for (const phieuDangKy of fetchedPhieuDangKyList) {
+          const goiBaoHiemResponse = await GoiBaoHiemService.getByID(
+            phieuDangKy.iD_GoiBaoHiem
+          );
+          const goiBaoHiemInfo = goiBaoHiemResponse.data;
 
-        const customerData = await customerService.getCustomer(userID);
-        setCustomer(customerData);
-        const myrequest = registerInsuranceService.getPhieuDangKy(
-          customer.iD_KhachHang
+          // Lưu thông tin về gói bảo hiểm vào state
+          setGoiBaoHiemInfo((prevInfo) => ({
+            ...prevInfo,
+            [phieuDangKy.iD_GoiBaoHiem]: goiBaoHiemInfo,
+          }));
+        }
+
+        setPhieuDangKyList(fetchedPhieuDangKyList);
+        setTotalPages(
+          Math.ceil(
+            fetchedPhieuDangKyList.filter(
+              (phieu) => phieu.tinhTrangDuyet === currentTab
+            ).length / itemsPerPage
+          )
         );
-        myrequest
-          .then((responseData) => {
-            // Lấy iD_PhieuDangKi từ dữ liệu phản hồi
-            const iD_PhieuDangKi = responseData[0].iD_PhieuDangKi;
-            const tinhTrangDuyet = responseData[0].tinhTrangDuyet;
-
-            // Hiển thị giá trị iD_PhieuDangKi trong một thông báo alert
-            alert(`iD_PhieuDangKi: ${iD_PhieuDangKi}`);
-          })
-          .catch((error) => {
-            // Xử lý lỗi nếu có
-            console.error("Error:", error);
-          });
-        // Lưu thông tin của Customer vào state
       } catch (error) {
-        // Xử lý lỗi nếu cần thiết
-        console.error("Error fetching customer data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchCustomerData(); // Gọi hàm fetchCustomerData khi component được mount
-  }, []); // Dùng mảng rỗng để chỉ gọi một lần khi component mount
-  if (!customer) {
-    // Nếu không có thông tin customer, có thể hiển thị một loading spinner hoặc thông báo khác
-    return <p>Loading...</p>;
-  }
+    fetchData();
+  }, [customerId, currentTab, itemsPerPage]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeTab = (newTab) => {
+    setCurrentTab(newTab);
+    setCurrentPage(1);
+  };
+
+  const filteredPhieuDangKyList = phieuDangKyList.filter(
+    (phieu) => phieu.tinhTrangDuyet === currentTab
+  );
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentList = filteredPhieuDangKyList.slice(startIndex, endIndex);
+
   return (
-    <>
-      <div className="px-4 py-3 sm:px-6">
-        <h1 className="font-semibold leading-6 text-lg text-gray-900">
-          YÊU CẦU ĐĂNG KÝ BẢO HIỂM
-        </h1>
-        <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {/* Tên gói */}
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-        </div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Danh sách Phiếu Đăng Ký</h1>
+      <div className="mb-4">
+        <button
+          className={`mr-4 p-2 rounded ${
+            currentTab === "Chưa duyệt"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300"
+          }`}
+          onClick={() => handleChangeTab("Chưa Duyệt")}
+        >
+          Chưa duyệt
+        </button>
+        <button
+          className={`mr-4 p-2 rounded ${
+            currentTab === "Đã Duyệt" ? "bg-blue-500 text-white" : "bg-gray-300"
+          }`}
+          onClick={() => handleChangeTab("Đã Duyệt")}
+        >
+          Đã được Duyệt
+        </button>
+        <button
+          className={`mr-4 p-2 rounded ${
+            currentTab === "Từ chối" ? "bg-blue-500 text-white" : "bg-gray-300"
+          }`}
+          onClick={() => handleChangeTab("Từ Chối")}
+        >
+          Đã bị từ chối
+        </button>
       </div>
-    </>
+      <ul>
+        {currentList.length === 0 ? (
+          <p>Không có phiếu đăng ký nào.</p>
+        ) : (
+          currentList.map((phieuDangKy) => (
+            <li
+              key={phieuDangKy.iD_PhieuDangKi}
+              className="bg-white rounded-lg shadow-md p-4 mb-4"
+            >
+              <div>
+                <strong>ID Phiếu Đăng Ký:</strong> {phieuDangKy.iD_PhieuDangKi}
+              </div>
+
+              <div>
+                <strong>Địa Điểm Kí Kết:</strong> {phieuDangKy.diaDiemKiKet}
+              </div>
+              <div>
+                <strong>Thời Gian Kí Kết:</strong>{" "}
+                {new Date(phieuDangKy.thoiGianKiKet).toLocaleDateString()}
+              </div>
+              <div>
+                <strong>Tờ Khai Sức Khỏe:</strong> {phieuDangKy.toKhaiSucKhoe}
+              </div>
+              <div>
+                <strong>ID Khách Hàng:</strong> {phieuDangKy.iD_KhachHang}
+              </div>
+              <div>
+                <strong>ID Gói Bảo Hiểm:</strong> {phieuDangKy.iD_GoiBaoHiem}
+              </div>
+              <div>
+                <strong>Tên Gói Bảo Hiểm:</strong>{" "}
+                {goiBaoHiemInfo[phieuDangKy.iD_GoiBaoHiem]?.tenBaoHiem}
+              </div>
+              <div>
+                <strong>Hạng Gói Bảo Hiểm:</strong>{" "}
+                {goiBaoHiemInfo[phieuDangKy.iD_GoiBaoHiem]?.tenGoi}
+              </div>
+            </li>
+          ))
+        )}
+      </ul>
+      {/* Các nút điều chỉnh trang */}
+      <div className="mt-4 flex justify-between">
+        <button
+          className="bg-blue-500 text-white p-2 rounded"
+          onClick={() =>
+            handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
+          }
+          disabled={currentPage === 1}
+        >
+          Trang trước
+        </button>
+        <button
+          className="bg-blue-500 text-white p-2 rounded"
+          onClick={() =>
+            handlePageChange(
+              currentPage < totalPages ? currentPage + 1 : totalPages
+            )
+          }
+          disabled={currentPage === totalPages}
+        >
+          Trang sau
+        </button>
+      </div>
+    </div>
   );
 };
-export default Status_Register;
+
+export default CustomerPhieuDangKyList;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AdminService from "../services/admin.service";
 import UserService from "../services/user.service";
 
 const AdminAccountList = () => {
@@ -29,10 +28,10 @@ const AdminAccountList = () => {
     try {
       // Tùy thuộc vào tình trạng hiện tại để quyết định hành động
       const newTinhTrang =
-        currentTinhTrang === "Hoạt Động" ? "Đã Khoá" : "Hoạt Động";
+        currentTinhTrang === "Hoạt Động" ? "Đã Khóa" : "Hoạt Động";
 
       // Gọi API để cập nhật tình trạng tài khoản
-      await AdminService.updateAccountStatus(iD_TaiKhoan, newTinhTrang);
+      await UserService.chinhSuaTinhTrangHoatDong(iD_TaiKhoan, newTinhTrang);
 
       // Cập nhật danh sách sau khi thay đổi
       setAccounts((prevAccounts) =>

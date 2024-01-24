@@ -1,16 +1,12 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState } from "react";
-import UserService from "../services/user.service";
 import { withRouter } from "../common/with-router";
 import { Navigate, Link } from "react-router-dom";
-
-import authService from "../services/auth.service";
+import NhanVienService from "../services/nhanVien.service";
 import { isEmail } from "validator";
-import customerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 import AuthService from "../services/auth.service";
-
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 const required = (value) => {
@@ -81,8 +77,8 @@ function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
-function AddCustomer() {
-  const user = authService.getCurrentUser();
+function AddAdmin() {
+  const user = AuthService.getCurrentUser();
   const userID = user.taiKhoan.iD_TaiKhoan;
 
   const [hoten, sethoten] = useState("");
@@ -134,15 +130,15 @@ function AddCustomer() {
       email: email,
       cmnd: cmnd,
       ngheNghiep: nghenghiep,
-      chiTietCongViec: chitietcongviec,
-      thuNhap: parseInt(thunhap),
+      loainhanvien: "Quản Trị Viên",
       soTaiKhoan: sotaikhoan,
       nganHang: nganhang,
       soDienThoai: sodienthoai,
+      iD_TaiKhoan: userID,
     };
     console.log(requestData);
 
-    customerService.addCustomer(userID, requestData).then(
+    NhanVienService.addNhanVien(requestData).then(
       (response) => {
         setSuccess(true);
         setMessage(response.data.message);
@@ -169,7 +165,7 @@ function AddCustomer() {
       <div className="  px-2 py-2  mx-2">
         <div className="flex flex-col  w-full">
           <div className="flex flex-row text-lg justify-center">
-            <h3 className="text-green-800 ">CẬP NHẬT THÔNG TIN</h3>
+            <h3 className="text-green-800 ">CẬP NHẬT THÔNG TIN </h3>
           </div>
         </div>
         <Form onSubmit={handleAddCustomer} ref={fref}>
@@ -464,52 +460,7 @@ function AddCustomer() {
 
           {/*Cập nhật công việc */}
           <div className="sm:col-span-4 py-3">
-            <h4> Công việc / Tài chính </h4>
-            {/*Nghề nghiệp */}
-            <label
-              htmlFor="NgheNghiep"
-              className="block text-sm font-medium leading-6 text-gray-900 pt-2 "
-            >
-              Nghề nghiệp
-            </label>
-            <div className="mt-2">
-              <input
-                id="NgheNghiep"
-                name="NgheNghiep"
-                type="text"
-                validations={[required]}
-                autoComplete="off"
-                // value="A"
-                onChange={(e) => {
-                  setnghenghiep(e.target.value);
-                }} //   validations={required}
-                placeholder="Nhập nghề nghiệp"
-                className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-
-            {/* Cập nhật công việc cụ thể */}
-
-            <label
-              htmlFor="ChiTietCongViec"
-              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
-            >
-              Công việc/ Chức vụ cụ thể
-            </label>
-            <div className="mt-2">
-              <input
-                id="ChiTietCongViec"
-                name="ChiTietCongViec"
-                validations={[required]}
-                type="text"
-                autoComplete="off"
-                onChange={(e) => {
-                  setchitietcongviec(e.target.value);
-                }} //   validations={[required]}
-                placeholder="Nhập Công việc/ Chức vụ cụ thể "
-                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
+            <h4> Tài chính </h4>
 
             <label
               htmlFor="ThuNhap"
@@ -603,4 +554,4 @@ function AddCustomer() {
   );
 }
 
-export default withRouter(AddCustomer);
+export default withRouter(AddAdmin);

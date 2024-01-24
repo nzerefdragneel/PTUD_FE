@@ -249,7 +249,7 @@ class LoginForm extends Component {
           >
             <div className="form-group">
               <label htmlFor="username" className="font-semibold mb-2">
-                Số điện thoại
+                Số điện thoại / Username
               </label>
               <Input
                 type="text"

@@ -69,27 +69,37 @@ function Signup() {
     e.preventDefault();
 
     fref.current.validateAll();
-
-    AuthService.register(username, password).then(
-      (response) => {
-        setSuccess(true);
-        setMessage(response.data.message);
-        setIsSubmit(true);
+    const userNameRegex = /^[0-9]{10}$/;
+    if (!userNameRegex.test(username)) {
+      alert("SDT phải có độ dài là 10 (0-9)");
+      setIsLoading(false);
+    } else {
+      if (password.length < 6 || password.length > 40) {
+        alert("Mật khẩu phải từ 6-40 kí tự");
         setIsLoading(false);
-      },
-      (error) => {
-        const resMessage =
-          error.response ||
-          error.response.data ||
-          error.response.data.message ||
-          error.message ||
-          error.toString();
-        setMessage(error.response.data);
-        setIsSubmit(true);
-        setSuccess(false);
-        setIsLoading(false);
+      } else {
+        AuthService.register(username, password).then(
+          (response) => {
+            setSuccess(true);
+            setMessage(response.data.message);
+            setIsSubmit(true);
+            setIsLoading(false);
+          },
+          (error) => {
+            const resMessage =
+              error.response ||
+              error.response.data ||
+              error.response.data.message ||
+              error.message ||
+              error.toString();
+            setMessage(error.response.data);
+            setIsSubmit(true);
+            setSuccess(false);
+            setIsLoading(false);
+          }
+        );
       }
-    );
+    }
   };
 
   return (

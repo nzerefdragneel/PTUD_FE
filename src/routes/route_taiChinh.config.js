@@ -87,14 +87,14 @@ export const appRouters_taiChinh = [
     showInMenu: true,
     component: <EditAccount />,
   },
-  {
+/*  {
     path: "/editAccount",
     title: "editAccount",
     name: "Lịch sử chi trả",
     icon: BookmarkIcon,
     showInMenu: true,
     component: <EditAccount />,
-  },
+  },*/
 ];
 
 export const routers = [...appRouters_taiChinh];

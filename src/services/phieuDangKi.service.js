@@ -17,6 +17,10 @@ class PhieuDangKiService {
       iD_NhanVien,
     });
   }
+  GetbyKH(id) {
+    const url = `${API_URL}GetByIdKhachHang?idkh=${id}`;
+    return axios.get(url);
+  }
 }
 
 export default new PhieuDangKiService();

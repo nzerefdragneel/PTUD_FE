@@ -6,9 +6,9 @@ class PhieuDangKiService {
   getAll() {
     return axios.get(`${API_URL}GetAll`);
   }
-  xetDuyetPhieuDangKy(id, updatedPhieuDangKy) {
-    const url = `${API_URL}XetDuyetPhieuDangKy/${id}`;
-    return axios.post(url, updatedPhieuDangKy);
+  xetDuyetPhieuDangKy(id, tinhTrang) {
+    const url = `${API_URL}XetDuyetPhieuDangKy?id=${id}&tinhTrangDuyet=${tinhTrang}`;
+    return axios.post(url);
   }
 
   UpdateNhanVien(iD_PhieuDangKi, iD_NhanVien) {
@@ -16,6 +16,10 @@ class PhieuDangKiService {
       iD_PhieuDangKi,
       iD_NhanVien,
     });
+  }
+  GetbyKH(id) {
+    const url = `${API_URL}GetByIdKhachHang?idkh=${id}`;
+    return axios.get(url);
   }
 }
 

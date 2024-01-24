@@ -45,6 +45,13 @@ import Nv_duyetYeuCauChiTra from "./components/nv_duyetYeuCauChiTra.component";
 import PhieuDangKyList from "./components/Maganage_Application.component";
 import DanhSachKyKetList from "./components/Calendar_Application.component";
 import AdminAccountList from "./components/AdminAccountList.component";
+import ThemNhanVienComponent from "./components/AdminAddNV.component";
+import Nhanvien_Profile from "./components/NV_profile.component";
+import AddNhanVien from "./components/addNhanVien.component";
+import AddNhanVienTC from "./components/addNhanVienTC.component";
+import AddAdmin from "./components/addAdmin.component";
+import VerifyEmailComponent from "./components/verifyEmail.component";
+import VerifyScreen from "./screen/verifyScreen";
 import { Toaster } from "react-hot-toast";
 
 class App extends Component {
@@ -283,6 +290,15 @@ class App extends Component {
                   path="/adminAccountList"
                   element={<AdminAccountList />}
                 />
+                <Route path="/adminAdd" element={<ThemNhanVienComponent />} />
+                <Route
+                  path="/nhanvien_Profile"
+                  element={<Nhanvien_Profile />}
+                />
+                <Route path="/addNhanVien" element={<AddNhanVien />} />
+                <Route path="/addNhanVienTC" element={<AddNhanVienTC />} />
+                <Route path="/addAdmin" element={<AddAdmin />} />
+                <Route path="/VerifyEmail" element={<VerifyScreen />} />
               </Routes>
             </div>
           </div>

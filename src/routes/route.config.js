@@ -16,6 +16,7 @@ import addCustomerComponent from "../components/addCustomer.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import AdminAccountList from "../components/AdminAccountList.component";
+import ThemNhanVienComponent from "../components/AdminAddNV.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -138,31 +139,22 @@ export const appRouters = [
     showInMenu: true,
     component: <YeuCauTuVan />,
   },
-  {
-    path: "/manageApplications",
-    title: "manageApplications",
-    name: "Phiếu Đăng Ký Chờ Duyệt",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <PhieuDangKyList />,
-  },
-  {
-    path: "/calendarApplications",
-    title: "calendarApplications",
-    name: "Danh sách đã duyệt",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <DanhSachKyKetList />,
-  },
-  {
-    path: "/adminAccountList",
-    title: "adminAccountList",
-    name: "Danh sách tài khoản",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <AdminAccountList />,
-  },
-
+  // {
+  //   path: "/manageApplications",
+  //   title: "manageApplications",
+  //   name: "Phiếu Đăng Ký Chờ Duyệt",
+  //   icon: BookmarkIcon,
+  //   showInMenu: false,
+  //   component: <PhieuDangKyList />,
+  // },
+  // {
+  //   path: "/calendarApplications",
+  //   title: "calendarApplications",
+  //   name: "Danh sách đã duyệt",
+  //   icon: BookmarkIcon,
+  //   showInMenu: false,
+  //   component: <DanhSachKyKetList />,
+  // },
 ];
 
 export const routers = [...appRouters];

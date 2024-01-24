@@ -57,12 +57,13 @@ const PhieuDangKyList = () => {
 
       // Tạo updatedPhieuDangKy dựa trên loại action
       if (action === "duyet") {
-        updatedPhieuDangKy = {
-          tinhTrangDuyet: "Đã Duyệt",
-          diaDiemKiKet: "string", // Thay đổi địa điểm kí kết nếu cần
-          toKhaiSucKhoe: "N/A",
-        };
-        alert(JSON.stringify(updatedPhieuDangKy));
+        // updatedPhieuDangKy = {
+        //   tinhTrangDuyet: "Đã Duyệt",
+        //   diaDiemKiKet: "string", // Thay đổi địa điểm kí kết nếu cần
+        //   toKhaiSucKhoe: "N/A",
+        // };
+        // alert(JSON.stringify(updatedPhieuDangKy));
+        PhieuDangKiService.xetDuyetPhieuDangKy(iD_PhieuDangKi, "Đã Duyệt");
       } else if (action === "tuchoi") {
         updatedPhieuDangKy = {
           tinhTrangDuyet: "Từ Chối",
@@ -72,17 +73,15 @@ const PhieuDangKyList = () => {
       }
 
       // Gọi API PUT để cập nhật phiếu đăng ký
-      const response = await PhieuDangKiService.xetDuyetPhieuDangKy(
-        iD_PhieuDangKi,
-        updatedPhieuDangKy
-      );
+      // const response = await PhieuDangKiService.xetDuyetPhieuDangKy(
+      //   iD_PhieuDangKi,
+      //   updatedPhieuDangKy
+      // );
 
       // Xóa phần tử khỏi danh sách sau khi hành động thành công
       setPhieuDangKyList((prevList) =>
         prevList.filter((item) => item.iD_PhieuDangKi !== iD_PhieuDangKi)
       );
-
-      console.log(`Đã ${action} phiếu đăng ký:`, response.data);
     } catch (error) {
       console.error(`Error performing ${action} action:`, error);
     }

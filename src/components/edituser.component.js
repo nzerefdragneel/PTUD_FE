@@ -103,6 +103,8 @@ export default class EditUser extends Component {
       sodienthoai: customer.soDienThoai,
       userID: customer.iD_TaiKhoan,
       xacthuc: customer.xacThuc,
+      updating: false,
+      updateSuccess: false,
     };
   }
 
@@ -204,7 +206,10 @@ export default class EditUser extends Component {
     this.setState({
       message: "",
       successful: false,
+      updating: true,
+      updateSuccess: false,
     });
+
     const user = authService.getCurrentUser();
     const customer = CustomerService.getCurrentCustomer();
 
@@ -227,7 +232,29 @@ export default class EditUser extends Component {
       soDienThoai: this.state.sodienthoai,
     };
 
-    CustomerService.updateCustomer(customer.iD_KhachHang, requestData);
+    CustomerService.updateCustomer(customer.iD_KhachHang, requestData).then(
+      (response) => {
+        this.setState({
+          updateSuccess: true,
+          updating: false,
+          message: "Cập nhật thành công!",
+        });
+      },
+      (error) => {
+        const errorMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        this.setState({
+          successful: false,
+          message: errorMessage,
+          updating: false,
+        });
+      }
+    );
   }
 
   render() {
@@ -668,15 +695,26 @@ export default class EditUser extends Component {
               </div>
             </>
           )}
+          {this.state.updating && (
+            <div className="text-gray-900 font-semibold py-2">
+              Đang cập nhật thông tin...
+            </div>
+          )}
+
+          {/* {this.state.updateSuccess && (
+            <div className="text-green-600 font-semibold py-2">
+              Cập nhật thành công!
+            </div>
+          )} */}
+
           {this.state.message && (
             <div className="form-group">
               <div
                 className={
                   this.state.successful
-                    ? "alert alert-success"
-                    : "alert alert-danger"
+                    ? "text-red-600 font-semibold py-2"
+                    : "text-green-600 font-semibold py-2"
                 }
-                role="alert"
               >
                 {this.state.message}
               </div>

@@ -45,6 +45,8 @@ import Nv_duyetYeuCauChiTra from "./components/nv_duyetYeuCauChiTra.component";
 import PhieuDangKyList from "./components/Maganage_Application.component";
 import DanhSachKyKetList from "./components/Calendar_Application.component";
 import AdminAccountList from "./components/AdminAccountList.component";
+import { Toaster } from "react-hot-toast";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -104,6 +106,7 @@ class App extends Component {
     return (
       <div className="">
         {/* headers */}
+        <Toaster />
         <div className="pt-3 pb-4 px-32 flex flex-row  justify-between border-b mb-2 bg-black">
           <div className="flex flex-row flex-wrap text-lg  items-center">
             <a href="/" className="nav-link">
@@ -232,10 +235,7 @@ class App extends Component {
                   path="/nhanvien/NV_chonLichKiHopDong"
                   element={<NV_chonLichKiHopDong />}
                 />
-                <Route 
-                  path="/nhanvien/dsCSach" 
-                  element={<Nv_ds_allCS />} 
-                />
+                <Route path="/nhanvien/dsCSach" element={<Nv_ds_allCS />} />
                 <Route
                   path="/nhanvien/duyetYCCT"
                   element={<Nv_duyetYeuCauChiTra />}

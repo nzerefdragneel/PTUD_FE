@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DuyetYeuCauChiTraService from "../services/DuyetYeuCauChiTra.service";
+import QuanLyBaoHiemService from "../services/quanLyBaoHiem.service";
 import {
   Card,
   CardBody,
@@ -7,6 +8,7 @@ import {
   Button,
   Dialog,
 } from "@material-tailwind/react";
+import { toast } from "react-hot-toast";
 
 const Nv_duyetYeuCauChiTra = () => {
   const [danhSachYeuCau, setDanhSachYeuCau] = useState([]);
@@ -39,6 +41,18 @@ const Nv_duyetYeuCauChiTra = () => {
       currency: "VND",
     }).format(amount);
   };
+
+  const capNhatHanMucSuDung = async (qlbhid, soTienYeuCauChiTra) => {
+    try {
+      await QuanLyBaoHiemService.capNhatHanMucSuDung(
+        qlbhid,
+        soTienYeuCauChiTra
+      );
+    } catch (error) {
+      console.error("Error updating HanMucSuDung:", error);
+    }
+  };
+
   const updateDanhSachYeuCau = (iD_YeuCauChiTra) => {
     setDanhSachYeuCau(
       danhSachYeuCau.filter(
@@ -47,13 +61,25 @@ const Nv_duyetYeuCauChiTra = () => {
     );
   };
 
-  const handleDuyet = async (iD_YeuCauChiTra) => {
-    await DuyetYeuCauChiTraService.duyetYeuCauChiTra(
-      iD_YeuCauChiTra,
-      "Đã Duyệt"
-    );
-    updateDanhSachYeuCau(iD_YeuCauChiTra);
-    closeDialog();
+  const handleDuyet = async () => {
+    if (selectedYeuCau) {
+      // Approve the request
+      await DuyetYeuCauChiTraService.duyetYeuCauChiTra(
+        selectedYeuCau.iD_YeuCauChiTra,
+        "Đã Duyệt"
+      );
+
+      // Update the usage limit
+      await QuanLyBaoHiemService.capNhatHanMucSuDung(
+        selectedYeuCau.qlbhid,
+        selectedYeuCau.soTienYeuCauChiTra
+      );
+
+      // Update the list of requests
+      updateDanhSachYeuCau(selectedYeuCau.iD_YeuCauChiTra);
+      closeDialog();
+      toast.success("Yêu cầu chi trả đã được duyệt thành công!");
+    }
   };
 
   const handleTuChoi = async (iD_YeuCauChiTra) => {
@@ -64,6 +90,7 @@ const Nv_duyetYeuCauChiTra = () => {
 
     updateDanhSachYeuCau(iD_YeuCauChiTra);
     closeDialog();
+    toast.success("Yêu cầu đã bị từ chối.");
   };
   const openImageDialog = (imageUrl) => {
     setCurrentImage(imageUrl);

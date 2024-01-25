@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import KhachHangService from "../services/khachHang.service";
 import HopDongService from "../services/hopDong.service";
 import YeuCauChiTraService from "../services/yeuCauChiTra.service";
@@ -22,9 +23,10 @@ const YeuCauChiTra = () => {
   // const user = this.props.dataFromParent.iD_TaiKhoan;
   const user = authService.getCurrentUser();
   let iD_TaiKhoan = null;
+  const navigate = useNavigate();
   if (user !== null) {
     iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
-  }
+  } else navigate(`/home`);
 
   //cờ kiểm tra nếu user gởi lại cùng một nội dung
   const [daGuiYeuCau, setDaGuiYeuCau] = useState(false);

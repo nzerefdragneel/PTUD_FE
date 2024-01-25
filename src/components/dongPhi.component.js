@@ -11,8 +11,11 @@ import PhieuThanhToanBaoHiemService from "../services/phieuThanhToanBaoHiem.serv
 
 const DongPhi = () => {
   const user = authService.getCurrentUser();
-  const iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  let iD_TaiKhoan = null;
   const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   //hợp đồng sắp đến hạn thanh toán
   // const [hopDong_SDH, sethopDong_SDH] = useState([]);
   const [GBHdata_SDH, setGBHdata_SDH] = useState([]);

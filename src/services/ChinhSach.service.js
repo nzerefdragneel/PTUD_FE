@@ -4,6 +4,9 @@ const API_URL =
   "https://localhost:7202/api/ChiTietChinhSach/GetAllChitietchinhsach/";
 
 class ChinhSachService {
+  getAll() {
+    return axios.get(`https://localhost:7202/api/ChinhSach/GetAll`);
+  }
   getChinhSach(id) {
     axios
       .get(`${API_URL}idGoiBaoHiem?idGoiBaoHiem=${id}`, {

@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import DuyetYeuCauChiTraService from "../services/DuyetYeuCauChiTra.service";
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
-
+import { useNavigate } from "react-router-dom";
+import authService from "../services/auth.service";
 const Nv_duyetYeuCauChiTra = () => {
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   const [danhSachYeuCau, setDanhSachYeuCau] = useState([]);
 
   const fetchData = async () => {

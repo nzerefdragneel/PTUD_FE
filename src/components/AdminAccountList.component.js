@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import AdminService from "../services/admin.service";
 import UserService from "../services/user.service";
+import { useNavigate } from "react-router-dom";
+import authService from "../services/auth.service";
 
 const AdminAccountList = () => {
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   const [accounts, setAccounts] = useState([]);
   const [currentType, setCurrentType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);

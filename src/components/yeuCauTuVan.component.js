@@ -4,17 +4,24 @@ import KhachHangService from "../services/khachHang.service";
 import authService from "../services/auth.service";
 import { Button, Input } from "@material-tailwind/react";
 import DialogDefault from "./dialog";
-
+import { useNavigate } from "react-router-dom";
 const YeuCauTuVan = () => {
   //lấy idtaikhoan từ bảng tài khoản
   const user = authService.getCurrentUser();
-  const iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
   console.log(user);
-  //cờ kiểm tra nếu user gởi lại cùng một nội dung
+  console.log(user.taiKhoan.iD_TaiKhoan);
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
+  console.log(iD_TaiKhoan);
+  //cờ kiểm tra nếu user gởi lại yêu cầu tư vấn
   const [daGuiYeuCau, setDaGuiYeuCau] = useState(false);
   const [diaDiem, setdiaDiem] = useState(null);
   const [ngay, setngay] = useState(null);
   const [gio, setgio] = useState(null);
+  const [kiemTra, setkiemTra] = useState(false);
   const [khachHang, setkhachHang] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
   const [noiDungMessage, setnoiDungMessage] = useState(null);
@@ -23,8 +30,9 @@ const YeuCauTuVan = () => {
     const fetchData = async () => {
       try {
         const response = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
-        setkhachHang(response.data);
-        console.log(response.data);
+        setkiemTra(true);
+        setkhachHang(response.data[0]);
+        console.log(response.data[0].xacThuc);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -39,13 +47,19 @@ const YeuCauTuVan = () => {
       setnoiDungMessage("Bạn đã gửi yêu cầu, vui lòng đợi xử lý!");
       return;
     }
-    //kiểm tra khách hàng đã xác thực hay chưa
-
-    if (khachHang[0].xacThuc === "Chưa Xác Thực") {
-      setShowMessage(true);
-      setnoiDungMessage("Tài khoản chưa xác thực. Vui lòng quay lại sau!");
+    //kiểm tra khách hàng đã có thông tin và xác thực hay chưa
+    if (!kiemTra) {
+      alert("Vui lòng nhập thông tin cá nhân và xác thực tài khoản!");
+      navigate(`/addCustomer`);
       return;
+    } else {
+      if (khachHang.xacThuc === "Chưa Xác Thực") {
+        setShowMessage(true);
+        alert("Tài khoản chưa xác thực. Vui lòng quay lại sau!");
+        return;
+      }
     }
+
     // Kiểm tra xem có trường thông tin nào trống không
     if (!diaDiem) {
       setShowMessage(true);
@@ -105,12 +119,13 @@ const YeuCauTuVan = () => {
       );
       return;
     }
-
+    //gán cứng idkh=0 nếu tìm được kh thì gán lại kiểm tra nếu =0 thì chưa xác thực
     const thoiGian = ngay + "T" + gio;
     console.log(thoiGian);
+    console.log(khachHang.iD_KhachHang);
     try {
       const response = await YeuCauTuVanService.DatLichTuVan(
-        khachHang[0].iD_KhachHang,
+        khachHang.iD_KhachHang,
         diaDiem,
         thoiGian
       );

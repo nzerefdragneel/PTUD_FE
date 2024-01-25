@@ -19,10 +19,14 @@ const ChiTietGoiBaoHiem = () => {
   } = useLocation();
   const navigate = useNavigate();
   console.log(goiBaohiem);
+  const [kiemTraCoTrongBangKH, setkiemTraCoTrongBangKH] = useState(false);
+  const [kiemTraCoLaKhachHang, setkiemTraCoLaKhachHang] = useState(false);
   const [kiemTra, setkiemTra] = useState(false);
   const [khachHang, setkhachHang] = useState([]);
   const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
-  // const [danhSachDaLay, setDanhSachDaLay] = useState([]);
+  if (user.taiKhoan.loaiTaiKhoan === "KH") {
+    setkiemTraCoLaKhachHang(true);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +59,7 @@ const ChiTietGoiBaoHiem = () => {
           const response_kh = await KhachHangService.getByIdTaiKhoan(
             iD_TaiKhoan
           );
+          setkiemTraCoTrongBangKH(true);
           setkhachHang(response_kh.data[0]);
           console.log(response_kh.data[0]);
           try {
@@ -86,13 +91,17 @@ const ChiTietGoiBaoHiem = () => {
       navigate(`/login`);
       return;
     }
-
-    //kiểm tra xác thực
-    // console.log();
-    if (khachHang.xacThuc === "Chưa Xác Thực") {
-      alert("Bạn chưa xác thực email! Vui lòng quay lại sau!");
+    if (!kiemTraCoTrongBangKH) {
+      alert("Vui lòng nhập thông tin cá nhân và xác thực tài khoản!");
+      navigate(`/addCustomer`);
       return;
+    } else {
+      if (khachHang.xacThuc === "Chưa Xác Thực") {
+        alert("Tài khoản chưa xác thực. Vui lòng quay lại sau!");
+        return;
+      }
     }
+
     navigate(`/register/${goiBaohiem.iD_GoiBaoHiem}`, {
       state: { goiBaohiem },
     });
@@ -141,6 +150,7 @@ const ChiTietGoiBaoHiem = () => {
           </div>
         ))}
       </div>
+
       {kiemTra ? (
         <div className="bg-blue-500 text-white px-4 py-2">
           Gói bảo hiểm đang được sử dụng

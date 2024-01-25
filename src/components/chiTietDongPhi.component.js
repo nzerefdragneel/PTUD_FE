@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import KhachHangService from "../services/khachHang.service";
 import GoiBaoHiemService from "../services/goiBaoHiem.service";
 import { Button } from "@material-tailwind/react";
+import authService from "../services/auth.service";
 import { useParams, useLocation } from "react-router-dom";
 const ChiTietDongPhi = () => {
   const {
     state: { bHiem: baoHiem },
   } = useLocation();
+
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
 
   return (
     <div className="border border-black p-4">

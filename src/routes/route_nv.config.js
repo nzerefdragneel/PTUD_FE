@@ -68,7 +68,7 @@ export const appRouters_nv = [
   {
     path: "/addCustomer",
     title: "addCustomer",
-    name: "Thêm hồ sơ khách hàng",
+    name: "Thêm hồ sơ cá nhân",
     icon: BookmarkIcon,
     showInMenu: true,
     component: <addCustomerComponent />,

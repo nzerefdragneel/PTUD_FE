@@ -7,7 +7,7 @@ import AuthService from "../services/auth.service";
 
 import { withRouter } from "../common/with-router";
 import { Navigate } from "react-router-dom";
-import customerService from "../services/customer.service";
+import CustomerService from "../services/customer.service";
 import NhanvienService from "../services/nhanVien.service";
 
 const required = (value) => {
@@ -97,8 +97,7 @@ class LoginForm extends Component {
 
             if (userRole === "KH") {
               // Handling for customer role
-              customerService
-                .getCustomer(userID)
+              CustomerService.getCustomer(userID)
                 .then((customerResponse) => {
                   const customerData = customerResponse.data;
 

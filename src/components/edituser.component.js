@@ -127,7 +127,7 @@ export default class EditUser extends Component {
   }
   onChangengaysinh(e) {
     this.setState({
-      ngasinh: e.target.value,
+      ngaysinh: e.target.value,
     });
   }
   onChangechieucao(e) {
@@ -261,10 +261,11 @@ export default class EditUser extends Component {
     const user = authService.getCurrentUser();
     const userID = user.taiKhoan.iD_TaiKhoan;
     const colorClass = getColorClass(this.state.xacthuc);
+    console.log(user);
+    const ngaysinh = new Date(this.state.ngaysinh).toLocaleDateString("vi-VN");
 
-    if (user == null) {
-      return <Navigate replace to="/" />;
-    }
+    console.log(ngaysinh);
+
     return (
       <div className="  px-2 py-2  mx-2">
         <div className="flex flex-col  w-full">
@@ -402,6 +403,26 @@ export default class EditUser extends Component {
                           className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
+
+                      <label
+                        htmlFor="QuocTich"
+                        className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+                      >
+                        Quốc tịch
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="Quoctich"
+                          name="Quoctich"
+                          type="text"
+                          autoComplete="off"
+                          //   validations={[required, isIDCard]}
+                          placeholder="Nhập Quốc Tịch"
+                          value={this.state.quoctich}
+                          onChange={this.onChangequoctich}
+                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
                     </div>
 
                     {/*Cập nhật thể chất */}
@@ -434,7 +455,10 @@ export default class EditUser extends Component {
                         </div>
                         {/* Cập nhật sinh nhật */}
                         {/* <div className="sm:col-span-4 px-5 ">
-                          <label htmlFor="NgaySinh" className="block text-sm font-medium leading-6 text-gray-900">
+                          <label
+                            htmlFor="NgaySinh"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
                             Ngày sinh
                           </label>
                           <div className="mt-2">
@@ -444,7 +468,7 @@ export default class EditUser extends Component {
                               type="date"
                               autoComplete="off"
                               validations={required}
-                              value={this.state.ngaysinh}
+                              value={ngaysinh}
                               //   onChange={this.onChangengaysinh}
                               className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />

@@ -73,7 +73,7 @@ const CustomerPhieuDangKyList = () => {
       <div className="mb-4">
         <button
           className={`mr-4 p-2 rounded ${
-            currentTab === "Chưa duyệt"
+            currentTab === "Chưa Duyệt"
               ? "bg-blue-500 text-white"
               : "bg-gray-300"
           }`}
@@ -87,15 +87,15 @@ const CustomerPhieuDangKyList = () => {
           }`}
           onClick={() => handleChangeTab("Đã Duyệt")}
         >
-          Đã được Duyệt
+          Đã Duyệt
         </button>
         <button
           className={`mr-4 p-2 rounded ${
-            currentTab === "Từ chối" ? "bg-blue-500 text-white" : "bg-gray-300"
+            currentTab === "Từ Chối" ? "bg-blue-500 text-white" : "bg-gray-300"
           }`}
           onClick={() => handleChangeTab("Từ Chối")}
         >
-          Đã bị từ chối
+          Từ chối
         </button>
       </div>
       <ul>
@@ -110,7 +110,9 @@ const CustomerPhieuDangKyList = () => {
               <div>
                 <strong>ID Phiếu Đăng Ký:</strong> {phieuDangKy.iD_PhieuDangKi}
               </div>
-
+              <div>
+                <strong>Tình Trạng Duyệt:</strong> {phieuDangKy.tinhTrangDuyet}
+              </div>
               <div>
                 <strong>Địa Điểm Kí Kết:</strong> {phieuDangKy.diaDiemKiKet}
               </div>

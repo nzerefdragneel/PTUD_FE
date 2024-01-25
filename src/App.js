@@ -138,11 +138,6 @@ class App extends Component {
                   Trang chủ
                 </div>
               </a>
-              <a href="/user_profile" className="nav-link">
-                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
-                  Hồ sơ cá nhân
-                </div>
-              </a>
 
               {
                 <a href="/xemGoiBaoHiem" className="nav-link">

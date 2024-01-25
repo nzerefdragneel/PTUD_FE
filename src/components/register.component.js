@@ -49,6 +49,7 @@ function AddRegister() {
     e.preventDefault();
     fref.current.validateAll();
     console.log(customer.iD_KhachHang);
+    setIsLoading(false);
   };
 
   return (
@@ -73,11 +74,29 @@ function AddRegister() {
       </div>
       <div className="  px-2 py-2  mx-2">
         <div className="flex flex-col  w-full">
-          <div className="flex flex-row text-lg justify-center">
-            <h3 className="text-green-800 ">ĐĂNG KÝ BẢO HIỂM</h3>
-          </div>
+          <h3 className="text-green-800 ">ĐĂNG KÝ SỬ DỤNG DỊCH VỤ BẢO HIỂM</h3>
         </div>
         <Form onSubmit={handleRegister} ref={fref}>
+          <label
+            htmlFor="Tokhai"
+            className="block text-sm font-medium leading-6 text-gray-900 pt-2 "
+          >
+            Đường dẫn đến tờ khai sức khoẻ
+          </label>
+          <div className="mt-2">
+            <input
+              id="Tokhai"
+              name="Tokhai"
+              type="text"
+              autoComplete="off"
+              validations={[required]}
+              onChange={(e) => {
+                setdiaDiemKiKet(e.target.value);
+              }}
+              placeholder="Nhập đường dẫn tờ khai (GG drive,Cloud,...) "
+              className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
           <label
             htmlFor="diadiem"
             className="block text-sm font-medium leading-6 text-gray-900 pt-2 "
@@ -98,7 +117,52 @@ function AddRegister() {
               className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
+
+          <label
+            htmlFor="thoigiankiket"
+            className="block text-sm font-medium leading-6 text-gray-900 py-1"
+          >
+            Thời gian dự kiến quý khách có thể kí kết hợp đồng:
+          </label>
+          <div className="mt-2">
+            <input
+              id="thoigiankiket"
+              name="thoigiankiket"
+              type="date"
+              autoComplete="off"
+              onChange={(e) => {
+                setthoiGianKiKet(e.target.value);
+              }}
+              validations={required}
+              //   onChange={this.onChangengaysinh}
+              className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <div className="form-group">
+              <button
+                className="my-4 
+                rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => {
+                  setIsLoading(true);
+                }}
+              >
+                {isLoading && (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+                )}
+                Gửi thông tin
+              </button>
+            </div>
+          </div>
         </Form>
+        {isSubmit && !isSuccess && (
+          <div className="text-error-color text-base">
+            Kiểm tra lại thông tin{" "}
+          </div>
+        )}
+        {isSubmit && isSuccess && (
+          <div className="alert alert-success text-base">
+            Cập nhật thành công{" "}
+          </div>
+        )}
       </div>
     </>
   );

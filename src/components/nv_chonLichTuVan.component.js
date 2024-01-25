@@ -54,6 +54,12 @@ const NV_chonLichTuVan = () => {
   useEffect(() => {
     console.log(nhanVienData);
   }, []);
+
+/*  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };*/
+
   const handleNhanClick = async (phieuTuVan) => {
     console.log(ds_yeucautuvan);
     console.log(nhanVienData[0].iD_NhanVien);

@@ -4,7 +4,7 @@ import UserService from "../services/user.service";
 import { Navigate, Link } from "react-router-dom";
 import authService from "../services/auth.service";
 import { isEmail } from "validator";
-import customerService from "../services/customer.service";
+import CustomerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 
@@ -80,7 +80,7 @@ export default class EditUser extends Component {
     // this.onChangePassword = this.onChangePassword.bind(this);
 
     const user = authService.getCurrentUser();
-    const customer = customerService.getCurrentCustomer();
+    const customer = CustomerService.getCurrentCustomer();
 
     this.state = {
       hoten: customer.hoTen,
@@ -103,6 +103,8 @@ export default class EditUser extends Component {
       sodienthoai: customer.soDienThoai,
       userID: customer.iD_TaiKhoan,
       xacthuc: customer.xacThuc,
+      updating: false,
+      updateSuccess: false,
     };
   }
 
@@ -204,9 +206,12 @@ export default class EditUser extends Component {
     this.setState({
       message: "",
       successful: false,
+      updating: true,
+      updateSuccess: false,
     });
+
     const user = authService.getCurrentUser();
-    const customer = customerService.getCurrentCustomer();
+    const customer = CustomerService.getCurrentCustomer();
 
     const requestData = {
       hoTen: this.state.hoten,
@@ -218,17 +223,38 @@ export default class EditUser extends Component {
       phuongXa: this.state.phuongxa,
       quanHuyen: this.state.quanhuyen,
       thanhPho: this.state.thanhpho,
-      email: this.state.email,
       cmnd: this.state.cmnd,
       ngheNghiep: this.state.nghenghiep,
       chiTietCongViec: this.state.chitietcongviec,
       thuNhap: parseInt(this.state.thunhap),
       soTaiKhoan: this.state.sotaikhoan,
-      nganHang: this.state.nganHang,
+      nganHang: this.state.nganhang,
       soDienThoai: this.state.sodienthoai,
     };
 
-    customerService.updateCustomer(customer.iD_KhachHang, requestData);
+    CustomerService.updateCustomer(customer.iD_KhachHang, requestData).then(
+      (response) => {
+        this.setState({
+          updateSuccess: true,
+          updating: false,
+          message: "Cập nhật thành công!",
+        });
+      },
+      (error) => {
+        const errorMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        this.setState({
+          successful: false,
+          message: errorMessage,
+          updating: false,
+        });
+      }
+    );
   }
 
   render() {
@@ -669,15 +695,26 @@ export default class EditUser extends Component {
               </div>
             </>
           )}
+          {this.state.updating && (
+            <div className="text-gray-900 font-semibold py-2">
+              Đang cập nhật thông tin...
+            </div>
+          )}
+
+          {/* {this.state.updateSuccess && (
+            <div className="text-green-600 font-semibold py-2">
+              Cập nhật thành công!
+            </div>
+          )} */}
+
           {this.state.message && (
             <div className="form-group">
               <div
                 className={
                   this.state.successful
-                    ? "alert alert-success"
-                    : "alert alert-danger"
+                    ? "text-red-600 font-semibold py-2"
+                    : "text-green-600 font-semibold py-2"
                 }
-                role="alert"
               >
                 {this.state.message}
               </div>

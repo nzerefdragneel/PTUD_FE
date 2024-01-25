@@ -17,6 +17,7 @@ import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import AdminAccountList from "../components/AdminAccountList.component";
 import GoiBaoHiemCuaToi from "../components/goiBaoHiemCuaToi.component";
+import ThemNhanVienComponent from "../components/AdminAddNV.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -147,6 +148,7 @@ export const appRouters = [
     showInMenu: true,
     component: <YeuCauTuVan />,
   },
+
   {
     path: "/manageApplications",
     title: "manageApplications",
@@ -171,6 +173,7 @@ export const appRouters = [
     showInMenu: false,
     component: <AdminAccountList />,
   },
+
 ];
 
 export const routers = [...appRouters];

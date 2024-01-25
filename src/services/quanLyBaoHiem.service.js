@@ -6,10 +6,10 @@ class QuanLyBaoHiemService {
   getByIDKH(id) {
     return axios.get(`${API_URL}GetByIdKhachHang?idkh=${id}`);
   }
-  capNhatHanMucSuDung(id, sotien) {
-    return axios.post(
-      `${API_URL}CapNhatHanMucSuDung?id=${id}&HanMucSuDung=${sotien}`
-    );
+ 
+  capNhatHanMucSuDung(qlbhid, soTienYeuCauChiTra) {
+    const queryString = `id=${qlbhid}&HanMucSuDung=${soTienYeuCauChiTra}`;
+    return axios.post(`${API_URL}CapNhatHanMucSuDung?${queryString}`);
   }
 }
 

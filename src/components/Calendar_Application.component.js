@@ -145,7 +145,7 @@ const DanhSachKyKetList = () => {
                       handleCreateContract(phieudangky.iD_PhieuDangKi)
                     }
                   >
-                    Tạo Hợp Đồng
+                    Nhận lịch hẹn hợp đồng
                   </button>
                   {statusMessages[phieudangky.iD_PhieuDangKi] && (
                     <div

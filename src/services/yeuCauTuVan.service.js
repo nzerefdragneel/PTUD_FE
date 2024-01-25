@@ -19,6 +19,11 @@ class YeuCauTuVanService {
       iD_NhanVien,
     });
   }
+  getByIdKhachHang(idKhachHang) {
+    return axios.get(`${API_URL}GetByIdKhachHang`, {
+      params: { idkh: idKhachHang },
+    });
+  }
 }
 
 export default new YeuCauTuVanService();

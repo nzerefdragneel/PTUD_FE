@@ -11,6 +11,11 @@ class QuanLyBaoHiemService {
     const queryString = `id=${qlbhid}&HanMucSuDung=${soTienYeuCauChiTra}`;
     return axios.post(`${API_URL}CapNhatHanMucSuDung?${queryString}`);
   }
+
+  quanLyBaoHiem(data) {
+    return axios.post(`${API_URL}QuanLyBaoHiem`, data);
+  }
+  
 }
 
 export default new QuanLyBaoHiemService();

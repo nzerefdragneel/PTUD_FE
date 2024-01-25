@@ -58,6 +58,7 @@ import VerifyEmailComponent from "./components/verifyEmail.component";
 import VerifyScreen from "./screen/verifyScreen";
 import Nv_xacDinhChiPhiBaoHiem from "./components/nv_xacDinhChiPhiBaoHiem.component";
 import Nv_lichSuChiTra from "./components/nv_lichSuChiTra.component";
+import Nv_chinhSuaHopDong from "./components/nv_chinhSuaHopDong.component";
 import { Toaster } from "react-hot-toast";
 
 class App extends Component {
@@ -268,6 +269,10 @@ class App extends Component {
                 <Route
                   path="/nhanvien/duyetYCCT"
                   element={<Nv_duyetYeuCauChiTra />}
+                />
+                <Route
+                  path="/nhanvien/csHopDong"
+                  element={<Nv_chinhSuaHopDong />}
                 />
                 <Route
                   path="/nhanvien/xdChiPhiBH"

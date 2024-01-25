@@ -16,6 +16,7 @@ import Nhanvien_Profile from "../components/NV_profile.component";
 import Nv_duyetYeuCauChiTra from "../components/nv_duyetYeuCauChiTra.component";
 import Nv_xacDinhChiPhiBaoHiem from "../components/nv_xacDinhChiPhiBaoHiem.component";
 import Nv_lichSuChiTra from "../components/nv_lichSuChiTra.component";
+import Nv_chinhSuaHopDong from "../components/nv_chinhSuaHopDong.component";
 
 import {
   BookmarkIcon,
@@ -82,6 +83,16 @@ export const appRouters_taiChinh = [
     showInMenu: true,
     component: <Nv_xacDinhChiPhiBaoHiem />,
   },
+
+  {
+    path: "/nhanvien/csHopDong",
+    title: "chinhSuaHopDong",
+    name: "Chỉnh sửa hợp đồng",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <Nv_chinhSuaHopDong />,
+  },
+
   /*{
     path: "/editAccount",
     title: "editAccount",

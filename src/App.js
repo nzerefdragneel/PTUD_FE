@@ -41,12 +41,14 @@ import NV_chonLichTuVan from "./components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
 import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
+import TC_QuanLiThanhToan from "./components/tc_quanLyThanhToan.component";
 import NV_TiepNhanTuVan from "./components/nv_tiepNhanTuVan.component";
 import NV_ChonLichHenKH from "./components/nv_chonLichGapKH.component";
 import NV_LichHenCuaToi from "./components/nv_lichHenCuaToi.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
 import Nv_ds_allCS from "./components/nv_ds_allCS.component";
+import TC_xacNhanTT from "./components/tc_xacNhanThanhToan.component";
 import NV_LichSuGapKhachHang from "./components/nv_lichSuGapKH.component";
 import NV_LichSu_KiHopDong from "./components/nv_lichSuGapKH_kiHopDong.component";
 import NV_LichSu_TuVan from "./components/nv_lichSuGapKH_tuVanBH.component";
@@ -301,6 +303,15 @@ class App extends Component {
                 <Route
                   path="/nhanvien/chinh-sua-ds-chinh-sach/:id"
                   element={<NV_ds_chinhSach />}
+                />
+                {/* tài chính */}
+                <Route
+                  path="/taichinh/TC_QuanLiThanhToan"
+                  element={<TC_QuanLiThanhToan />}
+                />
+                <Route
+                  path="/taichinh/TC_xacNhanTT"
+                  element={<TC_xacNhanTT />}
                 />
                 <Route
                   exact

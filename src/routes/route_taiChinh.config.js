@@ -14,8 +14,6 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
 import Nv_duyetYeuCauChiTra from "../components/nv_duyetYeuCauChiTra.component";
-import Nv_xacDinhChiPhiBaoHiem from "../components/nv_xacDinhChiPhiBaoHiem.component";
-import Nv_lichSuChiTra from "../components/nv_lichSuChiTra.component";
 import {
   BookmarkIcon,
   HomeIcon,
@@ -37,7 +35,7 @@ export const appRouters_taiChinh = [
     title: "nhanvien_Profile",
     name: "Hồ sơ nhân viên",
     icon: BookmarkIcon,
-    showInMenu: false,
+    showInMenu: true,
     component: <Nhanvien_Profile />,
   },
   // {
@@ -54,7 +52,7 @@ export const appRouters_taiChinh = [
     title: "edituser",
     name: "Cập nhật thông tin ",
     icon: BookmarkIcon,
-    showInMenu: false,
+    showInMenu: true,
     component: <EditUser />,
   },
   {
@@ -62,7 +60,7 @@ export const appRouters_taiChinh = [
     title: "editAccount",
     name: "Cài đặt tài khoản ",
     icon: BookmarkIcon,
-    showInMenu: false,
+    showInMenu: true,
     component: <EditAccount />,
   },
   {
@@ -74,12 +72,12 @@ export const appRouters_taiChinh = [
     component: <Nv_duyetYeuCauChiTra />,
   },
   {
-    path: "/nhanvien/xdChiPhiBH",
-    title: "xdChiPhiBH",
+    path: "/editAccount",
+    title: "editAccount",
     name: "Xác định chi phí bảo hiểm",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <Nv_xacDinhChiPhiBaoHiem />,
+    component: <EditAccount />,
   },
   {
     path: "/editAccount",
@@ -90,12 +88,12 @@ export const appRouters_taiChinh = [
     component: <EditAccount />,
   },
   {
-    path: "/nhanvien/lsCTra",
-    title: "lsCTra",
+    path: "/editAccount",
+    title: "editAccount",
     name: "Lịch sử chi trả",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <Nv_lichSuChiTra />,
+    component: <EditAccount />,
   },
 ];
 

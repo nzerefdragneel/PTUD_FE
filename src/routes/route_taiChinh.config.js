@@ -34,7 +34,7 @@ export const appRouters_taiChinh = [
     title: "nhanvien_Profile",
     name: "Hồ sơ nhân viên",
     icon: BookmarkIcon,
-    showInMenu: false,
+    showInMenu: true,
     component: <Nhanvien_Profile />,
   },
   // {
@@ -68,7 +68,7 @@ export const appRouters_taiChinh = [
     title: "addNhanVienTC",
     name: "Thêm hồ sơ cá nhân ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <AddNhanVienTC />,
   },
   {
@@ -89,7 +89,6 @@ export const appRouters_taiChinh = [
   },
 
   {
-
     path: "/nhanvien/csHopDong",
     title: "chinhSuaHopDong",
     name: "Chỉnh sửa hợp đồng",
@@ -106,15 +105,15 @@ export const appRouters_taiChinh = [
     showInMenu: true,
     component: <TC_QuanLiThanhToan />,
   },
-  
-  {
-    path: "/nhanvien/lichSuChiTra",
-    title: "lichSuChiTra",
-    name: "Lịch sử chi trả",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <Nv_lichSuChiTra />,
-  },
+
+  // {
+  //   path: "/nhanvien/lichSuChiTra",
+  //   title: "lichSuChiTra",
+  //   name: "Lịch sử chi trả",
+  //   icon: BookmarkIcon,
+  //   showInMenu: true,
+  //   component: <Nv_lichSuChiTra />,
+  // },
 ];
 
 export const routers = [...appRouters_taiChinh];

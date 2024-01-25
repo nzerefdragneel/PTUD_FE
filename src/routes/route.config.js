@@ -91,14 +91,7 @@ export const appRouters = [
     showInMenu: false,
     component: <Health_Declaration />,
   },
-  {
-    path: "/xemGoiBaoHiem",
-    title: "goibaohiem",
-    name: "Xem gói bảo hiểm",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <XemGoiBaoHiemScreen />,
-  },
+
   {
     path: "/dongPhi",
     title: "dongphi",

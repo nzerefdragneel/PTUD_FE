@@ -56,29 +56,12 @@ export const appRouters_nv = [
   // },
 
   {
-    path: "/edituser",
-    title: "edituser",
-    name: "Cập nhật thông tin ",
-    icon: BookmarkIcon,
-    showInMenu: false,
-    component: <EditUser />,
-  },
-  {
     path: "/editAccount",
     title: "editAccount",
     name: "Cài đặt tài khoản ",
     icon: BookmarkIcon,
     showInMenu: false,
     component: <EditAccount />,
-  },
-
-  {
-    path: "/addNhanVien",
-    title: "addNhanVien",
-    name: "Thêm hồ sơ cá nhân",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <AddNhanVien />,
   },
 
   {
@@ -118,7 +101,7 @@ export const appRouters_nv = [
     title: "NV_ChonLichHenKH",
     name: "Chọn lịch hẹn khách hàng",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <NV_ChonLichHenKH />,
   },
 

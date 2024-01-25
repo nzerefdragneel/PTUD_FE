@@ -132,7 +132,7 @@ class App extends Component {
           <div className="flex flex-row flex-wrap text-balance  items-center">
             <a href="/" className="nav-link">
               <img
-                src="./assets/images/logo_0.png"
+                src="./assets/logo_0.png"
                 className="h-16 w-auto mr-2"
                 alt="logo"
               />

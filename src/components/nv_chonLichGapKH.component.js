@@ -47,12 +47,12 @@ const NV_ChonLichHenKH = () => {
       )}
       {nhanVienData.length !== 0 && (
         <div>
-          <Button
+          {/* <Button
             onClick={() => handleKiHopDongClick()}
             className="bg-blue-500 text-white px-4 py-2 text-lg mr-4"
           >
             Lịch kí hợp đồng
-          </Button>
+          </Button> */}
           <Button
             onClick={() => handleTuVanClick()}
             className="bg-blue-500 text-white px-4 py-2 text-lg"

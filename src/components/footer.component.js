@@ -6,7 +6,7 @@ export default class SimpleFooter extends Component {
       <div className="border-t mt-2 bottom-0 px-40 pb-8 pt-20 flex flex-row flex-wrap gap-2 justify-between">
         <div className="flex flex-col mt-2 mr-5">
           <img
-            src="./assets/images/logo_0.png"
+            src="./assets/logo_0.png"
             className="h-16 w-auto mr-2"
             alt="logo"
           />

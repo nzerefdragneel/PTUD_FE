@@ -194,7 +194,7 @@ function AddRegister() {
         )}
         {isSubmit && isSuccess && (
           <div className="alert alert-success text-base">
-            Cập nhật thành công{" "}
+            Đăng ký thành công{" "}
           </div>
         )}
       </div>

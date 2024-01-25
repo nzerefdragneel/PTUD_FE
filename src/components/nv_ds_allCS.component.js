@@ -3,6 +3,16 @@ import { useNavigate } from "react-router-dom";
 import PhatHanhCSService from "../services/PhatHanhCS.service"; // Make sure the path to the service file is correct
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
 import authService from "../services/auth.service";
+import { toast } from "react-hot-toast";
+
+const initialPolicyState = {
+  tenChinhSach: "",
+  hanMucChiTra: "",
+  dieuKienApDung: "",
+  mota: "",
+  thoiGianPhatHanh: "",
+};
+
 const Nv_ds_allCS = () => {
   const user = authService.getCurrentUser();
   let iD_TaiKhoan = null;
@@ -23,8 +33,6 @@ const Nv_ds_allCS = () => {
     hanMucChiTra: "",
     thoiGianPhatHanh: "",
   });
-
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -59,42 +67,66 @@ const Nv_ds_allCS = () => {
 
   const handleAddPolicySubmit = async (e) => {
     e.preventDefault();
-    let newErrors = { hanMucChiTra: "", thoiGianPhatHanh: "" };
+    let newErrors = {
+      tenChinhSach: "",
+      hanMucChiTra: "",
+      dieuKienApDung: "",
+      mota: "",
+      thoiGianPhatHanh: "",
+    };
 
+    if (!newPolicy.tenChinhSach.trim()) {
+      newErrors.tenChinhSach = "Tên chính sách không được để trống";
+    }
     // Validate HanMucChiTra
-    if (Number(newPolicy.hanMucChiTra) <= 0) {
-      newErrors.hanMucChiTra = "Hạn mức không thể bé hơn 0";
+    if (!newPolicy.hanMucChiTra || Number(newPolicy.hanMucChiTra) <= 0) {
+      newErrors.hanMucChiTra = "Hạn mức chi trả phải là một số lớn hơn 0";
     }
 
-    // Validate thoiGianPhatHanh
-    const selectedDate = new Date(newPolicy.thoiGianPhatHanh);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of day
-
-    if (selectedDate <= today) {
-      newErrors.thoiGianPhatHanh =
-        "Thời gian phát hành phải lớn hơn ngày hôm nay.";
+    if (!newPolicy.dieuKienApDung.trim()) {
+      newErrors.dieuKienApDung = "Điều kiện áp dụng không được để trống";
     }
 
-    if (newErrors.hanMucChiTra || newErrors.thoiGianPhatHanh) {
+    if (!newPolicy.mota.trim()) {
+      newErrors.mota = "Mô tả không được để trống";
+    }
+
+    if (!newPolicy.thoiGianPhatHanh) {
+      newErrors.thoiGianPhatHanh = "Thời gian phát hành không được để trống.";
+    } else {
+      const selectedDate = new Date(newPolicy.thoiGianPhatHanh);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate <= today) {
+        newErrors.thoiGianPhatHanh =
+          "Thời gian phát hành phải lớn hơn ngày hôm nay.";
+      }
+    }
+
+    if (Object.values(newErrors).some((error) => error)) {
       setErrors(newErrors);
+      toast.error(
+        "Có lỗi trong việc tạo chính sách, vui lòng kiểm tra lại thông tin."
+      );
       return;
     }
+
     try {
       await PhatHanhCSService.addChinhSach(newPolicy);
+      toast.success("Chính sách đã được thêm thành công!");
       setShowForm(false);
-      setShowSuccessPopup(true);
-      setNewPolicy({
-        tenChinhSach: "",
-        hanMucChiTra: "",
-        dieuKienApDung: "",
-        mota: "",
-        thoiGianPhatHanh: "",
-      });
+      setNewPolicy(initialPolicyState);
       fetchData();
     } catch (error) {
       console.error("Lỗi khi tạo chính sách", error);
+      toast.error("Lỗi không xác định khi thêm chính sách.");
     }
+  };
+
+  const handleCancel = () => {
+    setNewPolicy(initialPolicyState);
+    setShowForm(false);
+    fetchData();
   };
   return (
     <div className="wrapper mt-8 px-4">
@@ -123,6 +155,11 @@ const Nv_ds_allCS = () => {
               onChange={handleInputChange}
               className="form-input px-3 py-2 border rounded"
             />
+            {errors.tenChinhSach && (
+              <div className="text-error-color text-base" role="alert">
+                {errors.tenChinhSach}
+              </div>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -162,6 +199,12 @@ const Nv_ds_allCS = () => {
               onChange={handleInputChange}
               className="form-input px-3 py-2 border rounded"
             />
+            {/* dieuKienApDung input and error message */}
+            {errors.dieuKienApDung && (
+              <div className="text-error-color text-base" role="alert">
+                {errors.dieuKienApDung}
+              </div>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -178,6 +221,12 @@ const Nv_ds_allCS = () => {
               onChange={handleInputChange}
               className="form-input px-3 py-2 border rounded"
             />
+            {/* mota input and error message */}
+            {errors.mota && (
+              <div className="text-error-color text-base" role="alert">
+                {errors.mota}
+              </div>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -201,7 +250,7 @@ const Nv_ds_allCS = () => {
             )}
           </div>
           <div className="flex justify-end gap-4">
-            <Button color="red" onClick={() => setShowForm(false)}>
+            <Button color="red" onClick={handleCancel}>
               Hủy
             </Button>
             <Button color="green" type="submit">
@@ -209,15 +258,6 @@ const Nv_ds_allCS = () => {
             </Button>
           </div>
         </form>
-      ) : showSuccessPopup ? (
-        <div className="my-8">
-          <div className="p-4 bg-white shadow-lg rounded text-center">
-            <p>Thêm chính sách thành công!</p>
-            <Button color="green" onClick={() => setShowSuccessPopup(false)}>
-              OK
-            </Button>
-          </div>
-        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {danhSachChinhSach.map((chinhSach) => (

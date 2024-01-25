@@ -14,6 +14,7 @@ import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
 import AdminAccountList from "../components/AdminAccountList.component";
+import AddAdmin from "../components/addAdmin.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
 
 import ThemNhanVienComponent from "../components/AdminAddNV.component";
@@ -67,6 +68,14 @@ export const appRouters_qtv = [
     component: <EditAccount />,
   },
   {
+    path: "/addAdmin",
+    title: "addAdmin",
+    name: "Thêm hồ sơ cá nhân",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <AddAdmin />,
+  },
+  {
     path: "/adminAccountList",
     title: "adminAccountList",
     name: "Danh sách tài khoản",
@@ -82,6 +91,7 @@ export const appRouters_qtv = [
     showInMenu: true,
     component: <ThemNhanVienComponent />,
   },
+
   // {
   //   path: "/editAccount",
   //   title: "editAccount",

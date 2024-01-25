@@ -31,8 +31,8 @@ const YeuCauTuVan = () => {
       try {
         const response = await KhachHangService.getByIdTaiKhoan(iD_TaiKhoan);
         setkiemTra(true);
-        setkhachHang(response.data[0]);
-        console.log(response.data[0].xacThuc);
+        setkhachHang(response.data);
+        console.log(response.data.xacThuc);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

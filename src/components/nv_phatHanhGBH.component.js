@@ -48,7 +48,84 @@ const PhatHanhGoiBaoHiem = () => {
       return;
     }
     //kiểm tra hợp lệ
+    const chiChuaKhoangTrang = (dc) => {
+      const addressRegex = /^\s+$/;
 
+      return addressRegex.test(dc);
+    };
+    const diaChiHopLe = (dc) => {
+      const addressRegex = /^[^a-zA-Z0-9]+$/; // Biểu thức chính quy cho địa chỉ
+
+      return addressRegex.test(dc);
+    };
+    const ChiChuaSo = (address) => {
+      const numberRegex = /^\d+$/; // Biểu thức chính quy cho chuỗi chỉ chứa số
+
+      return numberRegex.test(address);
+    };
+    function soTienHopLe(t) {
+      // Biểu thức chính quy kiểm tra số tiền
+      const amountRegex = /^\d+(\.\d{1,2})?$/;
+      return amountRegex.test(t);
+    }
+    if (diaChiHopLe(tenBaoHiem)) {
+      alert("Tên bảo hiểm không hợp lệ");
+      return;
+    }
+    if (chiChuaKhoangTrang(tenBaoHiem)) {
+      alert("Tên bảo hiểm không hợp lệ");
+      return;
+    }
+    if (ChiChuaSo(tenBaoHiem)) {
+      alert("Tên bảo hiểm không hợp lệ");
+      return;
+    }
+
+    if (
+      tenGoi !== "Gold" &&
+      tenGoi !== "Siver" &&
+      tenGoi !== "Platinum" &&
+      tenGoi !== "Bronze"
+    ) {
+      alert("Tên gói không hợp lệ");
+      return;
+    }
+    if (!soTienHopLe(giaTien)) {
+      alert("Giá tiền không hợp lệ");
+      return;
+    }
+
+    if (!isNaN(thoiHan)) {
+      if (thoiHan % 12 !== 0) {
+        alert("Thời hạn phải chia hết cho 12");
+        return;
+      }
+    } else {
+      alert("Thời hạn không hợp lệ");
+      return;
+    }
+    if (diaChiHopLe(moTa)) {
+      alert("Mô tả không hợp lệ");
+      return;
+    }
+    if (chiChuaKhoangTrang(moTa)) {
+      alert("Mô tả không hợp lệ");
+      return;
+    }
+    if (ChiChuaSo(moTa)) {
+      alert("Mô tả không hợp lệ");
+      return;
+    }
+    if (chiChuaKhoangTrang(hinhAnh)) {
+      alert("Hình ảnh không hợp lệ");
+      return;
+    }
+    if (ChiChuaSo(hinhAnh)) {
+      alert("Hình ảnh không hợp lệ");
+      return;
+    }
+
+    //
     const ngayPhatHanh = new Date();
     console.log(ngayPhatHanh);
     const tinhTrang = "Đang phát hành";
@@ -66,12 +143,11 @@ const PhatHanhGoiBaoHiem = () => {
         hinhAnh
       );
       console.log("CapNhatGBH API Response:", response);
-      setShowMessage(true);
-      setnoiDungMessage("Chỉnh sửa thành công!");
+      console.log(giaTien / 10);
+      alert("Thêm bảo hiểm thành công!");
     } catch (error) {
-      setShowMessage(true);
-      setnoiDungMessage("Vui lòng kiểm tra lại thông tin!");
-      console.error("Error sending YeuCauTuVan request:", error);
+      alert("Vui lòng kiểm tra lại thông tin!");
+      console.error("Error sending  request:", error);
     }
   };
   const closeMessage = () => {
@@ -92,6 +168,8 @@ const PhatHanhGoiBaoHiem = () => {
             <Input
               type="text"
               name="tenBaoHiem"
+              maxLength="30"
+              placeholder="ví dụ: bảo hiểm sức khỏe"
               value={tenBaoHiem}
               required
               onChange={(e) => settenBaoHiem(e.target.value)}
@@ -105,6 +183,8 @@ const PhatHanhGoiBaoHiem = () => {
             <Input
               type="text"
               name="tenGoi"
+              maxLength="10"
+              placeholder="chọn trong các gói có sẵn"
               value={tenGoi}
               required
               onChange={(e) => settenGoi(e.target.value)}
@@ -124,6 +204,8 @@ const PhatHanhGoiBaoHiem = () => {
             <Input
               type="text"
               name="giaTien"
+              maxLength="21"
+              placeholder=" ví dụ: 15000.02  --sử dụng dấu . để biểu thị số sau thập phân, tối đa 2 số phần thập phân"
               value={giaTien}
               required
               onChange={(e) => setgiaTien(e.target.value)}
@@ -136,6 +218,7 @@ const PhatHanhGoiBaoHiem = () => {
             <Input
               type="text"
               name="thoiHan"
+              placeholder="thời hạn chia hết cho 12 (bội của năm)"
               value={thoiHan}
               required
               onChange={(e) => setthoiHan(e.target.value)}
@@ -144,11 +227,12 @@ const PhatHanhGoiBaoHiem = () => {
 
           <div className="form-group">
             <label htmlFor="hinhAnh" className="font-semibold mb-2">
-              Hình ảnh:
+              Link hình ảnh:
             </label>
             <Input
               type="text"
               name="hinhAnh"
+              placeholder="link ảnh bảo hiểm"
               value={hinhAnh}
               required={true}
               onChange={(e) => sethinhAnh(e.target.value)}
@@ -160,6 +244,7 @@ const PhatHanhGoiBaoHiem = () => {
             </label>
             <textarea
               value={moTa}
+              maxLength="50"
               onChange={(e) => setmoTa(e.target.value)}
               placeholder="Mô tả"
               className="w-full p-2 border border-gray-300 rounded h-100"

@@ -13,6 +13,7 @@ const GoiBaoHiemCuaToi = () => {
   if (user !== null) {
     iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
   } else navigate(`/home`);
+  const [kiemTraCoTrongBangKH, setkiemTraCoTrongBangKH] = useState(false);
   //kiểm tra có hợp đồng còn đang hiệu lực không
   const [kiemTra, setkiemTra] = useState(false);
   //kiểm tra có hợp đồng hết hạn không
@@ -26,9 +27,10 @@ const GoiBaoHiemCuaToi = () => {
         const khachHangData = await KhachHangService.getByIdTaiKhoan(
           iD_TaiKhoan
         );
+        setkiemTraCoTrongBangKH(true);
         try {
           const hopDongCuaKH = await HopDongService.getByIdKhachHang(
-            khachHangData.data[0].iD_KhachHang
+            khachHangData.data.iD_KhachHang
           );
           //lấy hợp đồng còn hiệu lực
           const hopDongConHieuLuc = hopDongCuaKH.data.filter(
@@ -195,7 +197,7 @@ const GoiBaoHiemCuaToi = () => {
         </div>
       ) : (
         <div>
-          <h3>Các gói bảo hiểm đang sử dụng</h3>
+          <h3>Các gói bảo hiểm hết hạn sử dụng</h3>
           <p>không có.</p>
         </div>
       )}

@@ -63,7 +63,7 @@ const YeuCauChiTra = () => {
         console.log(khachHangData);
         try {
           const response = await HopDongService.getByIdKhachHang(
-            khachHangData.data[0].iD_KhachHang
+            khachHangData.data.iD_KhachHang
           );
 
           const baoHiemConHieuLuc = response.data.filter(
@@ -92,7 +92,7 @@ const YeuCauChiTra = () => {
           setGoiBaoHiemData(dsGoiBaoHiem);
           try {
             const dl = await QuanLyBaoHiemService.getByIDKH(
-              khachHangData.data[0].iD_KhachHang
+              khachHangData.data.iD_KhachHang
             );
             const bHiem = dl.data.filter((bh) => {
               const ngayKT = new Date(bh.thoiGianKetThuc);
@@ -280,7 +280,7 @@ const YeuCauChiTra = () => {
     }
     function soTienHopLe(t) {
       // Biểu thức chính quy kiểm tra số tiền
-      const amountRegex = /^\d+(\.\d{1,3})?$/;
+      const amountRegex = /^\d+(\.\d{1,2})?$/;
       return amountRegex.test(t);
     }
     if (!soTienHopLe(soTienYeuCauChiTra)) {
@@ -531,7 +531,7 @@ const YeuCauChiTra = () => {
               type="text"
               maxLength="21"
               name="soTienYeuCauChiTra"
-              placeholder="ví dụ: 150000.567 ---(tối đa 3 số thập phân sau dấu chấm)"
+              placeholder="ví dụ: 150000.567 ---(tối đa 2 số thập phân sau dấu chấm)"
               value={soTienYeuCauChiTra}
               required="true"
               onChange={(e) => setsoTienYeuCauChiTra(e.target.value)}

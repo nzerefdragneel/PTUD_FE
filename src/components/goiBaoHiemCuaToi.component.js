@@ -197,7 +197,7 @@ const GoiBaoHiemCuaToi = () => {
         </div>
       ) : (
         <div>
-          <h3>Các gói bảo hiểm đang sử dụng</h3>
+          <h3>Các gói bảo hiểm hết hạn sử dụng</h3>
           <p>không có.</p>
         </div>
       )}

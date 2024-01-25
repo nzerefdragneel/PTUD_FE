@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import YeuCauTuVanService from "../services/yeuCauTuVan.service";
 import NhanVienService from "../services/nhanVien.service";
 import { Button, alert } from "@material-tailwind/react";
+import KhachHangService from "../services/khachHang.service";
 import SendEmail from "../services/sendEmail.service";
 import authService from "../services/auth.service";
 import DialogDefault from "./dialog";
@@ -46,8 +47,30 @@ const NV_chonLichTuVan = () => {
         ds_khongCoNVHienTai.sort(
           (a, b) => new Date(a.thoiGian) - new Date(b.thoiGian)
         );
-        setds_yeucautuvan(ds_khongCoNVHienTai);
+
         console.log(ds_khongCoNVHienTai);
+        const ds_yc = [];
+        for (const yc of ds_khongCoNVHienTai) {
+          const response = await KhachHangService.getById(yc.iD_KhachHang);
+          console.log(response.data.hoTen);
+          ds_yc.push({
+            iD_KhachHang: yc.iD_KhachHang,
+            hoTen: response.data.hoTen,
+            gioiTinh: response.data.gioiTinh,
+            ngaySinh: response.data.ngaySinh,
+            soNhaTenDuong: response.data.soNhaTenDuong,
+            phuongXa: response.data.phuongXa,
+            quanHuyen: response.data.quanHuyen,
+            thanhPho: response.data.thanhPho,
+            email: response.data.email,
+            soDienThoai: response.data.soDienThoai,
+            iD_YeuCauTuVan: yc.iD_YeuCauTuVan,
+            tinhTrangDuyet: yc.tinhTrangDuyet,
+            diaDiem: yc.diaDiem,
+            thoiGian: yc.thoiGian,
+          });
+        }
+        setds_yeucautuvan(ds_yc);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -118,27 +141,62 @@ const NV_chonLichTuVan = () => {
         <div>
           <h3 className="mb-8 mx-auto">Lịch tư vấn</h3>
           <div className="grid gap-4">
-            {ds_yeucautuvan.map((phieuTuVan) => (
+            {ds_yeucautuvan.map((phieuYCTV) => (
               <div
-                key={phieuTuVan.iD_YeuCauTuVan}
-                className="goiBaoHiemItem grid grid-cols-3 gap-4 border border-blue-500 rounded cursor-pointer"
+                key={phieuYCTV.iD_YeuCauTuVan}
+                className="bg-white rounded-lg shadow-md p-4 mb-4 text-sm text-left border border-gray-500"
+                style={{ paddingLeft: "20px" }}
               >
-                <p className="text-gray-600 mb-4">
-                  iD_YeuCauTuVan: {phieuTuVan.iD_YeuCauTuVan}
-                </p>
-                <p className="text-gray-600 mb-4">{phieuTuVan.diaDiem}</p>
-                <p className="text-gray-600 mb-4">
-                  {phieuTuVan.thoiGian.slice(0, 10)}
-                </p>
-                <p className="text-gray-600 mb-4">
-                  {phieuTuVan.thoiGian.slice(-8)}
-                </p>
-                <Button
-                  onClick={() => handleNhanClick(phieuTuVan)}
-                  className="bg-green-500 text-white px-4 py-2 mb-4"
-                >
-                  Nhận
-                </Button>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>iD_YeuCauTuVan:</strong> {phieuYCTV.iD_YeuCauTuVan}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>Tình trạng duyệt:</strong> {phieuYCTV.tinhTrangDuyet}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong className="text-red-500">Địa điểm cuộc hẹn:</strong>{" "}
+                  {phieuYCTV.diaDiem}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong className="text-red-500">Thời gian hẹn gặp:</strong>{" "}
+                  {phieuYCTV.thoiGian.slice(0, 10)}{" "}
+                  {phieuYCTV.thoiGian.slice(-8)}
+                </div>
+
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>Tên khách hàng:</strong>{" "}
+                  {phieuYCTV.hoTen ? phieuYCTV.hoTen : "N/A"}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>Giới tính:</strong>{" "}
+                  {phieuYCTV.gioiTinh ? phieuYCTV.gioiTinh : "N/A"}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>Ngày sinh:</strong>{" "}
+                  {phieuYCTV.ngaySinh ? phieuYCTV.ngaySinh.slice(0, 10) : "N/A"}
+                </div>
+
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>Địa chỉ nơi ở:</strong> {phieuYCTV.soNhaTenDuong},{" "}
+                  {phieuYCTV.phuongXa}, {phieuYCTV.quanHuyen},{" "}
+                  {phieuYCTV.thanhPho}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>email:</strong>{" "}
+                  {phieuYCTV.email ? phieuYCTV.email : "N/A"}
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  <strong>Số điện thoại:</strong>{" "}
+                  {phieuYCTV.soDienThoai ? phieuYCTV.soDienThoai : "N/A"}
+                </div>
+                <div className="mt-4 flex items-center justify-center">
+                  <button
+                    className="bg-green-500 text-white p-2 rounded mr-2 font-bold text-lg"
+                    onClick={() => handleNhanClick(phieuYCTV)}
+                  >
+                    Nhận
+                  </button>
+                </div>
               </div>
             ))}
           </div>

@@ -10,10 +10,12 @@ import ChinhSuaGoiBaoHiem from "../components/nv_chinhSuaGoiBaoHiem.component";
 import PhatHanhGoiBaoHiem from "../components/nv_phatHanhGBH.component";
 import NV_chonLichTuVan from "../components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "../components/nv_chonLichKiHopDong.component";
+import NV_ChonLichHenKH from "../components/nv_chonLichGapKH.component";
 import NV_ds_chinhSach from "../components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "../components/nv_ds_GBH.component";
 import NV_TiepNhanTuVan from "../components/nv_tiepNhanTuVan.component";
 import NV_LichHenCuaToi from "../components/nv_lichHenCuaToi.component";
+import NV_LichSuGapKhachHang from "../components/nv_lichSuGapKH.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import AddNhanVien from "../components/addNhanVien.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
@@ -27,14 +29,14 @@ import {
 import Nhanvien_Profile from "../components/NV_profile.component";
 
 export const appRouters_nv = [
-  {
-    path: "/home",
-    title: "home",
-    name: "Trang chủ",
-    icon: HomeIcon,
-    showInMenu: true,
-    component: <Home />,
-  },
+  // {
+  //   path: "/home",
+  //   title: "home",
+  //   name: "Trang chủ",
+  //   icon: HomeIcon,
+  //   showInMenu: true,
+  //   component: <Home />,
+  // },
   {
     path: "/nhanvien_Profile",
     title: "nhanvien_Profile",
@@ -111,21 +113,14 @@ export const appRouters_nv = [
   //   component: <NV_ds_GoiBaoHiem />,
   // },
   {
-    path: "/nhanvien/NV_chonLichTuVan",
-    title: "chonLichTuVanBaoHiem",
-    name: "Chọn lịch tư vấn bảo hiểm",
+    path: "/nhanvien/NV_ChonLichHenKH",
+    title: "NV_ChonLichHenKH",
+    name: "Chọn lịch hẹn khách hàng",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <NV_chonLichTuVan />,
+    component: <NV_ChonLichHenKH />,
   },
-  {
-    path: "/nhanvien/NV_chonLichKiHopDong",
-    title: "chonLichKiHopDong",
-    name: "Chọn lịch kí kết hợp đồng",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <NV_chonLichKiHopDong />,
-  },
+
   {
     path: "/manageApplications",
     title: "manageApplications",
@@ -152,11 +147,19 @@ export const appRouters_nv = [
   },
   {
     path: "/nhanvien/NV_LichHenCuaToi",
-    title: "Lịch hẹn của tôi",
+    title: "NV_LichHenCuaToi",
     name: "Lịch hẹn của tôi",
     icon: BookmarkIcon,
     showInMenu: true,
     component: <NV_LichHenCuaToi />,
+  },
+  {
+    path: "/nhanvien/NV_LichSuGapKhachHang",
+    title: "NV_LichSuGapKhachHang",
+    name: "Lịch sử gặp khách hàng",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_LichSuGapKhachHang />,
   },
 ];
 

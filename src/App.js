@@ -42,10 +42,14 @@ import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
 import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
 import NV_TiepNhanTuVan from "./components/nv_tiepNhanTuVan.component";
+import NV_ChonLichHenKH from "./components/nv_chonLichGapKH.component";
 import NV_LichHenCuaToi from "./components/nv_lichHenCuaToi.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
 import Nv_ds_allCS from "./components/nv_ds_allCS.component";
+import NV_LichSuGapKhachHang from "./components/nv_lichSuGapKH.component";
+import NV_LichSu_KiHopDong from "./components/nv_lichSuGapKH_kiHopDong.component";
+import NV_LichSu_TuVan from "./components/nv_lichSuGapKH_tuVanBH.component";
 import Nv_duyetYeuCauChiTra from "./components/nv_duyetYeuCauChiTra.component";
 import PhieuDangKyList from "./components/Maganage_Application.component";
 import DanhSachKyKetList from "./components/Calendar_Application.component";
@@ -256,6 +260,10 @@ class App extends Component {
                   element={<PhatHanhGoiBaoHiem />}
                 />
                 <Route
+                  path="/nhanvien/NV_ChonLichHenKH"
+                  element={<NV_ChonLichHenKH />}
+                />
+                <Route
                   path="/nhanvien/NV_chonLichTuVan"
                   element={<NV_chonLichTuVan />}
                 />
@@ -270,6 +278,18 @@ class App extends Component {
                 <Route
                   path="/nhanvien/NV_LichHenCuaToi"
                   element={<NV_LichHenCuaToi />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichSuGapKhachHang"
+                  element={<NV_LichSuGapKhachHang />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichSu_KiHopDong"
+                  element={<NV_LichSu_KiHopDong />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichSu_TuVan"
+                  element={<NV_LichSu_TuVan />}
                 />
                 <Route path="/nhanvien/dsCSach" element={<Nv_ds_allCS />} />
                 <Route

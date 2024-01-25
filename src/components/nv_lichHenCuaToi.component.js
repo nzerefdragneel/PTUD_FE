@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import YeuCauTuVanService from "../services/yeuCauTuVan.service";
+import GoiBaoHiemService from "../services/goiBaoHiem.service";
 import KhachHangService from "../services/khachHang.service";
 import phieuDangKiService from "../services/phieuDangKi.service";
 import NhanVienService from "../services/nhanVien.service";
@@ -37,7 +38,7 @@ const NV_LichHenCuaToi = () => {
             const tgTuVan = new Date(yc.thoiGian);
             const hienTai = new Date();
             // So sánh với thời điểm hiện tại
-            return tgTuVan > hienTai;
+            return tgTuVan >= hienTai;
           });
 
           console.log(data);
@@ -82,31 +83,44 @@ const NV_LichHenCuaToi = () => {
             const tgTuVan = new Date(yc.thoiGianKiKet);
             const hienTai = new Date();
             // So sánh với thời điểm hiện tại
-            return tgTuVan > hienTai;
+            return tgTuVan >= hienTai;
           });
 
           console.log(data);
           const ds_yc = [];
           for (const yc of data) {
-            const response = await KhachHangService.getById(yc.iD_KhachHang);
-            console.log(response.data.hoTen);
-            ds_yc.push({
-              iD_KhachHang: yc.iD_KhachHang,
-              hoTen: response.data.hoTen,
-              gioiTinh: response.data.gioiTinh,
-              ngaySinh: response.data.ngaySinh,
-              soNhaTenDuong: response.data.soNhaTenDuong,
-              phuongXa: response.data.phuongXa,
-              quanHuyen: response.data.quanHuyen,
-              thanhPho: response.data.thanhPho,
-              email: response.data.email,
-              soDienThoai: response.data.soDienThoai,
-              iD_PhieuDangKi: yc.iD_PhieuDangKi,
-              tinhTrangDuyet: yc.tinhTrangDuyet,
-              diaDiemKiKet: yc.diaDiemKiKet,
-              thoiGianKiKet: yc.thoiGianKiKet,
-              toKhaiSucKhoe: yc.toKhaiSucKhoe,
-            });
+            try {
+              const response = await KhachHangService.getById(yc.iD_KhachHang);
+              // console.log(response.data.hoTen);
+              try {
+                const bh = await GoiBaoHiemService.getByID(yc.iD_GoiBaoHiem);
+                // console.log(response.data.hoTen);
+                ds_yc.push({
+                  iD_KhachHang: yc.iD_KhachHang,
+                  hoTen: response.data.hoTen,
+                  gioiTinh: response.data.gioiTinh,
+                  ngaySinh: response.data.ngaySinh,
+                  soNhaTenDuong: response.data.soNhaTenDuong,
+                  phuongXa: response.data.phuongXa,
+                  quanHuyen: response.data.quanHuyen,
+                  thanhPho: response.data.thanhPho,
+                  email: response.data.email,
+                  soDienThoai: response.data.soDienThoai,
+                  iD_PhieuDangKi: yc.iD_PhieuDangKi,
+                  tinhTrangDuyet: yc.tinhTrangDuyet,
+                  diaDiemKiKet: yc.diaDiemKiKet,
+                  thoiGianKiKet: yc.thoiGianKiKet,
+                  toKhaiSucKhoe: yc.toKhaiSucKhoe,
+                  iD_GoiBaoHiem: yc.iD_GoiBaoHiem,
+                  tenBaoHiem: bh.data.tenBaoHiem,
+                  tenGoi: bh.data.tenGoi,
+                });
+              } catch (error) {
+                console.error("Error fetching data:", error);
+              }
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
           }
 
           const sx = ds_yc.sort(
@@ -147,7 +161,7 @@ const NV_LichHenCuaToi = () => {
                   {danhSachYCTV.map((phieuYCTV) => (
                     <li
                       key={phieuYCTV.iD_YeuCauTuVan}
-                      className="bg-white rounded-lg shadow-md p-4 mb-4 text-sm"
+                      className="bg-white rounded-lg shadow-md p-4 mb-4 text-sm border border-gray-500"
                     >
                       <div>
                         <strong>iD_YeuCauTuVan:</strong>{" "}
@@ -158,10 +172,13 @@ const NV_LichHenCuaToi = () => {
                         {phieuYCTV.tinhTrangDuyet}
                       </div>
                       <div>
-                        <strong>Địa điểm:</strong> {phieuYCTV.diaDiem}
+                        <strong className="text-red-500">
+                          Địa điểm cuộc hẹn:
+                        </strong>{" "}
+                        {phieuYCTV.diaDiem}
                       </div>
                       <div>
-                        <strong>Thời gian:</strong>{" "}
+                        <strong className="text-red-500">Thời gian hẹn:</strong>{" "}
                         {phieuYCTV.thoiGian.slice(0, 10)}{" "}
                         {phieuYCTV.thoiGian.slice(-8)}
                       </div>
@@ -173,7 +190,7 @@ const NV_LichHenCuaToi = () => {
                           : "N/A"}
                       </div>
                       <div>
-                        <strong>Họ tên:</strong>{" "}
+                        <strong>Tên khách hàng:</strong>{" "}
                         {phieuYCTV.hoTen ? phieuYCTV.hoTen : "N/A"}
                       </div>
                       <div>
@@ -218,8 +235,8 @@ const NV_LichHenCuaToi = () => {
                 <ul>
                   {danhSachPhieuDangKi.map((phieuDK) => (
                     <li
-                      key={phieuDK.iD_YeuCauTuVan}
-                      className="bg-white rounded-lg shadow-md p-4 mb-4 text-sm"
+                      key={phieuDK.iD_PhieuDangKi}
+                      className="bg-white rounded-lg shadow-md p-4 mb-4 text-sm border border-gray-500"
                     >
                       <div>
                         <strong>iD_PhieuDangKi:</strong>{" "}
@@ -230,10 +247,13 @@ const NV_LichHenCuaToi = () => {
                         {phieuDK.tinhTrangDuyet}
                       </div>
                       <div>
-                        <strong>Địa điểm:</strong> {phieuDK.diaDiemKiKet}
+                        <strong className="text-red-500">
+                          Địa điểm cuộc hẹn:
+                        </strong>{" "}
+                        {phieuDK.diaDiemKiKet}
                       </div>
                       <div>
-                        <strong>Thời gian:</strong>{" "}
+                        <strong className="text-red-500">Thời gian hẹn:</strong>{" "}
                         {phieuDK.thoiGianKiKet.slice(0, 10)}{" "}
                         {phieuDK.thoiGianKiKet.slice(-8)}
                       </div>
@@ -243,7 +263,7 @@ const NV_LichHenCuaToi = () => {
                         {phieuDK.iD_KhachHang ? phieuDK.iD_KhachHang : "N/A"}
                       </div>
                       <div>
-                        <strong>Họ tên:</strong>{" "}
+                        <strong>Tên khách hàng:</strong>{" "}
                         {phieuDK.hoTen ? phieuDK.hoTen : "N/A"}
                       </div>
                       <div>
@@ -269,6 +289,27 @@ const NV_LichHenCuaToi = () => {
                       <div>
                         <strong>Số điện thoại:</strong>{" "}
                         {phieuDK.soDienThoai ? phieuDK.soDienThoai : "N/A"}
+                      </div>
+                      <div>
+                        <strong>Tờ khai sức khỏe:</strong>{" "}
+                        <a
+                          href={phieuDK.toKhaiSucKhoe}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          {phieuDK.toKhaiSucKhoe
+                            ? phieuDK.toKhaiSucKhoe
+                            : "N/A"}
+                        </a>
+                      </div>
+                      <div>
+                        <strong>Tên bảo hiểm:</strong>{" "}
+                        {phieuDK.tenBaoHiem ? phieuDK.tenBaoHiem : "N/A"}
+                      </div>
+                      <div>
+                        <strong>Tên gói:</strong>{" "}
+                        {phieuDK.tenGoi ? phieuDK.tenGoi : "N/A"}
                       </div>
                     </li>
                   ))}

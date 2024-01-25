@@ -110,7 +110,7 @@ const NV_TiepNhanTuVan = () => {
                   {phieuYCTV.iD_KhachHang ? phieuYCTV.iD_KhachHang : "N/A"}
                 </div>
                 <div>
-                  <strong>Họ tên:</strong>{" "}
+                  <strong>Tên khách hàng:</strong>{" "}
                   {phieuYCTV.hoTen ? phieuYCTV.hoTen : "N/A"}
                 </div>
                 <div>

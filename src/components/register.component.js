@@ -28,8 +28,7 @@ function AddRegister() {
   const {
     state: { goiBaohiem },
   } = useLocation();
-  console.log(goiBaohiem.iD_GoiBaoHiem);
-  console.log(userID);
+
   const customer = CustomerService.getCurrentCustomer();
 
   //   const [passwor setConfirmPassword] = useState("");

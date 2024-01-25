@@ -10,6 +10,7 @@ import ChinhSuaGoiBaoHiem from "../components/nv_chinhSuaGoiBaoHiem.component";
 import PhatHanhGoiBaoHiem from "../components/nv_phatHanhGBH.component";
 import NV_chonLichTuVan from "../components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "../components/nv_chonLichKiHopDong.component";
+import Nv_chinhSuaHopDong from "../components/nv_chinhSuaHopDong.component";
 import NV_ChonLichHenKH from "../components/nv_chonLichGapKH.component";
 import NV_ds_chinhSach from "../components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "../components/nv_ds_GBH.component";
@@ -121,6 +122,14 @@ export const appRouters_nv = [
     component: <NV_ChonLichHenKH />,
   },
 
+  {
+    path: "/nhanvien/csHopDong",
+    title: "chinhSuaHopDong",
+    name: "Chỉnh sửa hợp đồng",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <Nv_chinhSuaHopDong />,
+  },
   {
     path: "/manageApplications",
     title: "manageApplications",

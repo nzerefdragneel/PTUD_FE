@@ -23,6 +23,12 @@ class YeuCauTuVanService {
       iD_NhanVien,
     });
   }
+
+  getByIdKhachHang(idKhachHang) {
+    return axios.get(`${API_URL}GetByIdKhachHang`, {
+      params: { idkh: idKhachHang },
+    });
+
   UpdateTinhTrangDuyet(iD_YeuCauTuVan, tinhTrangDuyet) {
     return axios.post(
       `${API_URL}UpdateTinhTrangDuyet?id=${iD_YeuCauTuVan}&tinhTrangDuyet=${tinhTrangDuyet}`

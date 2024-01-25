@@ -9,6 +9,10 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import AddNhanVienTC from "../components/addNhanVienTC.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
 import Nv_duyetYeuCauChiTra from "../components/nv_duyetYeuCauChiTra.component";
+import Nv_xacDinhChiPhiBaoHiem from "../components/nv_xacDinhChiPhiBaoHiem.component";
+import Nv_lichSuChiTra from "../components/nv_lichSuChiTra.component";
+import Nv_chinhSuaHopDong from "../components/nv_chinhSuaHopDong.component";
+
 import {
   BookmarkIcon,
   HomeIcon,
@@ -30,7 +34,7 @@ export const appRouters_taiChinh = [
     title: "nhanvien_Profile",
     name: "Hồ sơ nhân viên",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <Nhanvien_Profile />,
   },
   // {
@@ -47,7 +51,7 @@ export const appRouters_taiChinh = [
     title: "edituser",
     name: "Cập nhật thông tin ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditUser />,
   },
   {
@@ -55,7 +59,7 @@ export const appRouters_taiChinh = [
     title: "editAccount",
     name: "Cài đặt tài khoản ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditAccount />,
   },
 
@@ -76,13 +80,24 @@ export const appRouters_taiChinh = [
     component: <Nv_duyetYeuCauChiTra />,
   },
   {
-    path: "/editAccount",
-    title: "editAccount",
+    path: "/nhanvien/xdChiPhiBH",
+    title: "xacDinhChiPhiBH",
     name: "Xác định chi phí bảo hiểm",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <EditAccount />,
+    component: <Nv_xacDinhChiPhiBaoHiem />,
   },
+
+  {
+
+    path: "/nhanvien/csHopDong",
+    title: "chinhSuaHopDong",
+    name: "Chỉnh sửa hợp đồng",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <Nv_chinhSuaHopDong />,
+  },
+
   {
     path: "/taichinh/TC_QuanLiThanhToan",
     title: "editAccount",
@@ -91,13 +106,14 @@ export const appRouters_taiChinh = [
     showInMenu: true,
     component: <TC_QuanLiThanhToan />,
   },
+  
   {
-    path: "/editAccount",
-    title: "editAccount",
+    path: "/nhanvien/lichSuChiTra",
+    title: "lichSuChiTra",
     name: "Lịch sử chi trả",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <EditAccount />,
+    component: <Nv_lichSuChiTra />,
   },
 ];
 

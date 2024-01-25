@@ -106,14 +106,14 @@ export const appRouters_taiChinh = [
     component: <TC_QuanLiThanhToan />,
   },
 
-  // {
-  //   path: "/nhanvien/lichSuChiTra",
-  //   title: "lichSuChiTra",
-  //   name: "Lịch sử chi trả",
-  //   icon: BookmarkIcon,
-  //   showInMenu: true,
-  //   component: <Nv_lichSuChiTra />,
-  // },
+  {
+    path: "/nhanvien/lichSuChiTra",
+    title: "lichSuChiTra",
+    name: "Lịch sử chi trả",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <Nv_lichSuChiTra />,
+  },
 ];
 
 export const routers = [...appRouters_taiChinh];

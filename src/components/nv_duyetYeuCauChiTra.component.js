@@ -3,6 +3,7 @@ import DuyetYeuCauChiTraService from "../services/DuyetYeuCauChiTra.service";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
 import QuanLyBaoHiemService from "../services/quanLyBaoHiem.service";
+import LichSuChiTraService from "../services/lichSuChiTra.service";
 import {
   Card,
   CardBody,
@@ -50,17 +51,6 @@ const Nv_duyetYeuCauChiTra = () => {
     }).format(amount);
   };
 
-  const capNhatHanMucSuDung = async (qlbhid, soTienYeuCauChiTra) => {
-    try {
-      await QuanLyBaoHiemService.capNhatHanMucSuDung(
-        qlbhid,
-        soTienYeuCauChiTra
-      );
-    } catch (error) {
-      console.error("Error updating HanMucSuDung:", error);
-    }
-  };
-
   const updateDanhSachYeuCau = (iD_YeuCauChiTra) => {
     setDanhSachYeuCau(
       danhSachYeuCau.filter(
@@ -71,22 +61,49 @@ const Nv_duyetYeuCauChiTra = () => {
 
   const handleDuyet = async () => {
     if (selectedYeuCau) {
-      // Approve the request
-      await DuyetYeuCauChiTraService.duyetYeuCauChiTra(
-        selectedYeuCau.iD_YeuCauChiTra,
-        "Đã Duyệt"
-      );
+      try {
+        // Duyệt yêu cầu chi trả
+        await DuyetYeuCauChiTraService.duyetYeuCauChiTra(
+          selectedYeuCau.iD_YeuCauChiTra,
+          "Đã Duyệt"
+        );
 
-      // Update the usage limit
-      await QuanLyBaoHiemService.capNhatHanMucSuDung(
-        selectedYeuCau.qlbhid,
-        selectedYeuCau.soTienYeuCauChiTra
-      );
+        // Kiểm tra trạng thái duyệt sau khi gọi API
+        const duyetResponse =
+          await DuyetYeuCauChiTraService.getYeuCauChiTraById(
+            selectedYeuCau.iD_YeuCauChiTra
+          );
+        if (duyetResponse.data.tinhTrangDuyet !== "Đã Duyệt") {
+          toast.error("Lỗi: Không thể duyệt yêu cầu chi trả!");
+          return;
+        }
 
-      // Update the list of requests
-      updateDanhSachYeuCau(selectedYeuCau.iD_YeuCauChiTra);
-      closeDialog();
-      toast.success("Yêu cầu chi trả đã được duyệt thành công!");
+        // Cập nhật hạn mức sử dụng
+        await QuanLyBaoHiemService.capNhatHanMucSuDung(
+          selectedYeuCau.qlbhid,
+          selectedYeuCau.soTienYeuCauChiTra
+        );
+
+        // Chuẩn bị dữ liệu cho LichSuChiTra
+        const addLichSuChiTraDTO = {
+          iD_YeuCauChiTra: selectedYeuCau.iD_YeuCauChiTra,
+          thoiGianChiTra: new Date().toISOString(),
+          soTienChiTra: selectedYeuCau.soTienYeuCauChiTra,
+        };
+
+        // Gọi API themLichSuChiTra
+        await LichSuChiTraService.themLichSuChiTra(addLichSuChiTraDTO);
+
+        // Cập nhật danh sách yêu cầu
+        updateDanhSachYeuCau(selectedYeuCau.iD_YeuCauChiTra);
+        closeDialog();
+        toast.success(
+          "Yêu cầu chi trả đã được duyệt và lưu vào lịch sử thành công!"
+        );
+      } catch (error) {
+        console.error("Error during validation or request approval:", error);
+        toast.error("Có lỗi xảy ra khi kiểm tra hoặc duyệt yêu cầu.");
+      }
     }
   };
 

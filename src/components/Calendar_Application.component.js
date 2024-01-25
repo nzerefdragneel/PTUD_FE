@@ -93,7 +93,7 @@ const DanhSachKyKetList = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Danh sách đã Duyệt</h1>
+      <h1 className="text-2xl font-bold mb-4">Phiếu đăng ký đã duyệt </h1>
       {phieudangkyList.length === 0 ? (
         <p>Chưa có phiếu đăng ký nào đã duyệt.</p>
       ) : (

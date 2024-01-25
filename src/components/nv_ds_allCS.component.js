@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PhatHanhCSService from "../services/PhatHanhCS.service"; // Make sure the path to the service file is correct
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
-
+import authService from "../services/auth.service";
 const Nv_ds_allCS = () => {
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
   const [showForm, setShowForm] = useState(false); // Renamed from showModal to showForm
   const [newPolicy, setNewPolicy] = useState({
@@ -17,6 +23,7 @@ const Nv_ds_allCS = () => {
     hanMucChiTra: "",
     thoiGianPhatHanh: "",
   });
+
   const navigate = useNavigate();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 

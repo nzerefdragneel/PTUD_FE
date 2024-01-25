@@ -2,8 +2,15 @@ import React, { useState, useEffect } from "react";
 import PhieuDangKiService from "../services/phieuDangKi.service";
 import GoiBaoHiemService from "../services/goiBaoHiem.service";
 import AuthService from "../services/auth.service";
-
+import { useNavigate } from "react-router-dom";
+import authService from "../services/auth.service";
 const DanhSachKyKetList = () => {
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   const [phieudangkyList, setPhieuDangKyList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 

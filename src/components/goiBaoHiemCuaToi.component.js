@@ -8,14 +8,17 @@ import { Button } from "@material-tailwind/react";
 
 const GoiBaoHiemCuaToi = () => {
   const user = authService.getCurrentUser();
-  const iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   //kiểm tra có hợp đồng còn đang hiệu lực không
   const [kiemTra, setkiemTra] = useState(false);
   //kiểm tra có hợp đồng hết hạn không
   const [kiemTra2, setkiemTra2] = useState(false);
   const [baoHiemConHieuLuc, setbaoHiemConHieuLuc] = useState([]);
   const [baoHiemHetHieuLuc, setbaoHiemHetHieuLuc] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {

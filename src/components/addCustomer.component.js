@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import UserService from "../services/user.service";
 import { withRouter } from "../common/with-router";
 import { Navigate, Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
 import { isEmail } from "validator";
 import customerService from "../services/customer.service";
@@ -82,8 +82,12 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 function AddCustomer() {
-  const user = authService.getCurrentUser();
-  const userID = user.taiKhoan.iD_TaiKhoan;
+  const userID = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (userID !== null) {
+    iD_TaiKhoan = userID.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
 
   const [hoten, sethoten] = useState("");
   const [email, setemail] = useState("");

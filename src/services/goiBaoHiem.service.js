@@ -9,7 +9,29 @@ class GoiBaoHiemService {
   getByID(id) {
     return axios.get(`${API_URL}/GetById?id=${id}`);
   }
+  capNhatGoiBaoHiem(
+    id,
 
+    tenBaoHiem,
+    tenGoi,
+    giaTien,
+    thoiHan,
+    moTa,
+    ngayPhatHanh,
+    tinhTrang,
+    hinhAnh
+  ) {
+    return axios.put(`${API_URL}/CapNhatGoiBaoHiem/${id}`, {
+      tenBaoHiem,
+      tenGoi,
+      giaTien,
+      thoiHan,
+      moTa,
+      ngayPhatHanh,
+      tinhTrang,
+      hinhAnh,
+    });
+  }
   capNhatGBH(
     id,
     iD_GoiBaoHiem,

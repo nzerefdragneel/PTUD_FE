@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import YeuCauTuVanService from "../services/yeuCauTuVan.service";
 import NhanVienService from "../services/nhanVien.service";
-import { Button } from "@material-tailwind/react";
+import { Button, alert } from "@material-tailwind/react";
 import SendEmail from "../services/sendEmail.service";
 import authService from "../services/auth.service";
 import DialogDefault from "./dialog";
 const NV_chonLichTuVan = () => {
   const user = authService.getCurrentUser();
-  // const iD_TaiKhoan = user.id;
-  const iD_TaiKhoan = 1;
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   const [nhanVienData, setnhanVienData] = useState([]);
   const [ds_yeucautuvan, setds_yeucautuvan] = useState([]);
-  const navigate = useNavigate();
+
   const [showMessage, setShowMessage] = useState(false);
   const [noiDungMessage, setnoiDungMessage] = useState(null);
   useEffect(() => {
@@ -51,10 +54,12 @@ const NV_chonLichTuVan = () => {
   useEffect(() => {
     console.log(nhanVienData);
   }, []);
-  const formatDate = (dateString) => {
+
+/*  const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
-  };
+  };*/
+
   const handleNhanClick = async (phieuTuVan) => {
     console.log(ds_yeucautuvan);
     console.log(nhanVienData[0].iD_NhanVien);
@@ -96,26 +101,26 @@ const NV_chonLichTuVan = () => {
       {showMessage && (
         <DialogDefault handler={closeMessage} message={noiDungMessage} />
       )}
-      <h3 className="mb-8 mx-auto text-2xl font-bold">Lịch tư vấn</h3>
+      <h3 className="mb-8 mx-auto">Lịch tư vấn</h3>
       <div className="grid gap-4">
         {ds_yeucautuvan.map((phieuTuVan) => (
           <div
             key={phieuTuVan.iD_YeuCauTuVan}
-            className="goiBaoHiemItem flex flex-col md:flex-row justify-between items-center p-4 border border-blue-500 rounded shadow-lg transition-all hover:shadow-xl my-2"
+            className="goiBaoHiemItem grid grid-cols-3 gap-4 border border-blue-500 rounded cursor-pointer"
           >
-            <div className="flex flex-col text-left mb-4 md:mb-0">
-              <p className="font-semibold">ID: {phieuTuVan.iD_YeuCauTuVan}</p>
-              <p className="text-gray-800">
-                Ngày: {formatDate(phieuTuVan.thoiGian)}
-              </p>
-              <p className="text-gray-800">
-                Thời gian: {phieuTuVan.thoiGian.slice(-8)}
-              </p>
-              <p className="text-gray-800">Địa điểm: {phieuTuVan.diaDiem}</p>
-            </div>
+            <p className="text-gray-600 mb-4">
+              iD_YeuCauTuVan: {phieuTuVan.iD_YeuCauTuVan}
+            </p>
+            <p className="text-gray-600 mb-4">{phieuTuVan.diaDiem}</p>
+            <p className="text-gray-600 mb-4">
+              {phieuTuVan.thoiGian.slice(0, 10)}
+            </p>
+            <p className="text-gray-600 mb-4">
+              {phieuTuVan.thoiGian.slice(-8)}
+            </p>
             <Button
               onClick={() => handleNhanClick(phieuTuVan)}
-              className="bg-green-500 text-white px-4 py-2 transition-colors duration-300 ease-in-out hover:bg-green-600 self-start md:self-center"
+              className="bg-green-500 text-white px-4 py-2 mb-4"
             >
               Nhận
             </Button>

@@ -68,6 +68,16 @@ export const appRouters_nv = [
   },
 
   {
+  {
+    path: "/addCustomer",
+    title: "addCustomer",
+    name: "Thêm hồ sơ cá nhân",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <addCustomerComponent />,
+  },
+
+  {
     path: "/nhanvien/goiBaoHiem",
     title: "phatHanhGoiBaoHiem",
     name: "Phát hành gói bảo hiểm",

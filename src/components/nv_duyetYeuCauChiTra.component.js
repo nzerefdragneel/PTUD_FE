@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DuyetYeuCauChiTraService from "../services/DuyetYeuCauChiTra.service";
+import { useNavigate } from "react-router-dom";
+import authService from "../services/auth.service";
 import QuanLyBaoHiemService from "../services/quanLyBaoHiem.service";
 import {
   Card,
@@ -11,6 +13,12 @@ import {
 import { toast } from "react-hot-toast";
 
 const Nv_duyetYeuCauChiTra = () => {
+  const user = authService.getCurrentUser();
+  let iD_TaiKhoan = null;
+  const navigate = useNavigate();
+  if (user !== null) {
+    iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
+  } else navigate(`/home`);
   const [danhSachYeuCau, setDanhSachYeuCau] = useState([]);
   const [selectedYeuCau, setSelectedYeuCau] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);

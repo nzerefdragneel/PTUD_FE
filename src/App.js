@@ -36,10 +36,12 @@ import ChiTietGoiBaoHiemCuaToi from "./components/chiTietGoiBaoHiemCuaToi.compon
 import NV_ds_GoiBaoHiem from "./components/nv_ds_GoiBaoHiem.component";
 // import ChinhSuaGoiBaoHiem from "./components/nv_chinhSuaGoiBaoHiem.component";
 import PhatHanhGoiBaoHiem from "./components/nv_phatHanhGBH.component";
+import NV_ChiTietGoiBaoHiem from "./components/nv_chiTietGoiBaoHiem.component";
 import NV_chonLichTuVan from "./components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
 import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
+
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
 import Nv_ds_allCS from "./components/nv_ds_allCS.component";
@@ -243,6 +245,10 @@ class App extends Component {
                 <Route
                   path="/nhanvien/goiBaoHiem"
                   element={<NV_ds_GoiBaoHiem />}
+                />
+                <Route
+                  path="/nhanvien/nv_xem-chi-tiet-goi-bao-hiem/:id"
+                  element={<NV_ChiTietGoiBaoHiem />}
                 />
                 <Route
                   path="/nhanvien/phatHanhGoiBaoHiem"

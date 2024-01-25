@@ -11,6 +11,7 @@ class HopDongService {
   getByIdHopDong(id) {
     return axios.get(`${API_URL}GetById?id=${id}`);
   }
+
   ChinhSuaHopDong(id, hopDongData) {
     return axios.post(`${API_URL}ChinhSuaHopDong/${id}`, hopDongData);
   }
@@ -19,6 +20,9 @@ class HopDongService {
       id,
       price,
     });
+
+  taoHopDong(iD_PhieuDangKi) {
+    return axios.post(`${API_URL}HopDong?idPDK=${iD_PhieuDangKi}`);
   }
 }
 

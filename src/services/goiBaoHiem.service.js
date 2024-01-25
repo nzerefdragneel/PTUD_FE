@@ -11,7 +11,6 @@ class GoiBaoHiemService {
   }
   capNhatGoiBaoHiem(
     id,
-
     tenBaoHiem,
     tenGoi,
     giaTien,
@@ -21,7 +20,7 @@ class GoiBaoHiemService {
     tinhTrang,
     hinhAnh
   ) {
-    return axios.put(`${API_URL}/CapNhatGoiBaoHiem/${id}`, {
+    return axios.post(`${API_URL}/CapNhatGoiBaoHiem?id=${id}`, {
       tenBaoHiem,
       tenGoi,
       giaTien,

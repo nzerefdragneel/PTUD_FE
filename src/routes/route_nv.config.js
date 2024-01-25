@@ -1,6 +1,6 @@
 import EditUser from "../components/edituser.component";
 import Home from "../components/home.component";
-import Register_Insurance from "../components/register.component";
+import AddRegister from "../components/register.component";
 import User_Profile from "../components/user_profile.component";
 import EditAccount from "../components/editAccount.component";
 import Health_Declaration from "../components/health_declaration.component";
@@ -11,10 +11,14 @@ import PhatHanhGoiBaoHiem from "../components/nv_phatHanhGBH.component";
 import NV_chonLichTuVan from "../components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "../components/nv_chonLichKiHopDong.component";
 import Nv_chinhSuaHopDong from "../components/nv_chinhSuaHopDong.component";
+import NV_ChonLichHenKH from "../components/nv_chonLichGapKH.component";
 import NV_ds_chinhSach from "../components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "../components/nv_ds_GBH.component";
+import NV_TiepNhanTuVan from "../components/nv_tiepNhanTuVan.component";
+import NV_LichHenCuaToi from "../components/nv_lichHenCuaToi.component";
+import NV_LichSuGapKhachHang from "../components/nv_lichSuGapKH.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-import addCustomerComponent from "../components/addCustomer.component";
+import AddNhanVien from "../components/addNhanVien.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import {
@@ -26,14 +30,14 @@ import {
 import Nhanvien_Profile from "../components/NV_profile.component";
 
 export const appRouters_nv = [
-  {
-    path: "/home",
-    title: "home",
-    name: "Trang chủ",
-    icon: HomeIcon,
-    showInMenu: true,
-    component: <Home />,
-  },
+  // {
+  //   path: "/home",
+  //   title: "home",
+  //   name: "Trang chủ",
+  //   icon: HomeIcon,
+  //   showInMenu: true,
+  //   component: <Home />,
+  // },
   {
     path: "/nhanvien_Profile",
     title: "nhanvien_Profile",
@@ -69,12 +73,12 @@ export const appRouters_nv = [
   },
 
   {
-    path: "/addCustomer",
-    title: "addCustomer",
+    path: "/addNhanVien",
+    title: "addNhanVien",
     name: "Thêm hồ sơ cá nhân",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <addCustomerComponent />,
+    component: <AddNhanVien />,
   },
 
   {
@@ -110,21 +114,14 @@ export const appRouters_nv = [
   //   component: <NV_ds_GoiBaoHiem />,
   // },
   {
-    path: "/nhanvien/NV_chonLichTuVan",
-    title: "chonLichTuVanBaoHiem",
-    name: "Chọn lịch tư vấn bảo hiểm",
+    path: "/nhanvien/NV_ChonLichHenKH",
+    title: "NV_ChonLichHenKH",
+    name: "Chọn lịch hẹn khách hàng",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <NV_chonLichTuVan />,
+    component: <NV_ChonLichHenKH />,
   },
-  {
-    path: "/nhanvien/NV_chonLichKiHopDong",
-    title: "chonLichKiHopDong",
-    name: "Chọn lịch kí kết hợp đồng",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <NV_chonLichKiHopDong />,
-  },
+
   {
     path: "/nhanvien/csHopDong",
     title: "chinhSuaHopDong",
@@ -149,22 +146,30 @@ export const appRouters_nv = [
     showInMenu: true,
     component: <DanhSachKyKetList />,
   },
-  // {
-  //   path: "/nhanvien/NV_chonLichKiHopDong",
-  //   title: "tiepNhanTuVan",
-  //   name: "Tiếp nhận tư vấn",
-  //   icon: BookmarkIcon,
-  //   showInMenu: true,
-  //   component: <NV_ds_GoiBaoHiem />,
-  // },
-  // {
-  //   path: "/nhanvien/NV_chonLichKiHopDong",
-  //   title: "Lịch hẹn của tôi",
-  //   name: "Lịch hẹn của tôi",
-  //   icon: BookmarkIcon,
-  //   showInMenu: true,
-  //   component: <NV_chonLichKiHopDong />,
-  // },
+  {
+    path: "/nhanvien/NV_TiepNhanTuVan",
+    title: "tiepNhanTuVan",
+    name: "Tiếp nhận tư vấn",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_TiepNhanTuVan />,
+  },
+  {
+    path: "/nhanvien/NV_LichHenCuaToi",
+    title: "NV_LichHenCuaToi",
+    name: "Lịch hẹn của tôi",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_LichHenCuaToi />,
+  },
+  {
+    path: "/nhanvien/NV_LichSuGapKhachHang",
+    title: "NV_LichSuGapKhachHang",
+    name: "Lịch sử gặp khách hàng",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_LichSuGapKhachHang />,
+  },
 ];
 
 export const routers = [...appRouters_nv];

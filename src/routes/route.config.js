@@ -4,6 +4,7 @@ import Register_Insurance from "../components/register.component";
 import User_Profile from "../components/user_profile.component";
 import EditAccount from "../components/editAccount.component";
 import Health_Declaration from "../components/health_declaration.component";
+import AddNhanVienTC from "../components/addNhanVienTC.component";
 import XemGoiBaoHiemScreen from "../screen/xemGoiBaoHiemScreen";
 import CongTyScreen from "../screen/congTyScreen";
 import DongPhi from "../components/dongPhi.component";
@@ -59,12 +60,12 @@ export const appRouters = [
   //   component:<Profile/>
   // },
   {
-    path: "/register/:idGoiBaoHiem",
-    title: "register",
+    path: "/xemGoiBaoHiem",
+    title: "Danh sách gói bảo hiểm",
     name: "Đăng ký bảo hiểm ",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <Register_Insurance />,
+    component: <XemGoiBaoHiemScreen />,
   },
   {
     path: "/edituser",
@@ -129,7 +130,7 @@ export const appRouters = [
     name: "Thêm hồ sơ khách hàng",
     icon: BookmarkIcon,
     showInMenu: false,
-    component: <addCustomerComponent />,
+    component: <AddNhanVienTC />,
   },
 
   {
@@ -173,7 +174,6 @@ export const appRouters = [
     showInMenu: false,
     component: <AdminAccountList />,
   },
-
 ];
 
 export const routers = [...appRouters];

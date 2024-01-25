@@ -11,14 +11,16 @@ class PhieuDangKiService {
     return axios.post(url);
   }
 
-  UpdateNhanVien(iD_PhieuDangKi, iD_NhanVien) {
-    return axios.post(`${API_URL}ThemNhanVienChoPhieuDangKi`, {
-      iD_PhieuDangKi,
-      iD_NhanVien,
-    });
+  UpdateNhanVien(requestData) {
+    const api = `${API_URL}ThemNhanVienChoPhieuDangKi`;
+    return axios.post(api, requestData);
   }
   GetbyKH(id) {
     const url = `${API_URL}GetByIdKhachHang?idkh=${id}`;
+    return axios.get(url);
+  }
+  GetByIdNhanVien(idnv) {
+    const url = `${API_URL}GetByIdNhanVien?idnv=${idnv}`;
     return axios.get(url);
   }
 }

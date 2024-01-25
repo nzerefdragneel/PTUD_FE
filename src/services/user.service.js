@@ -14,12 +14,12 @@ class UserService {
 
     return axios.post(url, { id, tinhTrang });
   }
-  ThemNhanVienByADMIN(username, password, _loaitaikhoan, _tinhTrang) {
+  ThemNhanVienByADMIN(username, password, _loaitaikhoan) {
     const requestData = {
       iD_TaiKhoan: 0,
       tenDangNhap: username,
       matKhau: password,
-      loaiTaiKhoan: "NV",
+      loaiTaiKhoan: _loaitaikhoan,
       tinhTrang: "Hoạt Động",
     };
 

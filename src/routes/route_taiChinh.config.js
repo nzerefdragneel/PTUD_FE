@@ -3,15 +3,10 @@ import Home from "../components/home.component";
 import Register_Insurance from "../components/register.component";
 import User_Profile from "../components/user_profile.component";
 import EditAccount from "../components/editAccount.component";
-import Health_Declaration from "../components/health_declaration.component";
-import XemGoiBaoHiemScreen from "../screen/xemGoiBaoHiemScreen";
-import CongTyScreen from "../screen/congTyScreen";
-import DongPhi from "../components/dongPhi.component";
-import ChiTietDongPhi from "../components/chiTietDongPhi.component";
-import YeuCauTuVan from "../components/yeuCauTuVan.component";
+import TC_QuanLiThanhToan from "../components/tc_quanLyThanhToan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-import addCustomerComponent from "../components/addCustomer.component";
+import AddNhanVienTC from "../components/addNhanVienTC.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
 import Nv_duyetYeuCauChiTra from "../components/nv_duyetYeuCauChiTra.component";
 import Nv_xacDinhChiPhiBaoHiem from "../components/nv_xacDinhChiPhiBaoHiem.component";
@@ -67,6 +62,15 @@ export const appRouters_taiChinh = [
     showInMenu: false,
     component: <EditAccount />,
   },
+
+  {
+    path: "/addNhanVienTC",
+    title: "addNhanVienTC",
+    name: "Thêm hồ sơ cá nhân ",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <AddNhanVienTC />,
+  },
   {
     path: "/nhanvien/duyetYCCT",
     title: "duyetYCCT",
@@ -85,6 +89,7 @@ export const appRouters_taiChinh = [
   },
 
   {
+
     path: "/nhanvien/csHopDong",
     title: "chinhSuaHopDong",
     name: "Chỉnh sửa hợp đồng",
@@ -93,14 +98,15 @@ export const appRouters_taiChinh = [
     component: <Nv_chinhSuaHopDong />,
   },
 
-  /*{
-    path: "/editAccount",
+  {
+    path: "/taichinh/TC_QuanLiThanhToan",
     title: "editAccount",
-    name: "Xác nhận thanh toán chi phí",
+    name: "Quản lý thanh toán",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <EditAccount />,
-  },*/
+    component: <TC_QuanLiThanhToan />,
+  },
+  
   {
     path: "/nhanvien/lichSuChiTra",
     title: "lichSuChiTra",

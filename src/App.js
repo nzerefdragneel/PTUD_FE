@@ -23,7 +23,7 @@ import SimpleFooter from "./components/footer.component";
 import ChiTietDongPhi from "./components/chiTietDongPhi.component";
 import Bus from "./common/bus";
 import SignupScreen from "./screen/signupScreen";
-import Register_Insurance from "./components/register.component";
+import AddRegister from "./components/register.component";
 import User_Profile from "./components/user_profile.component";
 import EditAccount from "./components/editAccount.component";
 import Health_Declaration from "./components/health_declaration.component";
@@ -41,10 +41,17 @@ import NV_chonLichTuVan from "./components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
 import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
-
+import TC_QuanLiThanhToan from "./components/tc_quanLyThanhToan.component";
+import NV_TiepNhanTuVan from "./components/nv_tiepNhanTuVan.component";
+import NV_ChonLichHenKH from "./components/nv_chonLichGapKH.component";
+import NV_LichHenCuaToi from "./components/nv_lichHenCuaToi.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
 import Nv_ds_allCS from "./components/nv_ds_allCS.component";
+import TC_xacNhanTT from "./components/tc_xacNhanThanhToan.component";
+import NV_LichSuGapKhachHang from "./components/nv_lichSuGapKH.component";
+import NV_LichSu_KiHopDong from "./components/nv_lichSuGapKH_kiHopDong.component";
+import NV_LichSu_TuVan from "./components/nv_lichSuGapKH_tuVanBH.component";
 import Nv_duyetYeuCauChiTra from "./components/nv_duyetYeuCauChiTra.component";
 import PhieuDangKyList from "./components/Maganage_Application.component";
 import DanhSachKyKetList from "./components/Calendar_Application.component";
@@ -121,8 +128,8 @@ class App extends Component {
       <div className="">
         {/* headers */}
         <Toaster />
-        <div className="pt-3 pb-4 px-32 flex flex-row  justify-between border-b mb-2 bg-black">
-          <div className="flex flex-row flex-wrap text-lg  items-center">
+        <div className="pt-3 pb-4 px-30 flex flex-row  justify-between border-b mb-2 bg-black">
+          <div className="flex flex-row flex-wrap text-balance  items-center">
             <a href="/" className="nav-link">
               <img
                 src="./assets/images/logo_0.png"
@@ -141,11 +148,6 @@ class App extends Component {
                   Trang chủ
                 </div>
               </a>
-              <a href="/user_profile" className="nav-link">
-                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
-                  Hồ sơ cá nhân
-                </div>
-              </a>
 
               {
                 <a href="/xemGoiBaoHiem" className="nav-link">
@@ -159,6 +161,11 @@ class App extends Component {
                 </div>
               </a> */
               }
+              <a href="/statusRegister" className="nav-link">
+                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                  Đơn đăng kí của tôi
+                </div>
+              </a>
               <a href="/login" className="nav-link" onClick={this.logOut}>
                 <div
                   className=" rounded-lg hover:bg-pink-400
@@ -180,6 +187,7 @@ class App extends Component {
                   Danh mục sản phẩm
                 </div>
               </a>
+
               <Link to={"/signup"} className="nav-link">
                 <div
                   className=" rounded-lg hover:bg-pink-400
@@ -224,7 +232,7 @@ class App extends Component {
                 <Route path="/congTy" element={<CongTyScreen />} />
                 <Route
                   path="/register/:idGoiBaoHiem"
-                  element={<Register_Insurance />}
+                  element={<AddRegister />}
                 />
                 <Route
                   path="/chiTietDongPhi/:id"
@@ -258,12 +266,36 @@ class App extends Component {
                   element={<PhatHanhGoiBaoHiem />}
                 />
                 <Route
+                  path="/nhanvien/NV_ChonLichHenKH"
+                  element={<NV_ChonLichHenKH />}
+                />
+                <Route
                   path="/nhanvien/NV_chonLichTuVan"
                   element={<NV_chonLichTuVan />}
                 />
                 <Route
                   path="/nhanvien/NV_chonLichKiHopDong"
                   element={<NV_chonLichKiHopDong />}
+                />
+                <Route
+                  path="/nhanvien/NV_TiepNhanTuVan"
+                  element={<NV_TiepNhanTuVan />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichHenCuaToi"
+                  element={<NV_LichHenCuaToi />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichSuGapKhachHang"
+                  element={<NV_LichSuGapKhachHang />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichSu_KiHopDong"
+                  element={<NV_LichSu_KiHopDong />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichSu_TuVan"
+                  element={<NV_LichSu_TuVan />}
                 />
                 <Route path="/nhanvien/dsCSach" element={<Nv_ds_allCS />} />
                 <Route
@@ -288,6 +320,15 @@ class App extends Component {
                   path="/nhanvien/chinh-sua-ds-chinh-sach/:id"
                   element={<NV_ds_chinhSach />}
                 />
+                {/* tài chính */}
+                <Route
+                  path="/taichinh/TC_QuanLiThanhToan"
+                  element={<TC_QuanLiThanhToan />}
+                />
+                <Route
+                  path="/taichinh/TC_xacNhanTT"
+                  element={<TC_xacNhanTT />}
+                />
                 <Route
                   exact
                   path="/"
@@ -303,7 +344,7 @@ class App extends Component {
                   }
                 />
                 {/* <Route path="/profile" element={<Profile />} /> */}{" "}
-                <Route path="/register" element={<Register_Insurance />} />
+                <Route path="/register" element={<AddRegister />} />
                 <Route path="/user_profile" element={<User_Profile />} />
                 <Route path="/edituser" element={<EditUser />} />
                 <Route path="/editAccount" element={<EditAccount />} />

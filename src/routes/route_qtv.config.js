@@ -1,6 +1,6 @@
 import EditUser from "../components/edituser.component";
 import Home from "../components/home.component";
-import Register_Insurance from "../components/register.component";
+import AddRegister from "../components/register.component";
 import User_Profile from "../components/user_profile.component";
 import EditAccount from "../components/editAccount.component";
 import Health_Declaration from "../components/health_declaration.component";
@@ -14,6 +14,7 @@ import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import addCustomerComponent from "../components/addCustomer.component";
 import AdminAccountList from "../components/AdminAccountList.component";
+import AddAdmin from "../components/addAdmin.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
 
 import ThemNhanVienComponent from "../components/AdminAddNV.component";
@@ -67,6 +68,14 @@ export const appRouters_qtv = [
     component: <EditAccount />,
   },
   {
+    path: "/addAdmin",
+    title: "addAdmin",
+    name: "Thêm hồ sơ cá nhân",
+    icon: BookmarkIcon,
+    showInMenu: false,
+    component: <AddAdmin />,
+  },
+  {
     path: "/adminAccountList",
     title: "adminAccountList",
     name: "Danh sách tài khoản",
@@ -82,6 +91,7 @@ export const appRouters_qtv = [
     showInMenu: true,
     component: <ThemNhanVienComponent />,
   },
+
   // {
   //   path: "/editAccount",
   //   title: "editAccount",

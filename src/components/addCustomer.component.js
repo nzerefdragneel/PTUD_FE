@@ -6,7 +6,7 @@ import { Navigate, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
 import { isEmail } from "validator";
-import customerService from "../services/customer.service";
+import CustomerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 import AuthService from "../services/auth.service";
@@ -146,7 +146,7 @@ function AddCustomer() {
     };
     console.log(requestData);
 
-    customerService.addCustomer(userID, requestData).then(
+    CustomerService.addCustomer(userID, requestData).then(
       (response) => {
         setSuccess(true);
         setMessage(response.data.message);

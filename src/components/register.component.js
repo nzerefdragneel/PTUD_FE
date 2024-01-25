@@ -2,9 +2,11 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import UserService from "../services/user.service";
 import React, { useRef, useState } from "react";
 import { withRouter } from "../common/with-router";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
 
 import { Navigate, Link, useLocation } from "react-router-dom";
-import authService from "../services/auth.service";
+import AuthService from "../services/auth.service";
 import { isEmail } from "validator";
 import CustomerService from "../services/customer.service";
 const required = (value) => {
@@ -17,12 +19,12 @@ const required = (value) => {
   }
 };
 function AddRegister() {
-  const user = authService.getCurrentUser();
+  const user = AuthService.getCurrentUser();
   const userID = user.taiKhoan.iD_TaiKhoan;
 
-  // const [hoten, sethoten] = useState("");
-  // const [email, setemail] = useState("");
-  // const [gioitinh, setgioitinh] = useState("");
+  const [diaDiemKiKet, setdiaDiemKiKet] = useState("");
+  const [toKhaiSucKhoe, settoKhaiSucKhoe] = useState("");
+  const [thoiGianKiKet, setthoiGianKiKet] = useState("");
   // const [quoctich, setquoctich] = useState("");
 
   const {
@@ -30,6 +32,8 @@ function AddRegister() {
   } = useLocation();
 
   const customer = CustomerService.getCurrentCustomer();
+  console.log(customer);
+  console.log(goiBaohiem);
 
   //   const [passwor setConfirmPassword] = useState("");
 
@@ -41,38 +45,11 @@ function AddRegister() {
   const [isLoading, setIsLoading] = useState(false);
   const requestData = {};
 
-  // const handleAddCustomer = (e) => {
-  //   e.preventDefault();
-
-  //   fref.current.validateAll();
-  //   console.log(userID);
-  //   console.log(hoten);
-  //   const requestData = {
-
-  //   };
-  //   console.log(requestData);
-
-  //   customerService.addCustomer(userID, requestData).then(
-  //     (response) => {
-  //       setSuccess(true);
-  //       setMessage(response.data.message);
-  //       setIsSubmit(true);
-  //       setIsLoading(false);
-  //     },
-  //     (error) => {
-  //       const resMessage =
-  //         error.response ||
-  //         error.response.data ||
-  //         error.response.data.message ||
-  //         error.message ||
-  //         error.toString();
-  //       setMessage(resMessage.toString());
-  //       setIsSubmit(true);
-  //       setSuccess(false);
-  //       setIsLoading(false);
-  //     }
-  //   );
-  // };
+  const handleRegister = (e) => {
+    e.preventDefault();
+    fref.current.validateAll();
+    console.log(customer.iD_KhachHang);
+  };
 
   return (
     <>
@@ -100,6 +77,28 @@ function AddRegister() {
             <h3 className="text-green-800 ">ĐĂNG KÝ BẢO HIỂM</h3>
           </div>
         </div>
+        <Form onSubmit={handleRegister} ref={fref}>
+          <label
+            htmlFor="diadiem"
+            className="block text-sm font-medium leading-6 text-gray-900 pt-2 "
+          >
+            Địa điểm ký kết
+          </label>
+          <div className="mt-2">
+            <input
+              id="Diadiem"
+              name="Diadiem"
+              type="text"
+              autoComplete="off"
+              validations={[required]}
+              onChange={(e) => {
+                setdiaDiemKiKet(e.target.value);
+              }}
+              placeholder="Nhập địa điểm "
+              className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </Form>
       </div>
     </>
   );

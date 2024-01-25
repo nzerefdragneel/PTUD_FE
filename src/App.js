@@ -41,7 +41,8 @@ import NV_chonLichTuVan from "./components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "./components/nv_chonLichKiHopDong.component";
 import NV_ds_chinhSach from "./components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "./components/nv_ds_GBH.component";
-
+import NV_TiepNhanTuVan from "./components/nv_tiepNhanTuVan.component";
+import NV_LichHenCuaToi from "./components/nv_lichHenCuaToi.component";
 import AddCustomerComponent from "./components/addCustomer.component";
 import Status_Register from "./components/status_register.component";
 import Nv_ds_allCS from "./components/nv_ds_allCS.component";
@@ -261,6 +262,14 @@ class App extends Component {
                 <Route
                   path="/nhanvien/NV_chonLichKiHopDong"
                   element={<NV_chonLichKiHopDong />}
+                />
+                <Route
+                  path="/nhanvien/NV_TiepNhanTuVan"
+                  element={<NV_TiepNhanTuVan />}
+                />
+                <Route
+                  path="/nhanvien/NV_LichHenCuaToi"
+                  element={<NV_LichHenCuaToi />}
                 />
                 <Route path="/nhanvien/dsCSach" element={<Nv_ds_allCS />} />
                 <Route

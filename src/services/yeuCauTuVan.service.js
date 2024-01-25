@@ -6,6 +6,10 @@ class YeuCauTuVanService {
   getAll() {
     return axios.get(`${API_URL}GetAll`);
   }
+  GetByIdNhanVien(idnv) {
+    return axios.get(`${API_URL}GetByIdNhanVien?idnv=${idnv}`);
+  }
+
   DatLichTuVan(iD_KhachHang, diaDiem, thoiGian) {
     return axios.post(`${API_URL}DatLichTuVan`, {
       iD_KhachHang,
@@ -18,6 +22,11 @@ class YeuCauTuVanService {
       iD_YeuCauTuVan,
       iD_NhanVien,
     });
+  }
+  UpdateTinhTrangDuyet(iD_YeuCauTuVan, tinhTrangDuyet) {
+    return axios.post(
+      `${API_URL}UpdateTinhTrangDuyet?id=${iD_YeuCauTuVan}&tinhTrangDuyet=${tinhTrangDuyet}`
+    );
   }
 }
 

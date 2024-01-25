@@ -13,9 +13,10 @@ const NV_chonLichTuVan = () => {
   if (user !== null) {
     iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
   } else navigate(`/home`);
+  console.log(iD_TaiKhoan);
   const [nhanVienData, setnhanVienData] = useState([]);
   const [ds_yeucautuvan, setds_yeucautuvan] = useState([]);
-
+  const [kiemTraCoTrongBangNV, setkiemTraCoTrongBangNV] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [noiDungMessage, setnoiDungMessage] = useState(null);
   useEffect(() => {
@@ -23,6 +24,7 @@ const NV_chonLichTuVan = () => {
       try {
         const response_nv = await NhanVienService.getAllNhanVien();
         const data_nv = response_nv.data;
+        console.log(response_nv.data);
         const nv = data_nv.filter((nvien) => nvien.iD_TaiKhoan === iD_TaiKhoan);
         console.log(nv);
         setnhanVienData(nv);
@@ -40,35 +42,43 @@ const NV_chonLichTuVan = () => {
           (lich) =>
             lich.iD_NhanVien1 !== (nv.length > 0 ? nv[0].iD_NhanVien : null)
         );
-        setds_yeucautuvan(ds_khongCoNVHienTai);
-        console.log(ds_khongCoNVHienTai);
-        ds_yeucautuvan.sort(
+
+        ds_khongCoNVHienTai.sort(
           (a, b) => new Date(a.thoiGian) - new Date(b.thoiGian)
         );
+        setds_yeucautuvan(ds_khongCoNVHienTai);
+        console.log(ds_khongCoNVHienTai);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, [ds_yeucautuvan]);
+  //ds_yeucautuvan
   useEffect(() => {
     console.log(nhanVienData);
   }, []);
 
-/*  const formatDate = (dateString) => {
+  /*  const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };*/
 
   const handleNhanClick = async (phieuTuVan) => {
-    console.log(ds_yeucautuvan);
+    if (nhanVienData.length === 0) {
+      alert("Vui lòng bổ sung thông tin cá nhân trước khi chọn lịch!");
+      navigate(`/addNhanVien`);
+      return;
+    }
+    console.log(phieuTuVan.iD_YeuCauTuVan);
     console.log(nhanVienData[0].iD_NhanVien);
+    // phieuTuVan.iD_KhachHang
     const chuDe = "Lịch tư vấn bảo hiểm Vietnam Health Insurance";
     const noiDung =
       "Lịch đặt tư vấn của quý khách đã được nhận, quý khách lưu ý đến đúng giờ và địa điểm. Cảm ơn quý khách!";
     try {
       const response = await YeuCauTuVanService.UpdateNhanVien(
-        phieuTuVan.iD_KhachHang,
+        phieuTuVan.iD_YeuCauTuVan,
         nhanVienData[0].iD_NhanVien
       );
       console.log("YeuCauTuVan API Response:", response);
@@ -101,32 +111,39 @@ const NV_chonLichTuVan = () => {
       {showMessage && (
         <DialogDefault handler={closeMessage} message={noiDungMessage} />
       )}
-      <h3 className="mb-8 mx-auto">Lịch tư vấn</h3>
-      <div className="grid gap-4">
-        {ds_yeucautuvan.map((phieuTuVan) => (
-          <div
-            key={phieuTuVan.iD_YeuCauTuVan}
-            className="goiBaoHiemItem grid grid-cols-3 gap-4 border border-blue-500 rounded cursor-pointer"
-          >
-            <p className="text-gray-600 mb-4">
-              iD_YeuCauTuVan: {phieuTuVan.iD_YeuCauTuVan}
-            </p>
-            <p className="text-gray-600 mb-4">{phieuTuVan.diaDiem}</p>
-            <p className="text-gray-600 mb-4">
-              {phieuTuVan.thoiGian.slice(0, 10)}
-            </p>
-            <p className="text-gray-600 mb-4">
-              {phieuTuVan.thoiGian.slice(-8)}
-            </p>
-            <Button
-              onClick={() => handleNhanClick(phieuTuVan)}
-              className="bg-green-500 text-white px-4 py-2 mb-4"
-            >
-              Nhận
-            </Button>
+      {nhanVienData.length === 0 && (
+        <h5>Vui lòng thêm thông tin cá nhân trước!</h5>
+      )}
+      {nhanVienData.length !== 0 && (
+        <div>
+          <h3 className="mb-8 mx-auto">Lịch tư vấn</h3>
+          <div className="grid gap-4">
+            {ds_yeucautuvan.map((phieuTuVan) => (
+              <div
+                key={phieuTuVan.iD_YeuCauTuVan}
+                className="goiBaoHiemItem grid grid-cols-3 gap-4 border border-blue-500 rounded cursor-pointer"
+              >
+                <p className="text-gray-600 mb-4">
+                  iD_YeuCauTuVan: {phieuTuVan.iD_YeuCauTuVan}
+                </p>
+                <p className="text-gray-600 mb-4">{phieuTuVan.diaDiem}</p>
+                <p className="text-gray-600 mb-4">
+                  {phieuTuVan.thoiGian.slice(0, 10)}
+                </p>
+                <p className="text-gray-600 mb-4">
+                  {phieuTuVan.thoiGian.slice(-8)}
+                </p>
+                <Button
+                  onClick={() => handleNhanClick(phieuTuVan)}
+                  className="bg-green-500 text-white px-4 py-2 mb-4"
+                >
+                  Nhận
+                </Button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </header>
   );
 };

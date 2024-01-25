@@ -11,7 +11,7 @@ import ChiTietDongPhi from "../components/chiTietDongPhi.component";
 import YeuCauTuVan from "../components/yeuCauTuVan.component";
 import Status_Register from "../components/status_register.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-import addCustomerComponent from "../components/addCustomer.component";
+import AddNhanVienTC from "../components/addNhanVienTC.component";
 import Nhanvien_Profile from "../components/NV_profile.component";
 import Nv_duyetYeuCauChiTra from "../components/nv_duyetYeuCauChiTra.component";
 import {
@@ -62,6 +62,15 @@ export const appRouters_taiChinh = [
     icon: BookmarkIcon,
     showInMenu: true,
     component: <EditAccount />,
+  },
+
+  {
+    path: "/addNhanVienTC",
+    title: "addNhanVienTC",
+    name: "Thêm hồ sơ cá nhân ",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <AddNhanVienTC />,
   },
   {
     path: "/nhanvien/duyetYCCT",

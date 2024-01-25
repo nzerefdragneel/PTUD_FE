@@ -30,16 +30,14 @@ const NV_chonLichKiHopDong = () => {
         const response = await PhieuDangKiService.getAll();
         const data = response.data;
         console.log(data);
-        const ds_daDuyet = data.filter(
-          (lich) =>
-            lich.tinhTrangDuyet === "Đã Duyệt" && lich.iD_NhanVien === null
-        );
-
+        const ds_daDuyet = data
+          .filter(
+            (lich) =>
+              lich.tinhTrangDuyet === "Đã Duyệt" && lich.iD_NhanVien === null
+          )
+          .sort((a, b) => new Date(a.thoiGian) - new Date(b.thoiGian));
+        console.log(ds_daDuyet);
         setds_phieuDangKi(ds_daDuyet);
-
-        ds_phieuDangKi.sort(
-          (a, b) => new Date(a.thoiGian) - new Date(b.thoiGian)
-        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -88,32 +86,39 @@ const NV_chonLichKiHopDong = () => {
       {showMessage && (
         <DialogDefault handler={closeMessage} message={noiDungMessage} />
       )}
-      <h3 className="mb-8 mx-auto">Lịch kí hợp đồng</h3>
-      <div className="grid gap-4">
-        {ds_phieuDangKi.map((phieuDangKi) => (
-          <div
-            key={phieuDangKi.iD_PhieuDangKi}
-            className="goiBaoHiemItem grid grid-cols-3 gap-4 border border-blue-500 rounded cursor-pointer"
-          >
-            <p className="text-gray-600 mb-4">
-              iD_PhieuDangKi: {phieuDangKi.iD_PhieuDangKi}
-            </p>
-            <p className="text-gray-600 mb-4">{phieuDangKi.diaDiemKiKet}</p>
-            <p className="text-gray-600 mb-4">
-              {phieuDangKi.thoiGianKiKet.slice(0, 10)}
-            </p>
-            <p className="text-gray-600 mb-4">
-              {phieuDangKi.thoiGianKiKet.slice(-8)}
-            </p>
-            <Button
-              onClick={() => handleNhanClick(phieuDangKi)}
-              className="bg-green-500 text-white px-4 py-2 mb-4"
-            >
-              Nhận
-            </Button>
+      {nhanVienData.length === 0 && (
+        <h5>Vui lòng thêm thông tin cá nhân trước!</h5>
+      )}
+      {nhanVienData.length !== 0 && (
+        <div>
+          <h3 className="mb-8 mx-auto">Lịch kí hợp đồng</h3>
+          <div className="grid gap-4">
+            {ds_phieuDangKi.map((phieuDangKi) => (
+              <div
+                key={phieuDangKi.iD_PhieuDangKi}
+                className="goiBaoHiemItem grid grid-cols-3 gap-4 border border-blue-500 rounded cursor-pointer"
+              >
+                <p className="text-gray-600 mb-4">
+                  iD_PhieuDangKi: {phieuDangKi.iD_PhieuDangKi}
+                </p>
+                <p className="text-gray-600 mb-4">{phieuDangKi.diaDiemKiKet}</p>
+                <p className="text-gray-600 mb-4">
+                  {phieuDangKi.thoiGianKiKet.slice(0, 10)}
+                </p>
+                <p className="text-gray-600 mb-4">
+                  {phieuDangKi.thoiGianKiKet.slice(-8)}
+                </p>
+                <Button
+                  onClick={() => handleNhanClick(phieuDangKi)}
+                  className="bg-green-500 text-white px-4 py-2 mb-4"
+                >
+                  Nhận
+                </Button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </header>
   );
 };

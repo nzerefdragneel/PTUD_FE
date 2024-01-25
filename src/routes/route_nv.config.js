@@ -12,8 +12,10 @@ import NV_chonLichTuVan from "../components/nv_chonLichTuVan.component";
 import NV_chonLichKiHopDong from "../components/nv_chonLichKiHopDong.component";
 import NV_ds_chinhSach from "../components/nv_ds_chinhSach.component";
 import NV_ds_GBH from "../components/nv_ds_GBH.component";
+import NV_TiepNhanTuVan from "../components/nv_tiepNhanTuVan.component";
+import NV_LichHenCuaToi from "../components/nv_lichHenCuaToi.component";
 import { faL } from "@fortawesome/free-solid-svg-icons";
-import addCustomerComponent from "../components/addCustomer.component";
+import AddNhanVien from "../components/addNhanVien.component";
 import PhieuDangKyList from "../components/Maganage_Application.component";
 import DanhSachKyKetList from "../components/Calendar_Application.component";
 import {
@@ -68,13 +70,12 @@ export const appRouters_nv = [
   },
 
   {
-  {
-    path: "/addCustomer",
-    title: "addCustomer",
+    path: "/addNhanVien",
+    title: "addNhanVien",
     name: "Thêm hồ sơ cá nhân",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <addCustomerComponent />,
+    component: <AddNhanVien />,
   },
 
   {
@@ -87,7 +88,7 @@ export const appRouters_nv = [
   },
   {
     path: "/nhanVien/dsCSach",
-    title: "phatHanhGoiBaoHiem",
+    title: "phatHanhChinhSach",
     name: "Phát hành chính sách",
     icon: BookmarkIcon,
     showInMenu: true,
@@ -141,22 +142,22 @@ export const appRouters_nv = [
     showInMenu: true,
     component: <DanhSachKyKetList />,
   },
-  // {
-  //   path: "/nhanvien/NV_chonLichKiHopDong",
-  //   title: "tiepNhanTuVan",
-  //   name: "Tiếp nhận tư vấn",
-  //   icon: BookmarkIcon,
-  //   showInMenu: true,
-  //   component: <NV_ds_GoiBaoHiem />,
-  // },
-  // {
-  //   path: "/nhanvien/NV_chonLichKiHopDong",
-  //   title: "Lịch hẹn của tôi",
-  //   name: "Lịch hẹn của tôi",
-  //   icon: BookmarkIcon,
-  //   showInMenu: true,
-  //   component: <NV_chonLichKiHopDong />,
-  // },
+  {
+    path: "/nhanvien/NV_TiepNhanTuVan",
+    title: "tiepNhanTuVan",
+    name: "Tiếp nhận tư vấn",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_TiepNhanTuVan />,
+  },
+  {
+    path: "/nhanvien/NV_LichHenCuaToi",
+    title: "Lịch hẹn của tôi",
+    name: "Lịch hẹn của tôi",
+    icon: BookmarkIcon,
+    showInMenu: true,
+    component: <NV_LichHenCuaToi />,
+  },
 ];
 
 export const routers = [...appRouters_nv];

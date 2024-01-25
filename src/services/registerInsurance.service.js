@@ -4,7 +4,7 @@ const API_URL = `${process.env.REACT_APP_URL_API}/api/PhieuDangKi/`;
 
 class RegisterInsuranceService {
   dangKyBaoHiem(requestData) {
-    url = `${API_URL}DangKyBaoHiem`;
+    const url = `${API_URL}DangKyBaoHiem`;
     return axios.post(url, requestData);
   }
 }

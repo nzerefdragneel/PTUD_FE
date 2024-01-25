@@ -9,6 +9,8 @@ import { Navigate, Link, useLocation } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import { isEmail } from "validator";
 import CustomerService from "../services/customer.service";
+import RegisterInsuranceService from "../services/registerInsurance.service";
+import { ImageFilterFrames } from "material-ui/svg-icons";
 const required = (value) => {
   if (!value) {
     return (
@@ -18,6 +20,7 @@ const required = (value) => {
     );
   }
 };
+
 function AddRegister() {
   const user = AuthService.getCurrentUser();
   const userID = user.taiKhoan.iD_TaiKhoan;
@@ -32,9 +35,9 @@ function AddRegister() {
   } = useLocation();
 
   const customer = CustomerService.getCurrentCustomer();
-  console.log(customer);
-  console.log(goiBaohiem);
 
+  const customerID = customer.iD_KhachHang;
+  console.log(goiBaohiem);
   //   const [passwor setConfirmPassword] = useState("");
 
   // const [email, setEmail] = useState("");
@@ -43,13 +46,44 @@ function AddRegister() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const requestData = {};
 
   const handleRegister = (e) => {
     e.preventDefault();
     fref.current.validateAll();
-    console.log(customer.iD_KhachHang);
     setIsLoading(false);
+    const requestData = {
+      diaDiemKiKet: diaDiemKiKet,
+      thoiGianKiKet: thoiGianKiKet,
+      toKhaiSucKhoe: toKhaiSucKhoe,
+      iD_KhachHang: customerID,
+      iD_GoiBaoHiem: goiBaohiem.iD_GoiBaoHiem,
+    };
+    console.log(requestData);
+    if (diaDiemKiKet === "" || toKhaiSucKhoe === "" || thoiGianKiKet === "") {
+      setIsSubmit(true);
+      setSuccess(false);
+    } else {
+      RegisterInsuranceService.dangKyBaoHiem(requestData).then(
+        (response) => {
+          setSuccess(true);
+          setMessage(response.data.message);
+          setIsSubmit(true);
+          setIsLoading(false);
+        },
+        (error) => {
+          const resMessage =
+            error.response ||
+            error.response.data ||
+            error.response.data.message ||
+            error.message ||
+            error.toString();
+          setMessage(resMessage.toString());
+          setIsSubmit(true);
+          setSuccess(false);
+          setIsLoading(false);
+        }
+      );
+    }
   };
 
   return (
@@ -89,10 +123,10 @@ function AddRegister() {
               name="Tokhai"
               type="text"
               autoComplete="off"
-              validations={[required]}
               onChange={(e) => {
-                setdiaDiemKiKet(e.target.value);
+                settoKhaiSucKhoe(e.target.value);
               }}
+              validations={required}
               placeholder="Nhập đường dẫn tờ khai (GG drive,Cloud,...) "
               className="block w-1/2 rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
@@ -155,7 +189,7 @@ function AddRegister() {
         </Form>
         {isSubmit && !isSuccess && (
           <div className="text-error-color text-base">
-            Kiểm tra lại thông tin{" "}
+            Có lỗi. Hãy kiểm tra lại{" "}
           </div>
         )}
         {isSubmit && isSuccess && (

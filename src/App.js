@@ -23,7 +23,7 @@ import SimpleFooter from "./components/footer.component";
 import ChiTietDongPhi from "./components/chiTietDongPhi.component";
 import Bus from "./common/bus";
 import SignupScreen from "./screen/signupScreen";
-import Register_Insurance from "./components/register.component";
+import AddRegister from "./components/register.component";
 import User_Profile from "./components/user_profile.component";
 import EditAccount from "./components/editAccount.component";
 import Health_Declaration from "./components/health_declaration.component";
@@ -221,7 +221,7 @@ class App extends Component {
                 <Route path="/congTy" element={<CongTyScreen />} />
                 <Route
                   path="/register/:idGoiBaoHiem"
-                  element={<Register_Insurance />}
+                  element={<AddRegister />}
                 />
                 <Route
                   path="/chiTietDongPhi/:id"
@@ -288,7 +288,7 @@ class App extends Component {
                   }
                 />
                 {/* <Route path="/profile" element={<Profile />} /> */}{" "}
-                <Route path="/register" element={<Register_Insurance />} />
+                <Route path="/register" element={<AddRegister />} />
                 <Route path="/user_profile" element={<User_Profile />} />
                 <Route path="/edituser" element={<EditUser />} />
                 <Route path="/editAccount" element={<EditAccount />} />

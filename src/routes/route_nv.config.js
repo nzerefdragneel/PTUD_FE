@@ -1,6 +1,6 @@
 import EditUser from "../components/edituser.component";
 import Home from "../components/home.component";
-import Register_Insurance from "../components/register.component";
+import AddRegister from "../components/register.component";
 import User_Profile from "../components/user_profile.component";
 import EditAccount from "../components/editAccount.component";
 import Health_Declaration from "../components/health_declaration.component";
@@ -66,17 +66,6 @@ export const appRouters_nv = [
     showInMenu: false,
     component: <EditAccount />,
   },
-
-  {
-  {
-    path: "/addCustomer",
-    title: "addCustomer",
-    name: "Thêm hồ sơ cá nhân",
-    icon: BookmarkIcon,
-    showInMenu: true,
-    component: <addCustomerComponent />,
-  },
-
   {
     path: "/nhanvien/goiBaoHiem",
     title: "phatHanhGoiBaoHiem",
@@ -87,7 +76,7 @@ export const appRouters_nv = [
   },
   {
     path: "/nhanVien/dsCSach",
-    title: "phatHanhGoiBaoHiem",
+    title: "phatHanhChinhSach",
     name: "Phát hành chính sách",
     icon: BookmarkIcon,
     showInMenu: true,

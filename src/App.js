@@ -118,8 +118,8 @@ class App extends Component {
       <div className="">
         {/* headers */}
         <Toaster />
-        <div className="pt-3 pb-4 px-32 flex flex-row  justify-between border-b mb-2 bg-black">
-          <div className="flex flex-row flex-wrap text-lg  items-center">
+        <div className="pt-3 pb-4 px-30 flex flex-row  justify-between border-b mb-2 bg-black">
+          <div className="flex flex-row flex-wrap text-balance  items-center">
             <a href="/" className="nav-link">
               <img
                 src="./assets/logo_0.png"
@@ -151,6 +151,11 @@ class App extends Component {
                 </div>
               </a> */
               }
+              <a href="/statusRegister" className="nav-link">
+                <div className=" rounded-lg hover:bg-pink-400 hover:cursor-pointer hover:ease-linear duration-300">
+                  Đơn đăng kí của tôi
+                </div>
+              </a>
               <a href="/login" className="nav-link" onClick={this.logOut}>
                 <div
                   className=" rounded-lg hover:bg-pink-400
@@ -172,6 +177,7 @@ class App extends Component {
                   Danh mục sản phẩm
                 </div>
               </a>
+
               <Link to={"/signup"} className="nav-link">
                 <div
                   className=" rounded-lg hover:bg-pink-400

@@ -68,7 +68,6 @@ export const appRouters_nv = [
   },
 
   {
-  {
     path: "/addCustomer",
     title: "addCustomer",
     name: "Thêm hồ sơ cá nhân",
@@ -87,7 +86,7 @@ export const appRouters_nv = [
   },
   {
     path: "/nhanVien/dsCSach",
-    title: "phatHanhGoiBaoHiem",
+    title: "phatHanhChinhSach",
     name: "Phát hành chính sách",
     icon: BookmarkIcon,
     showInMenu: true,

@@ -24,9 +24,11 @@ const ChiTietGoiBaoHiem = () => {
   const [kiemTra, setkiemTra] = useState(false);
   const [khachHang, setkhachHang] = useState([]);
   const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
-  if (user.taiKhoan.loaiTaiKhoan === "KH") {
-    setkiemTraCoLaKhachHang(true);
-  }
+  useEffect(() => {
+    if (user && user.taiKhoan.loaiTaiKhoan === "KH") {
+      setkiemTraCoLaKhachHang(true);
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {

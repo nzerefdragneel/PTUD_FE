@@ -24,7 +24,6 @@ const Nv_ds_allCS = () => {
     thoiGianPhatHanh: "",
   });
 
-  const navigate = useNavigate();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const fetchData = async () => {

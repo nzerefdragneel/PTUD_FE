@@ -19,8 +19,8 @@ class HopDongService {
     return axios.post(`${API_URL}XacDinhGiaTriHopDong`, {
       id,
       price,
-    });
-
+    }); // Corrected: Added closing curly brace and parenthesis here
+  }
   taoHopDong(iD_PhieuDangKi) {
     return axios.post(`${API_URL}HopDong?idPDK=${iD_PhieuDangKi}`);
   }

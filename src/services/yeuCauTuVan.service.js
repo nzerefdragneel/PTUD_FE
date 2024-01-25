@@ -1,11 +1,12 @@
+// import axios from "axios"; // Assuming axios is imported elsewhere in your project
 import axios from "axios";
-
 const API_URL = "https://localhost:7202/api/YeuCauTuVan/";
 
 class YeuCauTuVanService {
   getAll() {
     return axios.get(`${API_URL}GetAll`);
   }
+
   GetByIdNhanVien(idnv) {
     return axios.get(`${API_URL}GetByIdNhanVien?idnv=${idnv}`);
   }
@@ -17,6 +18,7 @@ class YeuCauTuVanService {
       thoiGian,
     });
   }
+
   UpdateNhanVien(iD_YeuCauTuVan, iD_NhanVien) {
     return axios.post(`${API_URL}UpdateNhanVien`, {
       iD_YeuCauTuVan,
@@ -28,6 +30,7 @@ class YeuCauTuVanService {
     return axios.get(`${API_URL}GetByIdKhachHang`, {
       params: { idkh: idKhachHang },
     });
+  } // Added closing parenthesis here
 
   UpdateTinhTrangDuyet(iD_YeuCauTuVan, tinhTrangDuyet) {
     return axios.post(

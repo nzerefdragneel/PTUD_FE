@@ -56,6 +56,8 @@ import AddNhanVienTC from "./components/addNhanVienTC.component";
 import AddAdmin from "./components/addAdmin.component";
 import VerifyEmailComponent from "./components/verifyEmail.component";
 import VerifyScreen from "./screen/verifyScreen";
+import Nv_xacDinhChiPhiBaoHiem from "./components/nv_xacDinhChiPhiBaoHiem.component";
+import Nv_lichSuChiTra from "./components/nv_lichSuChiTra.component";
 import { Toaster } from "react-hot-toast";
 
 class App extends Component {
@@ -122,7 +124,7 @@ class App extends Component {
           <div className="flex flex-row flex-wrap text-lg  items-center">
             <a href="/" className="nav-link">
               <img
-                src="./assets/logo_0.png"
+                src="./assets/images/logo_0.png"
                 className="h-16 w-auto mr-2"
                 alt="logo"
               />
@@ -266,6 +268,14 @@ class App extends Component {
                 <Route
                   path="/nhanvien/duyetYCCT"
                   element={<Nv_duyetYeuCauChiTra />}
+                />
+                <Route
+                  path="/nhanvien/xdChiPhiBH"
+                  element={<Nv_xacDinhChiPhiBaoHiem />}
+                />
+                <Route
+                  path="/nhanvien/lichSuChiTra"
+                  element={<Nv_lichSuChiTra />}
                 />
                 {/* chỉnh sửa danh sách chính sách */}
                 <Route path="/nhanvien/ds_gbh" element={<NV_ds_GBH />} />

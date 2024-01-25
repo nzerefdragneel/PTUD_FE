@@ -9,6 +9,9 @@ class NhanVienService {
   getNhanVien(iD_TaiKhoan) {
     return axios.get(`${API_URL}GetByIdTaiKhoan?idtk=${iD_TaiKhoan}`);
   }
+  getNhanVienbyID(iD_NhanVien) {
+    return axios.get(`${API_URL}id:int?id=${iD_NhanVien}`);
+  }
   getCurrentNhanVien() {
     return JSON.parse(localStorage.getItem("nhanvien"));
   }

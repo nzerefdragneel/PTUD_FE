@@ -7,8 +7,8 @@ import AuthService from "../services/auth.service";
 
 import { withRouter } from "../common/with-router";
 import { Navigate } from "react-router-dom";
-import customerService from "../services/customer.service";
-import nhanVienService from "../services/nhanVien.service";
+import CustomerService from "../services/customer.service";
+import NhanvienService from "../services/nhanVien.service";
 
 const required = (value) => {
   if (!value) {
@@ -97,8 +97,7 @@ class LoginForm extends Component {
 
             if (userRole === "KH") {
               // Handling for customer role
-              customerService
-                .getCustomer(userID)
+              CustomerService.getCustomer(userID)
                 .then((customerResponse) => {
                   const customerData = customerResponse.data;
 
@@ -109,7 +108,7 @@ class LoginForm extends Component {
                     );
                     this.props.router.navigate("/home");
                   } else {
-                    this.props.router.navigate("/addCustomer");
+                    this.props.router.navigate("");
                   }
                 })
                 .catch((customerError) => {
@@ -127,15 +126,14 @@ class LoginForm extends Component {
             }
             if (userRole === "NV") {
               // Handling for customer role
-              customerService
-                .getCustomer(userID)
-                .then((customerResponse) => {
-                  const customerData = customerResponse.data;
+              NhanvienService.getNhanVien(userID)
+                .then((nhanVienResponse) => {
+                  const nhanVienData = nhanVienResponse.data;
 
-                  if (customerData) {
+                  if (nhanVienData) {
                     localStorage.setItem(
-                      "customer",
-                      JSON.stringify(customerData)
+                      "nhanvien",
+                      JSON.stringify(nhanVienData)
                     );
                     this.props.router.navigate("/home");
                   } else {
@@ -157,15 +155,14 @@ class LoginForm extends Component {
             }
             if (userRole === "NVTC") {
               // Handling for customer role
-              customerService
-                .getCustomer(userID)
-                .then((customerResponse) => {
-                  const customerData = customerResponse.data;
+              NhanvienService.getNhanVien(userID)
+                .then((nhanVienResponse) => {
+                  const nhanVienData = nhanVienResponse.data;
 
-                  if (customerData) {
+                  if (nhanVienData) {
                     localStorage.setItem(
-                      "customer",
-                      JSON.stringify(customerData)
+                      "nhanvien",
+                      JSON.stringify(nhanVienData)
                     );
                     this.props.router.navigate("/home");
                   } else {
@@ -186,8 +183,7 @@ class LoginForm extends Component {
                 });
             }
             if (userRole === "ADMIN") {
-              nhanVienService
-                .getNhanVien(userID)
+              NhanvienService.getNhanVien(userID)
                 .then((nhanVienResponse) => {
                   const nhanVienData = nhanVienResponse.data;
 

@@ -60,12 +60,12 @@ export const appRouters = [
   //   component:<Profile/>
   // },
   {
-    path: "/register/:idGoiBaoHiem",
-    title: "register",
+    path: "/xemGoiBaoHiem",
+    title: "Danh sách gói bảo hiểm",
     name: "Đăng ký bảo hiểm ",
     icon: BookmarkIcon,
     showInMenu: true,
-    component: <Register_Insurance />,
+    component: <XemGoiBaoHiemScreen />,
   },
   {
     path: "/edituser",

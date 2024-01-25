@@ -318,53 +318,6 @@ function AddNhanVien() {
                 </div>
               </div>
               {/* Cập nhật thể trạng - cân nặng */}
-              <div className="sm:col-span-4 px-5">
-                <label
-                  htmlFor="CanNang"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Cân nặng
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="CanNang"
-                    name="CanNang"
-                    type="number"
-                    min="0"
-                    max="300"
-                    validations={[required]}
-                    autoComplete="off"
-                    onChange={(e) => {
-                      setcannang(e.target.value);
-                    }} //   validations={required}
-                    className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              {/* Cập nhật thể trạng - chiều cao*/}
-              <div className="sm:col-span-4 px-5 ">
-                <label
-                  htmlFor="ChieuCao"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Chiều cao
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="ChieuCao"
-                    name="ChieuCao"
-                    type="number"
-                    min="10"
-                    validations={[required]}
-                    max="200"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      setchieucao(e.target.value);
-                    }} //   validations={required}
-                    className=" block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>{" "}
             </div>
           </div>
 
@@ -462,27 +415,6 @@ function AddNhanVien() {
           <div className="sm:col-span-4 py-3">
             <h4> Tài chính </h4>
 
-            <label
-              htmlFor="ThuNhap"
-              className="block text-sm font-medium leading-6 text-gray-900 pt-2"
-            >
-              Thu Nhập / Tháng
-            </label>
-            <div className="mt-2">
-              <input
-                id="ThuNhap"
-                validations={[required]}
-                name="ThuNhap"
-                type="number"
-                autoComplete="off"
-                //   validations={required}
-                onChange={(e) => {
-                  setthunhap(e.target.value);
-                }}
-                placeholder="Nhập thu thập/ tháng"
-                className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
             <label
               htmlFor="NganHang"
               className="block text-sm font-medium leading-6 text-gray-900 pt-2"

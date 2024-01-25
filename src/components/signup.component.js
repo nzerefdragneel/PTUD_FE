@@ -71,12 +71,16 @@ function Signup() {
     fref.current.validateAll();
     const userNameRegex = /^[0-9]{10}$/;
     if (!userNameRegex.test(username)) {
-      alert("SDT phải có độ dài là 10 (0-9)");
       setIsLoading(false);
+      setIsSubmit(true);
+
+      setMessage("SDT phải có độ dài là 10 (0-9)");
     } else {
       if (password.length < 6 || password.length > 40) {
-        alert("Mật khẩu phải từ 6-40 kí tự");
         setIsLoading(false);
+        setIsSubmit(true);
+
+        setMessage("Mật khẩu phải từ 6 kí tự");
       } else {
         AuthService.register(username, password).then(
           (response) => {
@@ -172,7 +176,7 @@ function Signup() {
         </Form>
 
         {isSubmit && !isSuccess && (
-          <div className="text-error-color text-base">Lỗi: {message}</div>
+          <div className="text-error-color text-base">{message}</div>
         )}
         {isSubmit && isSuccess && (
           <div className="alert alert-success text-base">

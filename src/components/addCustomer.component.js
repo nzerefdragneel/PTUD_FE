@@ -4,9 +4,8 @@ import UserService from "../services/user.service";
 import { withRouter } from "../common/with-router";
 import { Navigate, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import authService from "../services/auth.service";
 import { isEmail } from "validator";
-import customerService from "../services/customer.service";
+import CustomerService from "../services/customer.service";
 import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 import AuthService from "../services/auth.service";
@@ -82,7 +81,7 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 function AddCustomer() {
-  const userID = authService.getCurrentUser();
+  const userID = AuthService.getCurrentUser();
   let iD_TaiKhoan = null;
   const navigate = useNavigate();
   if (userID !== null) {
@@ -146,7 +145,7 @@ function AddCustomer() {
     };
     console.log(requestData);
 
-    customerService.addCustomer(userID, requestData).then(
+    CustomerService.addCustomer(userID, requestData).then(
       (response) => {
         setSuccess(true);
         setMessage(response.data.message);

@@ -72,30 +72,32 @@ const CustomerPhieuDangKyList = () => {
       <h1 className="text-2xl font-bold mb-4">Danh sách Phiếu Đăng Ký</h1>
       <div className="mb-4">
         <button
-          className={`mr-4 p-2 rounded ${
-            currentTab === "Chưa duyệt"
+          onClick={() => setCurrentTab("Chưa Duyệt")}
+          className={`mr-2 p-2 rounded ${
+            currentTab === "Chưa Duyệt"
               ? "bg-blue-500 text-white"
               : "bg-gray-300"
           }`}
-          onClick={() => handleChangeTab("Chưa Duyệt")}
         >
-          Chưa duyệt
+          Chưa Duyệt
         </button>
         <button
-          className={`mr-4 p-2 rounded ${
-            currentTab === "Đã Duyệt" ? "bg-blue-500 text-white" : "bg-gray-300"
+          onClick={() => setCurrentTab("Đã Duyệt")}
+          className={`mr-2 p-2 rounded ${
+            currentTab === "Đã Duyệt"
+              ? "bg-green-500 text-white"
+              : "bg-gray-300"
           }`}
-          onClick={() => handleChangeTab("Đã Duyệt")}
         >
-          Đã được Duyệt
+          Đã Duyệt
         </button>
         <button
-          className={`mr-4 p-2 rounded ${
-            currentTab === "Từ chối" ? "bg-blue-500 text-white" : "bg-gray-300"
+          onClick={() => setCurrentTab("Từ Chối")}
+          className={`p-2 rounded ${
+            currentTab === "Từ Chối" ? "bg-red-500 text-white" : "bg-gray-300"
           }`}
-          onClick={() => handleChangeTab("Từ Chối")}
         >
-          Đã bị từ chối
+          Từ Chối
         </button>
       </div>
       <ul>
@@ -142,21 +144,19 @@ const CustomerPhieuDangKyList = () => {
       {/* Các nút điều chỉnh trang */}
       <div className="mt-4 flex justify-between">
         <button
-          className="bg-blue-500 text-white p-2 rounded"
           onClick={() =>
-            handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
+            setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
           }
+          className="bg-blue-500 text-white p-2 rounded"
           disabled={currentPage === 1}
         >
           Trang trước
         </button>
         <button
-          className="bg-blue-500 text-white p-2 rounded"
           onClick={() =>
-            handlePageChange(
-              currentPage < totalPages ? currentPage + 1 : totalPages
-            )
+            setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))
           }
+          className="bg-blue-500 text-white p-2 rounded"
           disabled={currentPage === totalPages}
         >
           Trang sau

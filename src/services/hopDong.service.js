@@ -8,6 +8,9 @@ class HopDongService {
   getByIdHopDong(id) {
     return axios.get(`${API_URL}GetByIdKh?idkh=${id}`);
   }
+  taoHopDong(iD_PhieuDangKi) {
+    return axios.post(`${API_URL}HopDong?idPDK=${iD_PhieuDangKi}`);
+  }
 }
 
 export default new HopDongService();

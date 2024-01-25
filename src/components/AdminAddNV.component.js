@@ -56,6 +56,7 @@ function parseJwt(token) {
 function ThemNhanVienComponent() {
   const [tenDangNhap, setUsername] = useState("");
   const [matKhau, setPassword] = useState("");
+  const [loainhanvien, setloainhanvien] = useState("");
   //   const [passwor setConfirmPassword] = useState("");
 
   // const [email, setEmail] = useState("");
@@ -69,27 +70,41 @@ function ThemNhanVienComponent() {
     e.preventDefault();
 
     fref.current.validateAll();
+    const userNameRegex = /^[0-9]{10}$/;
 
-    UserService.ThemNhanVienByADMIN(tenDangNhap, matKhau).then(
-      (response) => {
-        setSuccess(true);
-        setMessage(response.data.message);
-        setIsSubmit(true);
+    if (!userNameRegex.test(tenDangNhap)) {
+      setIsLoading(false);
+      setMessage("SDT phải có độ dài là 10 (0-9)");
+    } else {
+      if (matKhau.length < 6 || matKhau.length > 40) {
         setIsLoading(false);
-      },
-      (error) => {
-        const resMessage =
-          error.response ||
-          error.response.data ||
-          error.response.data.message ||
-          error.message ||
-          error.toString();
-        setMessage(resMessage.toString());
-        setIsSubmit(true);
-        setSuccess(false);
-        setIsLoading(false);
+      } else {
+        UserService.ThemNhanVienByADMIN(
+          tenDangNhap,
+          matKhau,
+          loainhanvien
+        ).then(
+          (response) => {
+            setSuccess(true);
+            setMessage(response.data.message);
+            setIsSubmit(true);
+            setIsLoading(false);
+          },
+          (error) => {
+            const resMessage =
+              error.response ||
+              error.response.data ||
+              error.response.data.message ||
+              error.message ||
+              error.toString();
+            setMessage("Mật khẩu phải từ 6 kí tự");
+            setIsSubmit(true);
+            setSuccess(false);
+            setIsLoading(false);
+          }
+        );
       }
-    );
+    }
   };
 
   return (
@@ -129,23 +144,30 @@ function ThemNhanVienComponent() {
                 validations={[required, vpassword]}
               />
             </div>
-            {/* <div className="form-group">
-              <label htmlFor="confirmPassword" className="font-semibold mb-2 mt-2">
-                Nhập lại mật khẩu Mật khẩu
-              </label>
-              <Input
-                type="password"
-                className="form-control p-3 rounded"
-                name="confirmPassword"
-                placeholder="Nhập mật khẩu"
-                onChange={(e) => {
-                //   setConfirmPassword(e.target.value);
-                
-                }}
+            <label
+              htmlFor="GioiTinh"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Loại nhân viên
+            </label>
+            <div className="mt-2">
+              <select
+                name="Loainhanvien"
+                id="Loainhanvien"
+                form="editform"
                 validations={[required]}
-              />
+                onChange={(e) => {
+                  setloainhanvien(e.target.value);
+                }}
+                className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <option value="None">Loại nhân viên</option>
+                validations={[required]}
+                <option value="NV">Nhân viên</option>
+                <option value="NVTC">Nhân viên tài chính</option>
+                <option value="ADMIN">Quản trị viên</option>
+              </select>
             </div>
-            */}
             <div className="form-group">
               <button
                 className="w-full py-2.5 text-white bg-dark-green rounded-lg text-sm mt-3"

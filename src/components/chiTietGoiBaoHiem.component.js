@@ -20,15 +20,10 @@ const ChiTietGoiBaoHiem = () => {
   const navigate = useNavigate();
   console.log(goiBaohiem);
   const [kiemTraCoTrongBangKH, setkiemTraCoTrongBangKH] = useState(false);
-  const [kiemTraCoLaKhachHang, setkiemTraCoLaKhachHang] = useState(false);
+
   const [kiemTra, setkiemTra] = useState(false);
   const [khachHang, setkhachHang] = useState([]);
   const [danhSachChinhSach, setDanhSachChinhSach] = useState([]);
-  useEffect(() => {
-    if (user && user.taiKhoan.loaiTaiKhoan === "KH") {
-      setkiemTraCoLaKhachHang(true);
-    }
-  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +35,7 @@ const ChiTietGoiBaoHiem = () => {
           (gbh) => gbh.ngayKetThuc !== "0001-01-01T00:00:00"
         );
 
-        // console.log(response_kh.data[0]);
+        // console.log(response_kh.data);
         const ds_cs = [];
         for (const dt of data) {
           try {
@@ -62,11 +57,11 @@ const ChiTietGoiBaoHiem = () => {
             iD_TaiKhoan
           );
           setkiemTraCoTrongBangKH(true);
-          setkhachHang(response_kh.data[0]);
-          console.log(response_kh.data[0]);
+          setkhachHang(response_kh.data);
+          console.log(response_kh.data);
           try {
             const res = await HopDongService.getByIdKhachHang(
-              response_kh.data[0].iD_KhachHang
+              response_kh.data.iD_KhachHang
             );
             const hd_conHieuLuc = res.data.filter(
               (hd) =>

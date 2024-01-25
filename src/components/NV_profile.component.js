@@ -10,20 +10,6 @@ const Nhanvien_Profile = () => {
   const user = authService.getCurrentUser();
   const userID = user.taiKhoan.iD_TaiKhoan;
 
-  NhanVienService.getNhanVien(userID)
-    .then((customerResponse) => {
-      const customerData = customerResponse.data;
-      localStorage.setItem("nhanvien", JSON.stringify(customerData));
-    })
-    .catch((customerError) => {
-      console.error("Lỗi khi lấy thông tin khách hàng:", customerError);
-
-      // Chuyển hướng vào /createProfile khi có lỗi
-      const message =
-        "Tài khoản mới hoặc chưa có hồ sơ người dùng. Vui lòng tạo hồ sơ người dùng để tiếp tục trải nghiệm dịch vụ của chúng tôi";
-      alert(message);
-      this.props.router.navigate("/home");
-    });
   const customer = NhanVienService.getCurrentNhanVien();
 
   const colorClass = getColorClass(customer?.xacThuc); // Thêm kiểm tra customer không null trước khi truy cập thuộc tính

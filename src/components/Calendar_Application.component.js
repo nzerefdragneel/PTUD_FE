@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import PhieuDangKiService from "../services/phieuDangKi.service";
 import GoiBaoHiemService from "../services/goiBaoHiem.service";
 import AuthService from "../services/auth.service";
+import HopDongService from "../services/hopDong.service";
 import { useNavigate } from "react-router-dom";
-import authService from "../services/auth.service";
+import NhanVienService from "../services/nhanVien.service";
 const DanhSachKyKetList = () => {
-  const user = authService.getCurrentUser();
+  const user = AuthService.getCurrentUser();
   let iD_TaiKhoan = null;
   const navigate = useNavigate();
   if (user !== null) {
     iD_TaiKhoan = user.taiKhoan.iD_TaiKhoan;
   } else navigate(`/home`);
+  const nhanvien = NhanVienService.getCurrentNhanVien();
+
   const [phieudangkyList, setPhieuDangKyList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [statusMessages, setStatusMessages] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,17 +24,13 @@ const DanhSachKyKetList = () => {
         const response = await PhieuDangKiService.getAll();
         const phieudangkyData = response.data;
 
-        // Lọc ra những phiếu đăng ký có tinhTrangDuyet là "Chưa Duyệt"
-        const chuaDuyetPhieudangkyData = phieudangkyData.filter(
+        const duyetPhieudangkyData = phieudangkyData.filter(
           (phieudangky) => phieudangky.tinhTrangDuyet === "Đã Duyệt"
         );
 
-        const startIndex = (currentPage - 1) * 3;
-        const endIndex = startIndex + 3;
-        const currentList = chuaDuyetPhieudangkyData.slice(
-          startIndex,
-          endIndex
-        );
+        const startIndex = (currentPage - 1) * 4;
+        const endIndex = startIndex + 4;
+        const currentList = duyetPhieudangkyData.slice(startIndex, endIndex);
 
         const updatedPhieudangkyList = await Promise.all(
           currentList.map(async (phieudangky) => {
@@ -56,11 +56,46 @@ const DanhSachKyKetList = () => {
     fetchData();
   }, [currentPage]);
 
+  const handleCreateContract = async (iD_PhieuDangKi) => {
+    try {
+      // Gọi API tạo hợp đồng
+
+      // Lấy iD_NhanVien từ localStorage
+      console.log(nhanvien);
+
+      const requestData = {
+        iD_NhanVien: parseInt(nhanvien.iD_NhanVien),
+        iD_PhieuDangKi: iD_PhieuDangKi,
+      };
+
+      // Gọi API cập nhật iD_NhanVien cho phiếu đăng ký
+      await PhieuDangKiService.UpdateNhanVien(requestData);
+      await HopDongService.taoHopDong(iD_PhieuDangKi);
+
+      setStatusMessages((prevMessages) => ({
+        ...prevMessages,
+        [iD_PhieuDangKi]: {
+          message: "Tạo hợp đồng thành công",
+          type: "success",
+        },
+      }));
+    } catch (error) {
+      console.error("Error creating contract:", error);
+      setStatusMessages((prevMessages) => ({
+        ...prevMessages,
+        [iD_PhieuDangKi]: {
+          message: "Hợp đồng đã có sẵn ! ",
+          type: "error",
+        },
+      }));
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Danh sách đã Duyệt</h1>
+      <h1 className="text-2xl font-bold mb-4">Phiếu đăng ký đã duyệt </h1>
       {phieudangkyList.length === 0 ? (
-        <p>Chưa có phiếu đăng ký nào chờ duyệt.</p>
+        <p>Chưa có phiếu đăng ký nào đã duyệt.</p>
       ) : (
         <>
           <ul>
@@ -101,6 +136,29 @@ const DanhSachKyKetList = () => {
                   {phieudangky.goiBaoHiem
                     ? phieudangky.goiBaoHiem.tenGoi
                     : "N/A"}
+                </div>
+
+                <div className="mt-4 flex items-center">
+                  <button
+                    className="bg-blue-500 text-white p-2 rounded"
+                    onClick={() =>
+                      handleCreateContract(phieudangky.iD_PhieuDangKi)
+                    }
+                  >
+                    Nhận lịch hẹn hợp đồng
+                  </button>
+                  {statusMessages[phieudangky.iD_PhieuDangKi] && (
+                    <div
+                      className={
+                        statusMessages[phieudangky.iD_PhieuDangKi].type ===
+                        "success"
+                          ? "ml-4 success-message"
+                          : "ml-4 error-message"
+                      }
+                    >
+                      {statusMessages[phieudangky.iD_PhieuDangKi].message}
+                    </div>
+                  )}
                 </div>
               </li>
             ))}

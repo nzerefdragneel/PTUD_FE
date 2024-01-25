@@ -5,7 +5,10 @@ import { Navigate, Link } from "react-router-dom";
 import authService from "../services/auth.service";
 import { isEmail } from "validator";
 import CustomerService from "../services/customer.service";
-import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers";
+import {
+  toHaveAccessibleErrorMessage,
+  toHaveDisplayValue,
+} from "@testing-library/jest-dom/matchers";
 import { getColorClass } from "../utils/colorultils";
 
 const required = (value) => {
@@ -90,6 +93,7 @@ export default class EditUser extends Component {
       chieucao: customer.chieuCao,
       cannang: customer.canNang,
       sonhaTenduong: customer.soNhaTenDuong,
+
       phuongxa: customer.phuongXa,
       quanhuyen: customer.quanHuyen,
       thanhpho: customer.thanhPho,
@@ -125,9 +129,10 @@ export default class EditUser extends Component {
       quoctich: e.target.value,
     });
   }
+
   onChangengaysinh(e) {
-    this.setState({
-      ngasinh: e.target.value,
+    toHaveDisplayValue.setState({
+      ngaysinh: e.target.value,
     });
   }
   onChangechieucao(e) {
@@ -202,6 +207,7 @@ export default class EditUser extends Component {
   }
 
   handleEdituser(e) {
+    console.log(this.state.ngaysinh);
     e.preventDefault();
     this.setState({
       message: "",
@@ -230,6 +236,7 @@ export default class EditUser extends Component {
       soTaiKhoan: this.state.sotaikhoan,
       nganHang: this.state.nganhang,
       soDienThoai: this.state.sodienthoai,
+      ngaySinh: this.state.ngaysinh,
     };
 
     CustomerService.updateCustomer(customer.iD_KhachHang, requestData).then(
@@ -402,6 +409,26 @@ export default class EditUser extends Component {
                           className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
+
+                      <label
+                        htmlFor="quoctich"
+                        className="block text-sm font-medium leading-6 text-gray-900 pt-2"
+                      >
+                        Quốc tịch
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="quoctich"
+                          name="quoctich"
+                          type="text"
+                          autoComplete="off"
+                          //   validations={[required, isIDCard]}
+                          placeholder="Nhập quốc tịch"
+                          value={this.state.quoctich}
+                          onChange={this.onChangequoctich}
+                          className="block w-full rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
                     </div>
 
                     {/*Cập nhật thể chất */}
@@ -433,23 +460,23 @@ export default class EditUser extends Component {
                           </div>
                         </div>
                         {/* Cập nhật sinh nhật */}
-                        {/* <div className="sm:col-span-4 px-5 ">
-                          <label htmlFor="NgaySinh" className="block text-sm font-medium leading-6 text-gray-900">
+                        <div className="sm:col-span-4 px-5 ">
+                          {/* <label
+                            htmlFor="NgaySinh"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
                             Ngày sinh
                           </label>
                           <div className="mt-2">
                             <input
-                              id="NgaySinh"
-                              name="NgaySinh"
-                              type="date"
-                              autoComplete="off"
-                              validations={required}
+                              name="Ngaysinh"
+                              id="Ngaysinh"
                               value={this.state.ngaysinh}
-                              //   onChange={this.onChangengaysinh}
-                              className="block w-20% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              onChange={this.onChangengaysinh}
+                              className="block w-10% rounded border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
-                          </div>
-                        </div> */}
+                          </div> */}
+                        </div>
                         {/* Cập nhật thể trạng - cân nặng */}
                         <div className="sm:col-span-4 px-5">
                           <label

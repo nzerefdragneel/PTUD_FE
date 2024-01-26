@@ -365,7 +365,8 @@ const YeuCauChiTra = () => {
       return;
     }
     const qlbhid = baoHiemDangDung.find((qlbh) => qlbh.iD_GoiBaoHiem === +GBH);
-
+    const ngayYeuCau = new Date();
+    console.log(ngayYeuCau);
     console.log(qlbhid);
     try {
       const response = await YeuCauChiTraService.EditYeuCauChiTra(
@@ -374,6 +375,7 @@ const YeuCauChiTra = () => {
         nguoiYeuCau,
         truongHopChiTra,
         moiQuanHe,
+        ngayYeuCau,
         noiDieuTri,
         diaChi,
         chanDoan,

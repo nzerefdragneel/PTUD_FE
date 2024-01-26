@@ -20,7 +20,7 @@ class HopDongService {
       id,
       price,
     });
-
+  }
   taoHopDong(iD_PhieuDangKi) {
     return axios.post(`${API_URL}HopDong?idPDK=${iD_PhieuDangKi}`);
   }

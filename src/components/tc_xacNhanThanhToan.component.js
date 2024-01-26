@@ -48,6 +48,17 @@ const TC_xacNhanTT = () => {
       const hopD = await HopDongService.getByIdHopDong(iD_HopDong);
       if (hopD.data.trangThai === "Hiệu Lực") {
         try {
+          const res = await PhieuThanhToanBaoHiemService.getByIdHopDong(
+            iD_HopDong
+          );
+          if (res.data.length === hopD.data.thoiHan / 12) {
+            alert("Không cần đóng phí");
+            return;
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+        try {
           const response = await GoiBaoHiemService.getByID(
             hopD.data.iD_GoiBaoHiem
           );

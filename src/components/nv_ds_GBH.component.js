@@ -17,7 +17,7 @@ const NV_ds_GBH = () => {
       try {
         const response = await GoiBaoHiemService.getAll();
         const data = response.data.filter(
-          (gbh) => gbh.tinhTrang === "Đang phát hành"
+          (gbh) => gbh.tinhTrang === "Đang Phát Hành"
         );
         setDanhSachGoiSanPham(data);
       } catch (error) {

@@ -81,12 +81,8 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 function AddCustomer() {
-  const userID = AuthService.getCurrentUser();
-  let iD_TaiKhoan = null;
-  const navigate = useNavigate();
-  if (userID !== null) {
-    iD_TaiKhoan = userID.taiKhoan.iD_TaiKhoan;
-  } else navigate(`/home`);
+  const user = AuthService.getCurrentUser();
+  const userID = user.taiKhoan.iD_TaiKhoan;
 
   const [hoten, sethoten] = useState("");
   const [email, setemail] = useState("");

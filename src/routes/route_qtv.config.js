@@ -56,7 +56,7 @@ export const appRouters_qtv = [
     title: "edituser",
     name: "Cập nhật thông tin ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditUser />,
   },
   {
@@ -64,7 +64,7 @@ export const appRouters_qtv = [
     title: "editAccount",
     name: "Cài đặt tài khoản ",
     icon: BookmarkIcon,
-    showInMenu: true,
+    showInMenu: false,
     component: <EditAccount />,
   },
   {

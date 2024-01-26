@@ -178,7 +178,7 @@ function ThemNhanVienComponent() {
                 {isLoading && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 )}
-                Đăng ký
+                Thêm Tài Khoản
               </button>
             </div>
           </div>

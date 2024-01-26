@@ -53,7 +53,7 @@ const TC_QuanLiThanhToan = () => {
         </Button>
       </div>
 
-      <div>
+      {/* <div>
         <Button
           onClick={() => handleXemHopDongCanTTClick()}
           className="bg-blue-500 text-white px-4 py-2 text-lg mr-4"
@@ -76,7 +76,7 @@ const TC_QuanLiThanhToan = () => {
         >
           Các hợp đồng quá hạn thanh toán
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

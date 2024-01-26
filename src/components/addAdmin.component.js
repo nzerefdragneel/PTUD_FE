@@ -80,6 +80,7 @@ function parseJwt(token) {
 function AddAdmin() {
   const user = AuthService.getCurrentUser();
   const userID = user.taiKhoan.iD_TaiKhoan;
+  console.log(userID);
 
   const [hoten, sethoten] = useState("");
   const [email, setemail] = useState("");
@@ -108,7 +109,6 @@ function AddAdmin() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const requestData = {};
 
   const handleAddCustomer = (e) => {
     e.preventDefault();

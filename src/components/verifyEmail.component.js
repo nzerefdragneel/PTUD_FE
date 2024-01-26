@@ -31,6 +31,7 @@ const AuthVerify = (props) => {
     const storedCustomer = JSON.parse(localStorage.getItem("customer"));
 
     setCustomer(storedCustomer);
+    console.log(storedCustomer.iD_KhachHang);
 
     if (Token && storedCustomer && storedCustomer.iD_KhachHang == Token.idKH) {
       if (storedCustomer.xacThuc === "Đã Xác Thực") {

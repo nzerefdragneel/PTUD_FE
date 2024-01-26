@@ -105,7 +105,7 @@ const ChiTietGoiBaoHiem = () => {
   };
   return (
     <header className="wrapper mt-8">
-      <div className="baoHiem border border-black p-4 mb-4">
+      <div className="baoHiem border border-black py-4 mb-4">
         <div className="TieuDe flex items-center">
           <h2 className="mr-2">{goiBaohiem.tenBaoHiem}</h2>
         </div>
@@ -116,6 +116,18 @@ const ChiTietGoiBaoHiem = () => {
           className="anhbaohiem"
           style={{ maxWidth: "100%", height: "auto" }}
         />
+        {kiemTra ? (
+          <div className="bg-blue-500 text-white px-4 py-">
+            Gói bảo hiểm đang được sử dụng
+          </div>
+        ) : (
+          <Button
+            onClick={() => handleDangKiBaoHiemClick(goiBaohiem)}
+            className="bg-blue-500 text-white px-4 py-2"
+          >
+            Đăng ký ngay
+          </Button>
+        )}
         <div className="thongtinbaohiem">
           <p>Giá tiền: {goiBaohiem.giaTien}</p>
           <p>Thời hạn:{goiBaohiem.thoiHan} tháng</p>
@@ -147,19 +159,6 @@ const ChiTietGoiBaoHiem = () => {
           </div>
         ))}
       </div>
-
-      {kiemTra ? (
-        <div className="bg-blue-500 text-white px-4 py-2">
-          Gói bảo hiểm đang được sử dụng
-        </div>
-      ) : (
-        <Button
-          onClick={() => handleDangKiBaoHiemClick(goiBaohiem)}
-          className="bg-blue-500 text-white px-4 py-2"
-        >
-          Đăng ký ngay
-        </Button>
-      )}
     </header>
   );
 };
